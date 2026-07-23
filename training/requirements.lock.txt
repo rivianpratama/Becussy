@@ -26,6 +26,7 @@ httpx==0.28.1
 huggingface_hub==1.24.0
 idna==3.18
 importlib_metadata==9.0.0
+iniconfig==2.3.0
 Jinja2==3.1.6
 joblib==1.5.3
 markdown-it-py==4.2.0
@@ -56,6 +57,7 @@ packaging==26.2
 pandas==3.0.5
 peft==0.19.1
 pillow==12.3.0
+pluggy==1.6.0
 propcache==0.5.2
 protobuf==7.35.1
 psutil==7.2.2
@@ -63,6 +65,7 @@ pyarrow==25.0.0
 pydantic==2.13.4
 pydantic_core==2.46.4
 Pygments==2.20.0
+pytest==9.1.1
 python-dateutil==2.9.0.post0
 PyYAML==6.0.3
 regex==2026.7.19
@@ -80,7 +83,6 @@ sympy==1.13.1
 threadpoolctl==3.6.0
 tokenizers==0.22.2
 torch==2.6.0+cu126
-torchao==0.13.0
 torchvision==0.21.0+cu126
 tqdm==4.69.0
 transformers==5.5.0

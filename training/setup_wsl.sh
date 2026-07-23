@@ -36,11 +36,19 @@ pip install "unsloth[cu126-torch260]" datasets sentencepiece protobuf
 # exist"). Re-pin it to the cu126 index without touching torch.
 pip install torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu126 --force-reinstall --no-deps
 
-# unsloth-zoo's resolver pulls torchao >=0.17, which needs torch 2.7+ APIs
-# (_pytree.register_constant) and crashes on import under torch 2.6. Pin 0.13.0:
-# it imports cleanly under torch 2.6 AND satisfies unsloth-zoo's >=0.13.0 floor,
-# so `pip check` passes (torchao's fp8/dynamic-quant paths are unused on Turing).
-pip install "torchao==0.13.0" --no-deps
+# DOCUMENTED OPTIONAL-DEPENDENCY EXEMPTION (report P1 #5).
+# torchao has no version that works on this stack:
+#   * torchao >= 0.17 crashes at import under torch 2.6 (uses the torch-2.7
+#     API torch.utils._pytree.register_constant);
+#   * torchao <= 0.16 makes PEFT's is_torchao_available() raise during LoRA
+#     injection ("only versions above 0.16.0 are supported");
+#   * torchao > 0.16 itself requires torch > 2.6, which Turing (sm75) cannot use.
+# It is an OPTIONAL accelerator (fp8 / dynamic quant) unused on Turing, so we
+# remove it. With torchao absent, PEFT cleanly skips its torchao dispatch path
+# and QLoRA trains normally. Consequence: `pip check` reports one expected
+# warning (unsloth-zoo wants torchao); that single line is the documented
+# exemption, not a real breakage.
+pip uninstall -y torchao || true
 
 echo "== HF cache on ext4 (NOT /mnt/c — 9P I/O is 10-50x slower) =="
 if ! grep -q "HF_HOME" "$HOME/.bashrc"; then
