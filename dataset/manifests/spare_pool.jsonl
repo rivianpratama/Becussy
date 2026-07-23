@@ -1,0 +1,330 @@
+{"pid": "alpaca-00036", "source": "alpaca", "category": "math", "lang": "en", "prompt": "The sum of the digits of the year 2004 is 6. What is the first year after 2000 for which the sum of the digits is 12?", "answer_key": null}
+{"pid": "alpaca-00505", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Provide an example of how AI can solve a problem.", "answer_key": null}
+{"pid": "alpaca-00534", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Describe a tool used for debugging a program.", "answer_key": null}
+{"pid": "alpaca-00600", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Describe the benefits of exercise.", "answer_key": null}
+{"pid": "alpaca-00926", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Given a table of daily stock prices with columns StockID, Date, and Price, write a SQL query to find the maximum price for each stock in the past 7 days.", "answer_key": null}
+{"pid": "alpaca-00971", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a song in C Major.", "answer_key": null}
+{"pid": "alpaca-00981", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a 200-word essay explaining the importance of sustainable energy.", "answer_key": null}
+{"pid": "alpaca-01306", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Name 3 types of clouds.", "answer_key": null}
+{"pid": "alpaca-01888", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Provide a step-by-step procedure on how to solve this math problem: 25% of 180", "answer_key": null}
+{"pid": "alpaca-01943", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Classify the type of point (maximum, minimum, or none) at the critical point of the differential equation y=3x^3 + 10x^2 + 5.", "answer_key": null}
+{"pid": "alpaca-01974", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Tell me something interesting about pandas.", "answer_key": null}
+{"pid": "alpaca-02122", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a JavaScript code to display an alert message when the 'Submit' button is pressed.", "answer_key": null}
+{"pid": "alpaca-02215", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Explain why it is important to use a descriptive variable name in programming.", "answer_key": null}
+{"pid": "alpaca-02439", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a 500-word story about a young orphan who discovers a hidden magical power.", "answer_key": null}
+{"pid": "alpaca-02480", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Given a table of student grades with columns StudentID, CourseID, and Grade, write a SQL query to find the average grade for each course, rounded to the nearest integer.", "answer_key": null}
+{"pid": "alpaca-02516", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a script that asks the user to enter their name.", "answer_key": null}
+{"pid": "alpaca-03191", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Imagine you are a travel agent. Suggest the most appealing aspects of Vienna to a client.", "answer_key": null}
+{"pid": "alpaca-03236", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a python function to rotate a matrix 90 degrees clockwise.", "answer_key": null}
+{"pid": "alpaca-03793", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a function which reverses the words in a sentence, but not the order of the words.", "answer_key": null}
+{"pid": "alpaca-03802", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a song that conveys the emotion of hope.", "answer_key": null}
+{"pid": "alpaca-03991", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "What does “algorithm” mean?", "answer_key": null}
+{"pid": "alpaca-04131", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the value of X for equation 2X+4=14", "answer_key": null}
+{"pid": "alpaca-04250", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Explain the concept of tail recursion using a programming language", "answer_key": null}
+{"pid": "alpaca-04289", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What are 5 must-have survival skills?", "answer_key": null}
+{"pid": "alpaca-04306", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Describe the differences between Python 2 and Python 3.", "answer_key": null}
+{"pid": "alpaca-04427", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Name two artificial intelligence methods that are used in natural language processing", "answer_key": null}
+{"pid": "alpaca-04750", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Given two tables, one for products with columns ProductID and Price, and one for orders with columns OrderID, ProductID, and Quantity, write a SQL query to find the total revenue generated by each product.", "answer_key": null}
+{"pid": "alpaca-04828", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a story about a knight.", "answer_key": null}
+{"pid": "alpaca-05158", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the total cost of 1000 apples at the rate of $1.5 per apple.", "answer_key": null}
+{"pid": "alpaca-05192", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Explain what a vector is in programming.", "answer_key": null}
+{"pid": "alpaca-05214", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "Create a list of steps to prepare a vegetable soup.", "answer_key": null}
+{"pid": "alpaca-05620", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a haiku about the beauty of nature, focusing on the imagery and emotions it evokes.", "answer_key": null}
+{"pid": "alpaca-05774", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write pseudocode for a program that reads two numbers and prints their sum.", "answer_key": null}
+{"pid": "alpaca-06533", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "How would you explain the concept of evolution to a child?", "answer_key": null}
+{"pid": "alpaca-06558", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a short poem about the beauty of nature, and briefly explain your choice of words and imagery.", "answer_key": null}
+{"pid": "alpaca-06628", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a script for a short skit between two people.", "answer_key": null}
+{"pid": "alpaca-07044", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Give an example of an algorithm and explain what it does.", "answer_key": null}
+{"pid": "alpaca-07935", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Generate an algorithm for identifying spam emails.", "answer_key": null}
+{"pid": "alpaca-08164", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Design a software program that auto completes data entry on a form.", "answer_key": null}
+{"pid": "alpaca-08250", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a program to predict whether an email is spam given its text.", "answer_key": null}
+{"pid": "alpaca-08369", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Construct a SQL query to get the total number of sales from the table 'Orders'.", "answer_key": null}
+{"pid": "alpaca-08449", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Describe the Difference between Python and JavaScript", "answer_key": null}
+{"pid": "alpaca-08630", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Find h(x), with terms in order of decreasing degree, if \n 9x^3-3x+1+h(x)=3x^2-5x+3.", "answer_key": null}
+{"pid": "alpaca-08698", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a function to validate an email address.", "answer_key": null}
+{"pid": "alpaca-08727", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What is the argument that most accurately supports the title, “Religious Education Should Not Be Taught in Public Schools”?", "answer_key": null}
+{"pid": "alpaca-09091", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Describe a teenager's life during a pandemic.", "answer_key": null}
+{"pid": "alpaca-09300", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a creative story about a time traveler.", "answer_key": null}
+{"pid": "alpaca-09327", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Find a library that provides an API for natural language processing.", "answer_key": null}
+{"pid": "alpaca-09769", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a short essay to explain the potential health benefits of eating fish.", "answer_key": null}
+{"pid": "alpaca-10274", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a program that takes an image and outputs the average color of all pixels.", "answer_key": null}
+{"pid": "alpaca-10291", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a creative story that contains a character who is a detective.", "answer_key": null}
+{"pid": "alpaca-10321", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Describe a scientific experiment with sufficient detail for a reader to recreate it.", "answer_key": null}
+{"pid": "alpaca-11107", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write an algorithm to sort a list of numbers from smallest to largest.", "answer_key": null}
+{"pid": "alpaca-11162", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Create a formula to calculate the area of a square.", "answer_key": null}
+{"pid": "alpaca-11654", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Compare and contrast an object-oriented programming language with a procedural programming language", "answer_key": null}
+{"pid": "alpaca-12202", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a regex expression that excludes words containing the letter \"x\".", "answer_key": null}
+{"pid": "alpaca-12221", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Given a numerical vector 'x = [5, 4, 3]', calculate the sum", "answer_key": null}
+{"pid": "alpaca-12409", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "You need to write a persuasive article discussing the importance of coding education in schools.", "answer_key": null}
+{"pid": "alpaca-12539", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "Make a list of 5 tips for effective communication", "answer_key": null}
+{"pid": "alpaca-12540", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Suggest a project that can incorporate the skills of Python, Machine Learning, and Web Development", "answer_key": null}
+{"pid": "alpaca-12621", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write down the syntax for declaring an array in Java.", "answer_key": null}
+{"pid": "alpaca-13067", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Four positive integers A, B, C and D have a sum of 36. If A+2 = B-2 = C × 2 = D ÷ 2, what is the value of the product A × B × C × D?", "answer_key": null}
+{"pid": "alpaca-13092", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Explain what is meant by contextual understanding of language.", "answer_key": null}
+{"pid": "alpaca-13154", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Convert this English sentence into French: \"Where is the nearest store?\"", "answer_key": null}
+{"pid": "alpaca-13313", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Let x be a value such that 8x^2 + 7x - 1 = 0 and 24x^2+53x-7 = 0. What is the value of x? Express your answer as a simplified common fraction.", "answer_key": null}
+{"pid": "alpaca-13763", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Explain the concept of coding to a 3rd grader.", "answer_key": null}
+{"pid": "alpaca-13783", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Generate an example of a medical procedure code.", "answer_key": null}
+{"pid": "alpaca-14261", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Develop an algorithm for sorting a group of numbers.", "answer_key": null}
+{"pid": "alpaca-14853", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Determine the most common programming language used in data science.", "answer_key": null}
+{"pid": "alpaca-15185", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a programming syntax using any language to sort.", "answer_key": null}
+{"pid": "alpaca-15291", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Construct a 5-day lesson plan teaching basic computer coding to middle-school students.", "answer_key": null}
+{"pid": "alpaca-15344", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a slogan to represent a charity that helps the homeless.", "answer_key": null}
+{"pid": "alpaca-15430", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a blog post advocating for teaching students coding skills in school.", "answer_key": null}
+{"pid": "alpaca-15517", "source": "alpaca", "category": "math", "lang": "en", "prompt": "How much is 4x3+3x2?", "answer_key": null}
+{"pid": "alpaca-15619", "source": "alpaca", "category": "math", "lang": "en", "prompt": "What value of x will give the minimum value of 2x^2 - 12x + 3?", "answer_key": null}
+{"pid": "alpaca-15739", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a creative story involving a dragon and a knight.", "answer_key": null}
+{"pid": "alpaca-16539", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a SQL query to find the total number of books in the library.", "answer_key": null}
+{"pid": "alpaca-16558", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Compare the features of HTML and CSS.", "answer_key": null}
+{"pid": "alpaca-16894", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Describe the meaning of the phrase \"life of the party\".", "answer_key": null}
+{"pid": "alpaca-16899", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "What are some tips for effective communication?", "answer_key": null}
+{"pid": "alpaca-17091", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Identify the correct syntax to declare a variable in Java.", "answer_key": null}
+{"pid": "alpaca-17105", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Compare and contrast Java and JavaScript", "answer_key": null}
+{"pid": "alpaca-17112", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Describe the different aspects of a programming language.", "answer_key": null}
+{"pid": "alpaca-17168", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "How would you introduce yourself", "answer_key": null}
+{"pid": "alpaca-17276", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Name five items a person would find in their kitchen.", "answer_key": null}
+{"pid": "alpaca-17280", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Compose a 1-2 sentence slogan for a brand that specializes in outdoor lifestyle apparel.", "answer_key": null}
+{"pid": "alpaca-17341", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a short poem about missing someone.", "answer_key": null}
+{"pid": "alpaca-17746", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write an algorithm to find the Top 3 movies with highest average rating.", "answer_key": null}
+{"pid": "alpaca-17926", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the cost to fly from Seattle to Los Angeles", "answer_key": null}
+{"pid": "alpaca-17955", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create an algorithm that can detect collisions between two objects.", "answer_key": null}
+{"pid": "alpaca-18061", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Compose 3 solution ideas to solve the problem of global warming.", "answer_key": null}
+{"pid": "alpaca-18162", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a C++ program to find outliers in an integer array.", "answer_key": null}
+{"pid": "alpaca-18199", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write an algorithm that checks if a given sentence has sentence fragments.", "answer_key": null}
+{"pid": "alpaca-18608", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Insert a line of code that defines and prints a string containing the words \"Hello, world!”", "answer_key": null}
+{"pid": "alpaca-19250", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Name three techniques used to debug computer programs.", "answer_key": null}
+{"pid": "alpaca-19625", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a CSS style class to display text in italic font.", "answer_key": null}
+{"pid": "alpaca-20203", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the surface area of a cube with each side measuring 8 ft.", "answer_key": null}
+{"pid": "alpaca-20560", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the total number of students in an auditorium with 65 chairs.", "answer_key": null}
+{"pid": "alpaca-20772", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Recommend 5 engaging books for children aged 7-9.", "answer_key": null}
+{"pid": "alpaca-20822", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Suppose you have a table named \"invoices\" with columns \"invoice_id\", \"customer_id\", \"invoice_date\", and \"amount\". Write a SQL query to find the top 5 customers who have the highest average invoice amount, excluding any customers who have made less than 10 purchases.", "answer_key": null}
+{"pid": "alpaca-20868", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Describe the function of the mitochondria in human cells.", "answer_key": null}
+{"pid": "alpaca-21030", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the cube root of 125.", "answer_key": null}
+{"pid": "alpaca-21034", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Construct a regular expression to match any valid US Zip Code.", "answer_key": null}
+{"pid": "alpaca-21039", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a SQL query to return the latest order placed by each customer.", "answer_key": null}
+{"pid": "alpaca-21226", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write an alliterative phrase using the letter \"T\".", "answer_key": null}
+{"pid": "alpaca-21279", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Create an expression using the numbers 1-10.", "answer_key": null}
+{"pid": "alpaca-21334", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Summarize the function of the liver.", "answer_key": null}
+{"pid": "alpaca-21727", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a song that tells a story", "answer_key": null}
+{"pid": "alpaca-21832", "source": "alpaca", "category": "math", "lang": "en", "prompt": "What is the value of 1/2*4/1*1/8*16/1…1/512*1024/1?", "answer_key": null}
+{"pid": "alpaca-21894", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Explain why the position vector is useful in physics.", "answer_key": null}
+{"pid": "alpaca-21961", "source": "alpaca", "category": "math", "lang": "en", "prompt": "A cylindrical water tank is 1/5 full. If three liters were added, the tank would be 1/4 full. How many liters does the tank hold when it is full?", "answer_key": null}
+{"pid": "alpaca-22179", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Name a type of specialized computer programming.", "answer_key": null}
+{"pid": "alpaca-22229", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a creative story using these words: house, animals, weather", "answer_key": null}
+{"pid": "alpaca-22327", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a CSS selector to apply a style to all the list items with the class \"highlight\"", "answer_key": null}
+{"pid": "alpaca-22638", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a Tweet-length description about the benefits of learning a foreign language.", "answer_key": null}
+{"pid": "alpaca-22655", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a css class for an element with a rounded border", "answer_key": null}
+{"pid": "alpaca-22910", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Convert the RGB color (255,153,0) to a hex color code.", "answer_key": null}
+{"pid": "alpaca-23079", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Describe a problem you solved with a coding project.", "answer_key": null}
+{"pid": "alpaca-23333", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Suppose you have a table named \"transactions\" with columns \"transaction_id\", \"customer_id\", \"transaction_date\", and \"amount\". Write a SQL query to find the customers who have made the largest percentage increase in spending from the previous month to the current month.", "answer_key": null}
+{"pid": "alpaca-24248", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Let P(x) = 0 be the polynomial equation of least possible degree, with rational coefficients, having 7^(1/3) + 49^(1/3) as a root. Compute the product of all of the roots of P(x) = 0.", "answer_key": null}
+{"pid": "alpaca-24262", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Sort a linked list using insertion sort. Write a python program to do it.", "answer_key": null}
+{"pid": "alpaca-24648", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "How would you explain computer programming to a 10 year old?", "answer_key": null}
+{"pid": "alpaca-25341", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "What is the definition of the 'Principle of Complementarity of Structure and Function'?", "answer_key": null}
+{"pid": "alpaca-25375", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Name a famous scientist and their main achievement", "answer_key": null}
+{"pid": "alpaca-25419", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a limerick with the word \"orange\"", "answer_key": null}
+{"pid": "alpaca-25839", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write an algorithm to print a multiplication table.", "answer_key": null}
+{"pid": "alpaca-25871", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a short story about overcoming adversity.", "answer_key": null}
+{"pid": "alpaca-26156", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Compose a 1-3 sentence description of a run-down apartment.", "answer_key": null}
+{"pid": "alpaca-26424", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "How can we increase the engagement rate of emails?", "answer_key": null}
+{"pid": "alpaca-26563", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a SQL query to find the 5 most popular restaurants in a given city.", "answer_key": null}
+{"pid": "alpaca-26575", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a script for handling customer phone calls.", "answer_key": null}
+{"pid": "alpaca-27185", "source": "alpaca", "category": "math", "lang": "en", "prompt": "If x is a real number and x^2 = 16, what is the sum of all possible values of x?", "answer_key": null}
+{"pid": "alpaca-27602", "source": "alpaca", "category": "math", "lang": "en", "prompt": "In 2-3 sentences, explain the Big Bang Theory", "answer_key": null}
+{"pid": "alpaca-27775", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "List the steps involved in writing a simple computer program.", "answer_key": null}
+{"pid": "alpaca-27909", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Find all solutions to the equation sqrt(5+2z) = 11.", "answer_key": null}
+{"pid": "alpaca-27919", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Imagine you have to move to a new city with different culture, what are 5 elements of culture you should consider before moving?", "answer_key": null}
+{"pid": "alpaca-28704", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Convert the given hexadecimal value to decimal.", "answer_key": null}
+{"pid": "alpaca-28786", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Cite the main advantages of object-oriented programming.", "answer_key": null}
+{"pid": "alpaca-28892", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Name one commonly used algorithm in artificial intelligence.", "answer_key": null}
+{"pid": "alpaca-29061", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What can I do to reduce the costs of hosting a website?", "answer_key": null}
+{"pid": "alpaca-29071", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a program that can detect potential fraudulent activity.", "answer_key": null}
+{"pid": "alpaca-29172", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Name 3 programming languages that are used to develop applications", "answer_key": null}
+{"pid": "alpaca-29267", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a regex to capture comma-separated values.", "answer_key": null}
+{"pid": "alpaca-29459", "source": "alpaca", "category": "math", "lang": "en", "prompt": "In how many ways can I arrange 3 different math books and 5 different history books on my bookshelf, if I require there to be a math book on both ends?", "answer_key": null}
+{"pid": "alpaca-29743", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the cost of purchasing 5 apples with a discount of 10%.", "answer_key": null}
+{"pid": "alpaca-29778", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Explain the differences between an open-ended and a close-ended question.", "answer_key": null}
+{"pid": "alpaca-29885", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Come up with an algorithm for predicting house prices in a given city.", "answer_key": null}
+{"pid": "alpaca-30728", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a program that outputs the Fibonacci number up to `N`. `N` is taken as an input.", "answer_key": null}
+{"pid": "alpaca-30733", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Imagine a character falling off a cliff. Explain what the character is feeling.", "answer_key": null}
+{"pid": "alpaca-30739", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "How can you prevent computer viruses?", "answer_key": null}
+{"pid": "alpaca-30825", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Output a piece of code that displays a message prompting the user to provide their name.", "answer_key": null}
+{"pid": "alpaca-32016", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Design an algorithm to identify a person's age from their date of birth.", "answer_key": null}
+{"pid": "alpaca-32183", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Imagine you are an alien visiting Earth for the first time. Describe what you are seeing.", "answer_key": null}
+{"pid": "alpaca-32315", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a script for a character to apologize for arriving late to a meeting.", "answer_key": null}
+{"pid": "alpaca-32331", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write 3 lines of code that prints out all the multiples of 7 from 0 to 50.", "answer_key": null}
+{"pid": "alpaca-32723", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a haiku describing the summer.", "answer_key": null}
+{"pid": "alpaca-33065", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a story about a time when a person showed courage in a difficult situation.", "answer_key": null}
+{"pid": "alpaca-33147", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write the code for swapping two elements in a given array.", "answer_key": null}
+{"pid": "alpaca-33372", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Write a 3-5 sentence job description for a sales representative.", "answer_key": null}
+{"pid": "alpaca-33877", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Find the remainder when 3 × 13 × 23 × 33 ×…× 183 × 193 is divided by 5.", "answer_key": null}
+{"pid": "alpaca-33887", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate how many kilometers 5 miles is.", "answer_key": null}
+{"pid": "alpaca-33942", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Identify a possible cause of an AI algorithm not performing as well as expected.", "answer_key": null}
+{"pid": "alpaca-34087", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a tweet speaking out against human trafficking.", "answer_key": null}
+{"pid": "alpaca-34268", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "Suggest 5 tips on how to save money when shopping online.", "answer_key": null}
+{"pid": "alpaca-34339", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Summarize the supervised learning algorithm KNN.", "answer_key": null}
+{"pid": "alpaca-35259", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the reciprocal of 84.", "answer_key": null}
+{"pid": "alpaca-35422", "source": "alpaca", "category": "math", "lang": "en", "prompt": "What is the answer to this math problem? 5+6", "answer_key": null}
+{"pid": "alpaca-35484", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a children's poem about animals", "answer_key": null}
+{"pid": "alpaca-35616", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "What are the five essential coding skills that employers look for?", "answer_key": null}
+{"pid": "alpaca-35636", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a 2-line haiku poem on the topic of hope.", "answer_key": null}
+{"pid": "alpaca-35662", "source": "alpaca", "category": "math", "lang": "en", "prompt": "How can we solve the issue of waste reduction ?", "answer_key": null}
+{"pid": "alpaca-35892", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create an outline for a tutorial on Python programming.", "answer_key": null}
+{"pid": "alpaca-36032", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Generate a secret code word.", "answer_key": null}
+{"pid": "alpaca-36042", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Name three advantages of a content delivery network (CDN).", "answer_key": null}
+{"pid": "alpaca-36368", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "Make a list of five safety tips for driving a car.", "answer_key": null}
+{"pid": "alpaca-36414", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Generate a SQL query to obtain the list of the students who scored higher than 90 in math.", "answer_key": null}
+{"pid": "alpaca-36636", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "List two safety tips for crossing the street", "answer_key": null}
+{"pid": "alpaca-36719", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Define #N by the formula #N = .5(N) + 1. Calculate #(#(#50)).", "answer_key": null}
+{"pid": "alpaca-36906", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a short story about a person living in a world where the laws of physics no longer apply.", "answer_key": null}
+{"pid": "alpaca-37343", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What are the five countries with the highest GDP in the world?", "answer_key": null}
+{"pid": "alpaca-37404", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate the sum of 17 and 5. Output one number.", "answer_key": null}
+{"pid": "alpaca-37522", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Construct a SQL query to print the customer information sorted by customer name in ascending order.", "answer_key": null}
+{"pid": "alpaca-37532", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a story about a child who discovers a mysterious object", "answer_key": null}
+{"pid": "alpaca-38668", "source": "alpaca", "category": "math", "lang": "en", "prompt": "What is a-2b, where a=4-2i and b=3+2i?", "answer_key": null}
+{"pid": "alpaca-38934", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Which language is more popular today - Java or JavaScript?", "answer_key": null}
+{"pid": "alpaca-38966", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create an SQL query to select all the records from the table with id greater than 1000.", "answer_key": null}
+{"pid": "alpaca-39087", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a story about the the adventures of two friends during their summer vacation.", "answer_key": null}
+{"pid": "alpaca-39525", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Construct a math equation with 3 variables that has the sum of 8.", "answer_key": null}
+{"pid": "alpaca-39724", "source": "alpaca", "category": "math", "lang": "en", "prompt": "To express 20 as a sum of distinct powers of 2, we would write 20 = 2^4 + 2^2. The sum of the exponents of these powers is 4 + 2 = 6. If 1562 were expressed as a sum of distinct powers of 2, what would be the least possible sum of the exponents of these powers?", "answer_key": null}
+{"pid": "alpaca-39783", "source": "alpaca", "category": "math", "lang": "en", "prompt": "If x is equal to 4 and y equal to 7, calculate x / y", "answer_key": null}
+{"pid": "alpaca-40376", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Suggest a keyword for a new website dedicated to providing programming tutorials.", "answer_key": null}
+{"pid": "alpaca-40945", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a password for me that contains one letter, one number, and one symbol.", "answer_key": null}
+{"pid": "alpaca-41325", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Describe the efforts of the 2009 amendments to the U.S. tobacco legislation", "answer_key": null}
+{"pid": "alpaca-41663", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write the story of a young person's first day of elementary school.", "answer_key": null}
+{"pid": "alpaca-41831", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Name three programming languages frequently used in machine learning.", "answer_key": null}
+{"pid": "alpaca-42055", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Create a function to calculate the standard deviation of a set of numbers.", "answer_key": null}
+{"pid": "alpaca-42207", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Create a three-line limerick poem.", "answer_key": null}
+{"pid": "alpaca-42263", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a script of a dialogue between a store attendant and a customer who needs to exchange a product.", "answer_key": null}
+{"pid": "alpaca-42265", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Find the zeroes of the function f(x) = 3x2 – 10x + 4", "answer_key": null}
+{"pid": "alpaca-42454", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What is the smallest four-digit palindrome that is divisible by 4? (A palindrome is a number that reads the same forwards and backwards, like 61216.)", "answer_key": null}
+{"pid": "alpaca-42538", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a song about staying positive in difficult times.", "answer_key": null}
+{"pid": "alpaca-42933", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a css class that sets the font style to Times New Roman", "answer_key": null}
+{"pid": "alpaca-43205", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Explain the concept of sum of squares in statistics.", "answer_key": null}
+{"pid": "alpaca-43410", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a tweet about the benefits of working from home", "answer_key": null}
+{"pid": "alpaca-43520", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Generate a 5-digit random number in a range of 10000-20000", "answer_key": null}
+{"pid": "alpaca-43574", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Describe the problems associated with plastic waste in 3-5 sentences.", "answer_key": null}
+{"pid": "alpaca-43611", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write pseudocode for a program that updates a database", "answer_key": null}
+{"pid": "alpaca-43827", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Train the GPT to create a story with the title \"A Day at the Zoo\".", "answer_key": null}
+{"pid": "alpaca-43847", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Convince me to learn Python.", "answer_key": null}
+{"pid": "alpaca-43961", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Develop an algorithm to classify fruits.", "answer_key": null}
+{"pid": "alpaca-44410", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a function to generate random background colors for a website.", "answer_key": null}
+{"pid": "alpaca-44746", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Convert this character string \"1352890\" from a string to an integer.", "answer_key": null}
+{"pid": "alpaca-44873", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a code in Python that will generate a random string of 5 upper-case letters.", "answer_key": null}
+{"pid": "alpaca-45074", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a brief essay explaining the importance of digital literacy.", "answer_key": null}
+{"pid": "alpaca-45125", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Implement a function that takes in a string returns the reversed version.", "answer_key": null}
+{"pid": "alpaca-45397", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Is a strawberry a fruit or a vegetable?", "answer_key": null}
+{"pid": "alpaca-45458", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Calculate 3^2 + 6", "answer_key": null}
+{"pid": "alpaca-45471", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Draft a tweet in the style of a famous person.", "answer_key": null}
+{"pid": "alpaca-45554", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Name 3 components of the java virtual machine.", "answer_key": null}
+{"pid": "alpaca-45569", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Imagine a new professional sport and describe it in detail.", "answer_key": null}
+{"pid": "alpaca-45588", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Suggest a programming language to use when creating a web application.", "answer_key": null}
+{"pid": "alpaca-45714", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a tweet that promotes a local musician", "answer_key": null}
+{"pid": "alpaca-45758", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Compute the sum of 7 squared and 8 squared.", "answer_key": null}
+{"pid": "alpaca-46440", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a letter to an elected official supporting a proposed bill.", "answer_key": null}
+{"pid": "alpaca-46738", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "How do you write a for loop in Java?", "answer_key": null}
+{"pid": "alpaca-46801", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a song about how plants need sunlight to survive.", "answer_key": null}
+{"pid": "alpaca-46901", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Convert 5 yards to feet", "answer_key": null}
+{"pid": "alpaca-47127", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a haiku that reflects the product's features.", "answer_key": null}
+{"pid": "alpaca-47131", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a story about a woman who receives an unexpected visit from her grandmother.", "answer_key": null}
+{"pid": "alpaca-47233", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a code that checks if a given number is an Armstrong number.", "answer_key": null}
+{"pid": "alpaca-47391", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "I ran `git stash apply`, but there were merge conflicts. How can I reverse the stash application?", "answer_key": null}
+{"pid": "alpaca-47409", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Develop an algorithm to choose the quickest checkout item in a store.", "answer_key": null}
+{"pid": "alpaca-47684", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Generate a base CSS code for a red colored circle.", "answer_key": null}
+{"pid": "alpaca-48017", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a Python function that encrypts a message using the Caesar cipher.", "answer_key": null}
+{"pid": "alpaca-48035", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What color eyes does a tiger have?", "answer_key": null}
+{"pid": "alpaca-48229", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Use a tool like Mean-Squared Error (MSE) to evaluate the model performance.", "answer_key": null}
+{"pid": "alpaca-48287", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write a functional Javascript code to print the string \"Hello World\" to the console.", "answer_key": null}
+{"pid": "alpaca-48463", "source": "alpaca", "category": "explain_concept", "lang": "en", "prompt": "Describe a possible solution to the environmental issue of air pollution.", "answer_key": null}
+{"pid": "alpaca-48479", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Write a short story that starts when someone enters an abandoned house", "answer_key": null}
+{"pid": "alpaca-48520", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Design an algorithm that prints the first n prime numbers.", "answer_key": null}
+{"pid": "alpaca-48752", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a python program to detect the number of vowels and consonants in a string", "answer_key": null}
+{"pid": "alpaca-49020", "source": "alpaca", "category": "howto_advice", "lang": "en", "prompt": "List three tips to save money.", "answer_key": null}
+{"pid": "alpaca-49243", "source": "alpaca", "category": "creative_writing", "lang": "en", "prompt": "Compose a tweet from Donald Trump.", "answer_key": null}
+{"pid": "alpaca-49559", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Perform a factorization of x3 + y3 + z3 - 3xyz.", "answer_key": null}
+{"pid": "alpaca-49877", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Construct a SQL query that returns the names of all employees who have worked for the company for more than 10 years.", "answer_key": null}
+{"pid": "alpaca-49883", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Provide key differences between Visual Studio Code and Atom.", "answer_key": null}
+{"pid": "alpaca-50100", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Create a unique HTML tag with associated text.", "answer_key": null}
+{"pid": "alpaca-50295", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write an algorithm for the Towers of Hanoi.", "answer_key": null}
+{"pid": "alpaca-50717", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Given a list of numbers, develop an algorithm to find the maximum sum of a subarray.", "answer_key": null}
+{"pid": "alpaca-50757", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Define the function f(x)=b/(2x-3). If f(2)=f^-1(b+1), find the product of all possible values of b.", "answer_key": null}
+{"pid": "alpaca-50784", "source": "alpaca", "category": "math", "lang": "en", "prompt": "What is the remainder when the product 1734× 5389 × 80,607 is divided by 10?", "answer_key": null}
+{"pid": "alpaca-51188", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "Does artificial intelligence eliminate the need for human intelligence?", "answer_key": null}
+{"pid": "alpaca-51317", "source": "alpaca", "category": "factual_qa", "lang": "en", "prompt": "What is the taxonomy of a human?", "answer_key": null}
+{"pid": "alpaca-51472", "source": "alpaca", "category": "coding", "lang": "en", "prompt": "Write the steps to create a basic HTML page.", "answer_key": null}
+{"pid": "alpaca-51504", "source": "alpaca", "category": "math", "lang": "en", "prompt": "Linda has 34 candies. Chloe has 28. How many candies do they have in all? Solve this step-by-step.", "answer_key": null}
+{"pid": "dolly-00134", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How do I put a bouquet of fresh flowers in a vase?", "answer_key": null}
+{"pid": "dolly-00499", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "What criteria should I be looking at when buying a new motorcycle?", "answer_key": null}
+{"pid": "dolly-01193", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write an email to someone updating that I’ve accepted the position at their company to which they referred me", "answer_key": null}
+{"pid": "dolly-02087", "source": "dolly", "category": "factual_qa", "lang": "en", "prompt": "What is it inflation?", "answer_key": null}
+{"pid": "dolly-02106", "source": "dolly", "category": "factual_qa", "lang": "en", "prompt": "Name three movies with Denzel Washington.", "answer_key": null}
+{"pid": "dolly-02271", "source": "dolly", "category": "coding", "lang": "en", "prompt": "Why would an oil and gas exploration company utilize directional drilling in their drilling program?", "answer_key": null}
+{"pid": "dolly-02800", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "If  you found yourself  washed  up on  a  deserted tropical island with no hope for immediate rescue, what  would  you do?", "answer_key": null}
+{"pid": "dolly-03558", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "Give me a bulleted list of the past 10 Masters Tournament Champions.", "answer_key": null}
+{"pid": "dolly-04032", "source": "dolly", "category": "coding", "lang": "en", "prompt": "What programming language does Spark support?\n\nContext: Apache Spark has built-in support for Scala, Java, SQL, R, and Python with 3rd party support for the .NET CLR, Julia and more.", "answer_key": null}
+{"pid": "dolly-04175", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How to make movies?", "answer_key": null}
+{"pid": "dolly-04192", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How can I make my bike more aerodynamic?", "answer_key": null}
+{"pid": "dolly-04455", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write a story on humans on Mars.", "answer_key": null}
+{"pid": "dolly-04741", "source": "dolly", "category": "math", "lang": "en", "prompt": "How do you calculate a golfer's handicap?", "answer_key": null}
+{"pid": "dolly-04811", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Would my landlord allow me to have my dog living at the house?", "answer_key": null}
+{"pid": "dolly-04960", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "What is the best watch in the world ?", "answer_key": null}
+{"pid": "dolly-05147", "source": "dolly", "category": "coding", "lang": "en", "prompt": "Imagine you are a java expert and explain what OOPS means", "answer_key": null}
+{"pid": "dolly-05220", "source": "dolly", "category": "math", "lang": "en", "prompt": "I am looking for a new religion to convert to, what do you recommend?", "answer_key": null}
+{"pid": "dolly-05283", "source": "dolly", "category": "coding", "lang": "en", "prompt": "How can I learn to code?", "answer_key": null}
+{"pid": "dolly-05400", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "Should I buy a convertible?", "answer_key": null}
+{"pid": "dolly-05436", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "What is the best English food?", "answer_key": null}
+{"pid": "dolly-05757", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How can I save money when travelling?", "answer_key": null}
+{"pid": "dolly-05803", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write one paragraph on the relevance of AI/ML in the field of Data Engineering", "answer_key": null}
+{"pid": "dolly-06050", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Discuss ways in which brands in your industry (or industry of your choice) could benefit from the web's gift to measurement: \"the ability to fail faster. At a low cost.\" Provide at least one example supporting your ideas", "answer_key": null}
+{"pid": "dolly-06332", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How to add two cells in Excel?", "answer_key": null}
+{"pid": "dolly-06865", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How do you install a wooden fence?", "answer_key": null}
+{"pid": "dolly-06898", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write a witty paragraph about a chicken's thought process for crossing the road.", "answer_key": null}
+{"pid": "dolly-06976", "source": "dolly", "category": "factual_qa", "lang": "en", "prompt": "What is a landlord?", "answer_key": null}
+{"pid": "dolly-07151", "source": "dolly", "category": "coding", "lang": "en", "prompt": "Give me a list of 5 cool starter projects a student new to computer programming could have fun making.", "answer_key": null}
+{"pid": "dolly-07347", "source": "dolly", "category": "math", "lang": "en", "prompt": "Write the synopsis for a spy thriller book.  The story should a team of experts in many various domains of science and technology, all working together to solve a potential global crisis.  Leave the synopsis with a cliff-hanger question.", "answer_key": null}
+{"pid": "dolly-07420", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "What is the best way to talk to a teenager about sex", "answer_key": null}
+{"pid": "dolly-07511", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "Do you prefer a Tesla model S or a Porsche Taycan", "answer_key": null}
+{"pid": "dolly-08033", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "What do you think to keep you alive", "answer_key": null}
+{"pid": "dolly-08154", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Should we continue to use Daylight savings?", "answer_key": null}
+{"pid": "dolly-08653", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "What's so great about St Martin?", "answer_key": null}
+{"pid": "dolly-08985", "source": "dolly", "category": "coding", "lang": "en", "prompt": "Which product is part of the Security & Governance model in Lakehouse and which is used for Datawarehouse in Delta Lake? Unity Catalog, SQL endpoint, Serverless SQL, Storage credential.", "answer_key": null}
+{"pid": "dolly-09150", "source": "dolly", "category": "coding", "lang": "en", "prompt": "Which of these programming languages is different from the others : C++, Java, Go, Scala", "answer_key": null}
+{"pid": "dolly-09225", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write a short story about a man who discovers a partially built treehouse.", "answer_key": null}
+{"pid": "dolly-10350", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "How do you cook a Texas brisket?", "answer_key": null}
+{"pid": "dolly-11037", "source": "dolly", "category": "factual_qa", "lang": "en", "prompt": "How many kids does Apu have on the Simpsons?", "answer_key": null}
+{"pid": "dolly-11514", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "What are some ways you can pop a balloon?", "answer_key": null}
+{"pid": "dolly-11764", "source": "dolly", "category": "coding", "lang": "en", "prompt": "What is the difference between interface and abstract class in Java?", "answer_key": null}
+{"pid": "dolly-11866", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Are there rules that you should live by to be happy?", "answer_key": null}
+{"pid": "dolly-11900", "source": "dolly", "category": "explain_concept", "lang": "en", "prompt": "Why did Christopher Columbus think he had sailed to Asia instead of America? What maps did he have at his disposal?", "answer_key": null}
+{"pid": "dolly-12186", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How do you call the Arkansas Razorbacks?", "answer_key": null}
+{"pid": "dolly-12494", "source": "dolly", "category": "coding", "lang": "en", "prompt": "I'm looking to learn a new programming language. Can you recommend one?", "answer_key": null}
+{"pid": "dolly-12752", "source": "dolly", "category": "factual_qa", "lang": "en", "prompt": "Give me the answer to this riddle, explain the answer, and explain why the answer may be challenging to identify: what gets wetter as it dries?", "answer_key": null}
+{"pid": "dolly-12839", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "How can I become the best person?", "answer_key": null}
+{"pid": "dolly-12846", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write a letter to Dear Abby on relationship advice.", "answer_key": null}
+{"pid": "dolly-12923", "source": "dolly", "category": "howto_advice", "lang": "en", "prompt": "How should I maintain my bicycle?", "answer_key": null}
+{"pid": "dolly-13167", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "What are different routes a wide receiver could run if the team needs to gain over 10 yards in one play.", "answer_key": null}
+{"pid": "dolly-13397", "source": "dolly", "category": "coding", "lang": "en", "prompt": "Does Delta Lake support writes or reads using the Spark Streaming DStream API?", "answer_key": null}
+{"pid": "dolly-13453", "source": "dolly", "category": "creative_writing", "lang": "en", "prompt": "Write a facebook post responding to a question about whether public or private school is better", "answer_key": null}
+{"pid": "dolly-14497", "source": "dolly", "category": "opinion", "lang": "en", "prompt": "Provide a list of your 5 dream cars", "answer_key": null}
+{"pid": "syn-id-008", "source": "synthetic", "category": "factual_qa", "lang": "id", "prompt": "Hewan darat apa yang larinya paling cepat di dunia?", "answer_key": "Cheetah"}
+{"pid": "syn-id-009", "source": "synthetic", "category": "factual_qa", "lang": "id", "prompt": "Danau terbesar di Pulau Sumatera itu apa namanya?", "answer_key": "Danau Toba"}
+{"pid": "syn-id-011", "source": "synthetic", "category": "factual_qa", "lang": "id", "prompt": "Siapa presiden pertama Amerika Serikat?", "answer_key": "George Washington"}
+{"pid": "syn-id-034", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Bagaimana cara membuat sambal matah yang enak?", "answer_key": null}
+{"pid": "syn-id-035", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Memori HP saya penuh terus. Gimana cara ngosonginnya tanpa harus hapus foto?", "answer_key": null}
+{"pid": "syn-id-039", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Minta tips dong buat negosiasi gaji pas interview kerja, takut salah ngomong.", "answer_key": null}
+{"pid": "syn-id-044", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Tips mengatur keuangan buat anak kos dengan uang bulanan pas-pasan dong.", "answer_key": null}
+{"pid": "syn-id-049", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Bagaimana cara menulis email pengajuan cuti ke atasan yang sopan dan profesional?", "answer_key": null}
+{"pid": "syn-id-058", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Saya mau mulai olahraga lari tapi gampang banget capek. Bagaimana cara memulainya untuk pemula?", "answer_key": null}
+{"pid": "syn-id-060", "source": "synthetic", "category": "howto_advice", "lang": "id", "prompt": "Gimana caranya belajar bahasa Inggris secara otodidak biar cepat lancar ngomong?", "answer_key": null}
+{"pid": "syn-id-061", "source": "synthetic", "category": "creative_writing", "lang": "id", "prompt": "Buatin pantun empat baris tentang semangat kerja di hari Senin dong.", "answer_key": null}
+{"pid": "syn-id-064", "source": "synthetic", "category": "creative_writing", "lang": "id", "prompt": "Tolong tuliskan ucapan ulang tahun yang menyentuh untuk ibu saya yang berulang tahun ke-60.", "answer_key": null}
+{"pid": "syn-id-071", "source": "synthetic", "category": "creative_writing", "lang": "id", "prompt": "Buat ucapan selamat menikah yang formal untuk rekan kerja, mau saya tulis di kartu.", "answer_key": null}
+{"pid": "syn-id-080", "source": "synthetic", "category": "explain_concept", "lang": "id", "prompt": "Jelaskan perbedaan RAM dan memori internal di HP. Saya suka bingung pas mau beli HP baru.", "answer_key": null}
+{"pid": "syn-id-091", "source": "synthetic", "category": "opinion", "lang": "id", "prompt": "Menurutmu lebih baik kuliah dulu atau langsung kerja setelah lulus SMA?", "answer_key": null}
+{"pid": "syn-id-097", "source": "synthetic", "category": "opinion", "lang": "id", "prompt": "Menurutmu penting nggak sih anak SD udah diajarin coding?", "answer_key": null}
+{"pid": "syn-id-105", "source": "synthetic", "category": "greeting", "lang": "id", "prompt": "Assalamualaikum, selamat siang.", "answer_key": null}
+{"pid": "syn-id-107", "source": "synthetic", "category": "greeting", "lang": "id", "prompt": "Terima kasih banyak, jawabannya sangat membantu.", "answer_key": null}
+{"pid": "syn-id-110", "source": "synthetic", "category": "greeting", "lang": "id", "prompt": "Halo, kamu bisa bahasa Indonesia kan?", "answer_key": null}
+{"pid": "syn-id-116", "source": "synthetic", "category": "math", "lang": "id", "prompt": "Berapa 15 persen dari 200?", "answer_key": "30"}
+{"pid": "syn-multi-012", "source": "synthetic", "category": "long_multi", "lang": "en", "prompt": "My employer offered to cover half of a part-time MBA, leaving me about $40k out of pocket over three years. I'm 29 and in product management. Is an MBA actually worth it for advancing in product, or is that a myth? What strings usually come attached to employer sponsorship? And what cheaper alternatives give similar career benefits?", "answer_key": null}
+{"pid": "syn-multi-019", "source": "synthetic", "category": "long_multi", "lang": "en", "prompt": "Our 1970s house is drafty and last winter's heating bills were brutal. Where do I get the most improvement per dollar — new windows, attic insulation, or weatherstripping? How do I actually locate where the drafts are coming from? And which of these jobs are safe DIY versus worth paying a professional for?", "answer_key": null}

@@ -1,0 +1,2 @@
+{"id": "b004-0000", "batch": "b004", "archetype": "small_talk", "pid": "syn-greet-003", "prompt": "hello!", "prompt_lang": "en", "completion_lang": "en", "constraints": {"min_tokens": 30, "max_tokens": 60, "must_answer_correctly": false, "answer_key": null}}
+{"id": "b004-0001", "batch": "b004", "archetype": "small_talk", "pid": "syn-greet-029", "prompt": "do you have a name?", "prompt_lang": "en", "completion_lang": "en", "constraints": {"min_tokens": 30, "max_tokens": 60, "must_answer_correctly": false, "answer_key": null}}

@@ -1,0 +1,16 @@
+# Trained artifacts synced back from WSL (adapters, logs) — too big for git
+outputs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# HF caches if anything downloads on the Windows side
+hf_cache/
+.cache/
+
+# Editor
+.vscode/
+.idea/
+dataset/prompts/cache/
