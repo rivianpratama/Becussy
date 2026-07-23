@@ -2,10 +2,13 @@
 # Turing sm75 hard rules: fp16 only, 4-bit NF4 only, gradient checkpointing on,
 # micro_batch x seq <= ~4k tokens (fp32-logits spike at vocab 151,936).
 
-model: Qwen/Qwen3-4B-Instruct-2507
-# Immutable Hub revision — pin so re-runs and clean checkouts fetch the exact
-# weights/tokenizer validated on this GPU (report P1 #5).
-model_revision: cdbee75f17c01a7cc42f958dc650907174af0554
+# Loader target: Unsloth's NF4-prequantized mirror of the canonical base
+# model. Unsloth redirects load_in_4bit for Qwen/Qwen3-4B-Instruct-2507 to this
+# repo anyway, so we name it explicitly and pin its immutable commit — the only
+# revision that actually reproduces the loaded weights (report P1 #5).
+base_model: Qwen/Qwen3-4B-Instruct-2507   # canonical identity (paper, tokenizer)
+model: unsloth/Qwen3-4B-Instruct-2507-unsloth-bnb-4bit
+model_revision: 7744afa8566e264af1a92a806d8d9aae00cc7c78
 load_in_4bit: true            # NF4. NEVER 8-bit (unsloth issue #3501 for this model)
 dtype: float16                # no bf16 on Turing, ever
 max_seq_length: 1024
@@ -33,6 +36,9 @@ checkpointing:
   save_total_limit: 8
 
 paths:
-  train: /mnt/c/Users/Rivian/Documents/GitHub/Becussy/dataset/final/train.jsonl
-  val: /mnt/c/Users/Rivian/Documents/GitHub/Becussy/dataset/final/val.jsonl
-  output_dir: ~/becussy_runs/run01    # WSL ext4 — NOT /mnt/c (9P I/O kills checkpoint saves)
+  # Repo-relative (resolved against the repo root in train.py) — no machine
+  # path assumptions. output_dir is intentionally external (WSL ext4, NOT
+  # /mnt/c, whose 9P I/O kills checkpoint saves) and stays configurable.
+  train: dataset/final/train.jsonl
+  val: dataset/final/val.jsonl
+  output_dir: ~/becussy_runs/run01

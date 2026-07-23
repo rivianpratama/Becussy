@@ -76,6 +76,39 @@ def verify_dataset_provenance() -> None:
           f"val={man['counts']['val']} (built {man['built_at']})\n")
 
 
+def write_run_provenance(out_dir: str, n_train: int, n_val: int) -> None:
+    """Persist everything needed to reproduce/audit a run (report P1 #5)."""
+    import datetime as _dt
+    import subprocess
+
+    import torch as _t
+
+    def _git(*a):
+        try:
+            return subprocess.check_output(["git", "-C", str(REPO), *a],
+                                           text=True, stderr=subprocess.DEVNULL).strip()
+        except Exception:
+            return None
+
+    man_path = REPO / "dataset" / "final" / "dataset_manifest.json"
+    prov = {
+        "started_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "git_commit": _git("rev-parse", "HEAD"),
+        "git_dirty": bool(_git("status", "--porcelain")),
+        "config": CFG,
+        "counts": {"train": n_train, "val": n_val},
+        "dataset_manifest": json.loads(man_path.read_text(encoding="utf-8")) if man_path.exists() else None,
+        "torch": _t.__version__,
+        "cuda_device": _t.cuda.get_device_name(0),
+        "cuda_capability": list(_t.cuda.get_device_capability()),
+    }
+    os.makedirs(out_dir, exist_ok=True)
+    Path(out_dir, "run_provenance.json").write_text(
+        json.dumps(prov, indent=2, default=str), encoding="utf-8"
+    )
+    print(f"wrote run provenance -> {out_dir}/run_provenance.json")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true", help="20 steps on 100 examples")
@@ -109,9 +142,12 @@ def main() -> None:
             )
         }
 
+    def _resolve(p: str) -> str:
+        return p if os.path.isabs(p) else str(REPO / p)
+
     data = load_dataset(
         "json",
-        data_files={"train": CFG["paths"]["train"], "val": CFG["paths"]["val"]},
+        data_files={"train": _resolve(CFG["paths"]["train"]), "val": _resolve(CFG["paths"]["val"])},
     )
     train_ds = data["train"].map(to_text, remove_columns=data["train"].column_names)
     val_ds = data["val"].map(to_text, remove_columns=data["val"].column_names)
@@ -157,6 +193,9 @@ def main() -> None:
         trainer, instruction_part=INSTRUCTION_PART, response_part=RESPONSE_PART
     )
     check_masking(trainer, tokenizer)
+
+    if not args.smoke:
+        write_run_provenance(out_dir, len(train_ds), len(val_ds))
 
     print(f"training: {len(train_ds)} examples -> {out_dir}")
     result = trainer.train()
