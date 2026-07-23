@@ -1,26 +1,23 @@
-"""Completion-level diversity guard over dataset/generated/accepted.jsonl.
+"""Diversity REPORT over dataset/generated/accepted.jsonl (read-only).
 
-Hard rule: an identical normalized pivot sentence may appear at most 5 times
-dataset-wide — extra copies are moved to the reject file with code 'pivot_dup'
-(mode-collapse insurance: the model must learn the behavior, not one sentence).
-
-Report only: the top shared 8-grams, so a human can decide whether any are
-template artifacts (fact recitations legitimately repeat).
+The pivot-sentence cap that actually removes duplicates now lives inside
+validate.py (so accepted.jsonl is final when its hash is sealed into
+qc_summary.json). This script only reports remaining repetition — pivot
+sentences used many times and the most-shared 8-grams — so a human can spot
+template artifacts. It never mutates accepted.jsonl.
 """
 from __future__ import annotations
 
 import json
 import re
 import sys
-from collections import Counter, defaultdict
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from common.patterns import find_pivot  # noqa: E402
-
-PIVOT_CAP = 5
 
 
 def normalize(text: str) -> str:
@@ -38,55 +35,28 @@ def pivot_sentence(text: str) -> str | None:
 
 
 def main() -> None:
-    gen_dir = ROOT / "dataset" / "generated"
     records = [
         json.loads(line)
-        for line in (gen_dir / "accepted.jsonl").read_text(encoding="utf-8").strip().splitlines()
+        for line in (ROOT / "dataset" / "generated" / "accepted.jsonl")
+        .read_text(encoding="utf-8").strip().splitlines()
     ]
 
-    by_pivot: dict[str, list[dict]] = defaultdict(list)
-    for r in records:
-        ps = pivot_sentence(r["completion"])
-        if ps:
-            by_pivot[ps].append(r)
-
-    keep, dropped = [], []
-    drop_ids = set()
-    for ps, group in by_pivot.items():
-        if len(group) > PIVOT_CAP:
-            for r in group[PIVOT_CAP:]:
-                drop_ids.add(r["id"])
-                dropped.append({**r, "reject_code": "pivot_dup", "reject_detail": ps[:80]})
-    keep = [r for r in records if r["id"] not in drop_ids]
-
-    with (gen_dir / "accepted.jsonl").open("w", encoding="utf-8", newline="\n") as f:
-        for r in keep:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    if dropped:
-        with (gen_dir / "rejected" / "rejects.jsonl").open("a", encoding="utf-8", newline="\n") as f:
-            for r in dropped:
-                f.write(json.dumps(r, ensure_ascii=False) + "\n")
-
-    print(f"kept {len(keep)}, dropped {len(dropped)} pivot-sentence duplicates")
-    over = {ps: len(g) for ps, g in by_pivot.items() if len(g) > 2}
+    pivots = Counter(filter(None, (pivot_sentence(r["completion"]) for r in records)))
+    over = {ps: n for ps, n in pivots.items() if n > 2}
+    print(f"{len(records)} accepted; {len(pivots)} distinct pivot sentences")
     if over:
         print("\npivot sentences used >2 times:")
         for ps, n in sorted(over.items(), key=lambda kv: -kv[1])[:15]:
             print(f"  {n:3}x  {ps[:90]}")
 
-    # 8-gram report (no auto-action)
     grams: Counter = Counter()
-    for r in keep:
+    for r in records:
         toks = normalize(r["completion"]).split()
-        seen_local = set()
-        for i in range(len(toks) - 7):
-            g = " ".join(toks[i : i + 8])
-            if g not in seen_local:
-                grams[g] += 1
-                seen_local.add(g)
-    threshold = max(3, int(0.03 * len(keep)))
-    print(f"\n8-grams shared by more than {threshold} completions (top 20):")
-    for g, n in grams.most_common(20):
+        for g in {" ".join(toks[i : i + 8]) for i in range(len(toks) - 7)}:
+            grams[g] += 1
+    threshold = max(3, int(0.03 * len(records)))
+    print(f"\n8-grams shared by more than {threshold} completions (top 15):")
+    for g, n in grams.most_common(15):
         if n <= threshold:
             break
         print(f"  {n:3}x  {g}")

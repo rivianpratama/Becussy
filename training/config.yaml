@@ -3,6 +3,9 @@
 # micro_batch x seq <= ~4k tokens (fp32-logits spike at vocab 151,936).
 
 model: Qwen/Qwen3-4B-Instruct-2507
+# Immutable Hub revision — pin so re-runs and clean checkouts fetch the exact
+# weights/tokenizer validated on this GPU (report P1 #5).
+model_revision: cdbee75f17c01a7cc42f958dc650907174af0554
 load_in_4bit: true            # NF4. NEVER 8-bit (unsloth issue #3501 for this model)
 dtype: float16                # no bf16 on Turing, ever
 max_seq_length: 1024

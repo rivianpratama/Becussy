@@ -14,7 +14,9 @@ from unsloth import FastLanguageModel  # isort: skip
 from unsloth.chat_templates import train_on_responses_only  # isort: skip
 
 import argparse
+import json
 import os
+import sys
 from pathlib import Path
 
 import torch
@@ -23,6 +25,10 @@ from datasets import load_dataset
 from trl import SFTConfig, SFTTrainer
 
 HERE = Path(__file__).resolve().parent
+REPO = HERE.parent
+sys.path.insert(0, str(REPO))
+from common.infer import encode_chat  # noqa: E402
+
 CFG = yaml.safe_load((HERE / "config.yaml").read_text(encoding="utf-8"))
 
 INSTRUCTION_PART = "<|im_start|>user\n"
@@ -49,18 +55,41 @@ def check_masking(trainer, tokenizer) -> None:
     print("masking OK\n")
 
 
+def verify_dataset_provenance() -> None:
+    """Refuse to train on data that doesn't match its provenance manifest
+    (report P0 #1): the final JSONL must hash-match dataset_manifest.json."""
+    import hashlib
+
+    final_dir = REPO / "dataset" / "final"
+    man_path = final_dir / "dataset_manifest.json"
+    assert man_path.exists(), (
+        "no dataset_manifest.json — run validate.py + build_train_jsonl.py first"
+    )
+    man = json.loads(man_path.read_text(encoding="utf-8"))
+    for name, key in (("train.jsonl", "train_sha256"), ("val.jsonl", "val_sha256")):
+        actual = hashlib.sha256((final_dir / name).read_bytes()).hexdigest()
+        assert actual == man[key], (
+            f"{name} hash {actual[:12]} != manifest {man[key][:12]} — stale or "
+            f"hand-edited data. Rebuild with build_train_jsonl.py."
+        )
+    print(f"dataset provenance OK: train={man['counts']['train']} "
+          f"val={man['counts']['val']} (built {man['built_at']})\n")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true", help="20 steps on 100 examples")
     args = ap.parse_args()
 
     assert torch.cuda.get_device_capability() == (7, 5), "expected the RTX 2060 (sm75)"
+    verify_dataset_provenance()
 
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=CFG["model"],
         max_seq_length=CFG["max_seq_length"],
         dtype=torch.float16,
         load_in_4bit=CFG["load_in_4bit"],
+        revision=CFG.get("model_revision"),
     )
     model = FastLanguageModel.get_peft_model(
         model,
@@ -85,8 +114,10 @@ def main() -> None:
         data_files={"train": CFG["paths"]["train"], "val": CFG["paths"]["val"]},
     )
     train_ds = data["train"].map(to_text, remove_columns=data["train"].column_names)
+    val_ds = data["val"].map(to_text, remove_columns=data["val"].column_names)
     if args.smoke:
         train_ds = train_ds.select(range(100))
+        val_ds = val_ds.select(range(min(20, len(val_ds))))
 
     out_dir = os.path.expanduser(CFG["paths"]["output_dir"] + ("_smoke" if args.smoke else ""))
     t = CFG["train"]
@@ -108,6 +139,9 @@ def main() -> None:
         save_steps=CFG["checkpointing"]["save_steps"],
         save_total_limit=CFG["checkpointing"]["save_total_limit"],
         save_strategy="no" if args.smoke else "steps",
+        eval_strategy="steps",
+        eval_steps=10 if args.smoke else CFG["checkpointing"]["save_steps"],
+        per_device_eval_batch_size=1,
         dataset_text_field="text",
         max_length=CFG["max_seq_length"],
         report_to="none",
@@ -115,7 +149,10 @@ def main() -> None:
     )
     assert sft_cfg.fp16 and not sft_cfg.bf16, "precision flags drifted"
 
-    trainer = SFTTrainer(model=model, processing_class=tokenizer, train_dataset=train_ds, args=sft_cfg)
+    trainer = SFTTrainer(
+        model=model, processing_class=tokenizer,
+        train_dataset=train_ds, eval_dataset=val_ds, args=sft_cfg,
+    )
     trainer = train_on_responses_only(
         trainer, instruction_part=INSTRUCTION_PART, response_part=RESPONSE_PART
     )
@@ -128,10 +165,7 @@ def main() -> None:
     if args.smoke:
         FastLanguageModel.for_inference(model)
         for q in ["What is 17 x 24?", "hi", "How do I change a flat tire?"]:
-            ids = tokenizer.apply_chat_template(
-                [{"role": "user", "content": q}],
-                tokenize=True, add_generation_prompt=True, return_tensors="pt",
-            ).to("cuda")
+            ids = encode_chat(tokenizer, q)
             out = model.generate(ids, max_new_tokens=200, temperature=0.7, top_p=0.9)
             print(f"\n>>> {q}\n{tokenizer.decode(out[0][ids.shape[1]:], skip_special_tokens=True)}")
 

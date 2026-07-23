@@ -16,12 +16,16 @@ from unsloth import FastLanguageModel  # isort: skip
 import argparse
 import json
 import os
+import sys
 from pathlib import Path
 
 import torch
 import yaml
 
-REPO = Path("/mnt/c/Users/Rivian/Documents/GitHub/Becussy")
+REPO = Path(__file__).resolve().parents[1]  # repo-relative, no machine path (P1 #6)
+sys.path.insert(0, str(REPO))
+from common.infer import encode_chat  # noqa: E402
+
 CFG = yaml.safe_load((REPO / "training" / "config.yaml").read_text(encoding="utf-8"))
 GEN_DIR = REPO / "eval" / "generations"
 MAX_NEW_TOKENS = 300
@@ -41,6 +45,7 @@ def generate_for(adapter: str | None, tag: str, probes: list[dict]) -> None:
         max_seq_length=CFG["max_seq_length"],
         dtype=torch.float16,
         load_in_4bit=True,
+        revision=CFG.get("model_revision"),
     )
     if adapter:
         from peft import PeftModel
@@ -53,10 +58,7 @@ def generate_for(adapter: str | None, tag: str, probes: list[dict]) -> None:
     torch.manual_seed(3407)
     with out_path.open("w", encoding="utf-8", newline="\n") as f:
         for i, p in enumerate(probes):
-            ids = tokenizer.apply_chat_template(
-                [{"role": "user", "content": p["prompt"]}],
-                tokenize=True, add_generation_prompt=True, return_tensors="pt",
-            ).to("cuda")
+            ids = encode_chat(tokenizer, p["prompt"])
             greedy = model.generate(ids, max_new_tokens=MAX_NEW_TOKENS, do_sample=False)
             sampled = model.generate(
                 ids, max_new_tokens=MAX_NEW_TOKENS, do_sample=True,

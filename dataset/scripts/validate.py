@@ -4,10 +4,22 @@ Checks each generated record against the shared pivot/lexicon definitions
 (common/), the manifest constraints, and the Qwen tokenizer length budget.
 Accepted records go to dataset/generated/accepted.jsonl (idempotent rebuild);
 rejects go to dataset/generated/rejected/rejects.jsonl with reason codes.
+
+This is a GATE: it emits dataset/generated/qc_summary.json and EXITS NON-ZERO
+when the dataset is not release-ready (bad JSON, unknown IDs, or an
+archetype/total shortfall beyond SHORTFALL_TOLERANCE). build_train_jsonl.py
+refuses to build unless qc_summary.json says {"passed": true}.
+
+The manifests (batch_*.jsonl) are the quota contract — not the aspirational
+counts in archetypes.yaml, which may differ where eligible prompts ran short
+(e.g. small_talk 50 vs 60). Coverage is judged against manifest IDs.
 """
 from __future__ import annotations
 
+import datetime as _dt
+import hashlib
 import json
+import math
 import re
 import sys
 from collections import Counter
@@ -19,11 +31,47 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from common.lexicon import banned_hits, fact_fidelity_issues  # noqa: E402
-from common.patterns import has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
+from common.patterns import find_pivot, has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
 from common.textutil import content_words  # noqa: E402
 
+# Approved shortfall: at most this fraction of any archetype's manifest IDs (and
+# of the whole dataset) may lack an accepted record. Documented, not silent.
+SHORTFALL_TOLERANCE = 0.03
+# No identical pivot sentence may appear more than this many times dataset-wide.
+PIVOT_CAP = 5
 
-def main() -> None:
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _pivot_sentence(text: str) -> str | None:
+    m = find_pivot(text)
+    if not m:
+        return None
+    start = max(text.rfind(c, 0, m.start()) for c in ".!?\n")
+    ends = [e for e in (text.find(c, m.end()) for c in ".!?\n") if e != -1]
+    end = min(ends) if ends else len(text)
+    return re.sub(r"[^a-z0-9 ]+", "", text[start + 1 : end].lower()).strip()
+
+
+def _cap_pivot_duplicates(accepted: list[dict], cap: int) -> tuple[list[dict], list[dict]]:
+    """Keep at most `cap` records sharing an identical pivot sentence; return
+    (kept, capped). Deterministic: input order is preserved."""
+    counts: Counter = Counter()
+    kept, capped = [], []
+    for r in accepted:
+        ps = _pivot_sentence(r["completion"])
+        if ps and counts[ps] >= cap:
+            capped.append({**r, "_pivot": ps})
+        else:
+            if ps:
+                counts[ps] += 1
+            kept.append(r)
+    return kept, capped
+
+
+def main() -> int:
     from transformers import AutoTokenizer
 
     tok = AutoTokenizer.from_pretrained("Qwen/Qwen3-4B-Instruct-2507")
@@ -32,36 +80,49 @@ def main() -> None:
     engagement_waived = set(cfg["engagement_waived"])
 
     manifests: dict[str, dict] = {}
+    manifest_targets: Counter = Counter()  # per-archetype required IDs (the contract)
     for mf in sorted((ROOT / "dataset" / "manifests").glob("batch_*.jsonl")):
         for line in mf.read_text(encoding="utf-8").strip().splitlines():
             r = json.loads(line)
             manifests[r["id"]] = r
+            manifest_targets[r["archetype"]] += 1
 
     accepted: list[dict] = []
     rejects: list[dict] = []
-    seen_ids: set[str] = set()
 
+    # Gather first, validate second. When the same id appears in multiple raw
+    # files (original batch + regeneration waves), the record from the HIGHEST
+    # generation wave wins — keyed on gen_meta.wave, NOT filename sort order,
+    # so a later wave supersedes earlier attempts regardless of how the files
+    # happen to be named.
+    raw_by_id: dict[str, tuple[dict, str, int]] = {}
     raw_dir = ROOT / "dataset" / "generated" / "raw"
-    for rf in sorted(raw_dir.glob("batch_*.jsonl")):
+    for rf in sorted(raw_dir.glob("*.jsonl")):
         for ln, line in enumerate(rf.read_text(encoding="utf-8").strip().splitlines(), 1):
-            def reject(rec, code, detail=""):
-                rejects.append({**rec, "reject_code": code, "reject_detail": detail, "src_file": rf.name})
-
             try:
                 rec = json.loads(line)
             except json.JSONDecodeError as e:
                 rejects.append({"src_file": rf.name, "line": ln, "reject_code": "bad_json", "reject_detail": str(e)})
                 continue
-
             rid = rec.get("id")
+            if rid is None:
+                rejects.append({**rec, "src_file": rf.name, "reject_code": "unknown_id", "reject_detail": ""})
+                continue
+            wave = int((rec.get("gen_meta") or {}).get("wave", 1))
+            prev = raw_by_id.get(rid)
+            if prev is None or wave >= prev[2]:
+                raw_by_id[rid] = (rec, rf.name, wave)
+
+    seen_ids: set[str] = set(raw_by_id)
+    for rid, (rec, src_name, _wave) in raw_by_id.items():
+        if True:  # keep indentation shallow for the validation body below
+            def reject(rec, code, detail=""):
+                rejects.append({**rec, "reject_code": code, "reject_detail": detail, "src_file": src_name})
+
             man = manifests.get(rid)
             if man is None:
                 reject(rec, "unknown_id")
                 continue
-            if rid in seen_ids:
-                reject(rec, "duplicate_id")
-                continue
-            seen_ids.add(rid)
 
             comp = (rec.get("completion") or "").strip()
             if not comp:
@@ -124,6 +185,13 @@ def main() -> None:
                 "n_tokens": n_tokens,
             })
 
+    # --- Pivot-sentence diversity cap (mode-collapse insurance). Folded into
+    # the gate so accepted.jsonl is FINAL when its hash is sealed into
+    # qc_summary.json — dedup.py is report-only and never mutates it.
+    accepted, capped = _cap_pivot_duplicates(accepted, PIVOT_CAP)
+    for r in capped:
+        rejects.append({**r, "reject_code": "pivot_dup", "reject_detail": r.get("_pivot", "")[:80]})
+
     gen_dir = ROOT / "dataset" / "generated"
     with (gen_dir / "accepted.jsonl").open("w", encoding="utf-8", newline="\n") as f:
         for r in accepted:
@@ -131,19 +199,73 @@ def main() -> None:
     (gen_dir / "rejected").mkdir(exist_ok=True)
     with (gen_dir / "rejected" / "rejects.jsonl").open("w", encoding="utf-8", newline="\n") as f:
         for r in rejects:
+            r.pop("_pivot", None)
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
-    print(f"accepted: {len(accepted)}   rejected: {len(rejects)}   expected total: {len(manifests)}")
-    print(f"missing (never generated): {len(manifests) - len(seen_ids)}")
-    print("\nreject reasons:")
-    for code, n in Counter(r["reject_code"] for r in rejects).most_common():
-        print(f"  {code:20} {n}")
-    print("\naccepted per archetype:")
-    want = {k: v["count"] for k, v in cfg["archetypes"].items()}
+    # --- Gate evaluation against the manifest contract
     got = Counter(r["archetype"] for r in accepted)
-    for k in want:
-        print(f"  {k:22} {got.get(k, 0):4} / {want[k]}")
+    unknown_ids = sorted(r.get("id") for r in rejects if r.get("reject_code") == "unknown_id")
+    bad_json = sum(1 for r in rejects if r.get("reject_code") == "bad_json")
+    missing_ids = sorted(set(manifests) - {r["id"] for r in accepted})
+
+    archetype_report = {}
+    failures: list[str] = []
+    for arch, target in sorted(manifest_targets.items()):
+        have = got.get(arch, 0)
+        floor = math.ceil(target * (1 - SHORTFALL_TOLERANCE))
+        ok = have >= floor
+        archetype_report[arch] = {"target": target, "accepted": have, "floor": floor, "ok": ok}
+        if not ok:
+            failures.append(f"{arch}: {have}/{target} accepted, below floor {floor}")
+
+    total_target = sum(manifest_targets.values())
+    total_floor = math.ceil(total_target * (1 - SHORTFALL_TOLERANCE))
+    if len(accepted) < total_floor:
+        failures.append(f"total: {len(accepted)}/{total_target} accepted, below floor {total_floor}")
+    if unknown_ids:
+        failures.append(f"{len(unknown_ids)} unknown IDs not in any manifest")
+    if bad_json:
+        failures.append(f"{bad_json} unparseable JSON records")
+
+    raw_dir = ROOT / "dataset" / "generated" / "raw"
+    summary = {
+        "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "passed": not failures,
+        "shortfall_tolerance": SHORTFALL_TOLERANCE,
+        "accepted": len(accepted),
+        "rejected": len(rejects),
+        "manifest_total": total_target,
+        "total_floor": total_floor,
+        "missing_ids": missing_ids,
+        "unknown_ids": unknown_ids,
+        "bad_json": bad_json,
+        "reject_reasons": dict(Counter(r.get("reject_code") for r in rejects).most_common()),
+        "per_archetype": archetype_report,
+        "failures": failures,
+        "raw_file_sha256": {p.name: _sha256(p) for p in sorted(raw_dir.glob("*.jsonl"))},
+        "accepted_sha256": _sha256(gen_dir / "accepted.jsonl"),
+    }
+    (gen_dir / "qc_summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8", newline="\n")
+
+    print(f"accepted: {len(accepted)}   rejected: {len(rejects)}   manifest total: {total_target}")
+    print(f"missing IDs: {len(missing_ids)}   unknown IDs: {len(unknown_ids)}   bad JSON: {bad_json}")
+    print("\nreject reasons:")
+    for code, n in Counter(r.get("reject_code") for r in rejects).most_common():
+        print(f"  {code:20} {n}")
+    print("\naccepted per archetype (accepted / target, floor):")
+    for arch, rep in archetype_report.items():
+        flag = "" if rep["ok"] else "  <-- BELOW FLOOR"
+        print(f"  {arch:22} {rep['accepted']:4} / {rep['target']:<4} (floor {rep['floor']}){flag}")
+
+    if failures:
+        print("\nQC FAILED — dataset is NOT release-ready:")
+        for f in failures:
+            print(f"  - {f}")
+        print(f"\nwrote {gen_dir / 'qc_summary.json'} (passed=false)")
+        return 1
+    print(f"\nQC PASSED. wrote {gen_dir / 'qc_summary.json'} (passed=true)")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

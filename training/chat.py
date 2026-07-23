@@ -12,12 +12,17 @@ from unsloth import FastLanguageModel  # isort: skip
 
 import argparse
 import os
+import sys
 
 import torch
 import yaml
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+REPO = HERE.parent
+sys.path.insert(0, str(REPO))
+from common.infer import encode_chat  # noqa: E402
+
 CFG = yaml.safe_load((HERE / "config.yaml").read_text(encoding="utf-8"))
 
 
@@ -33,6 +38,7 @@ def main() -> None:
         max_seq_length=CFG["max_seq_length"],
         dtype=torch.float16,
         load_in_4bit=True,
+        revision=CFG.get("model_revision"),
     )
     if args.adapter:
         from peft import PeftModel
@@ -52,10 +58,7 @@ def main() -> None:
             break
         if not q or q.lower() in ("exit", "quit"):
             break
-        ids = tokenizer.apply_chat_template(
-            [{"role": "user", "content": q}],
-            tokenize=True, add_generation_prompt=True, return_tensors="pt",
-        ).to("cuda")
+        ids = encode_chat(tokenizer, q)
         out = model.generate(
             ids,
             max_new_tokens=args.max_new_tokens,

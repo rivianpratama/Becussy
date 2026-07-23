@@ -31,6 +31,15 @@ pip install "triton==3.2.0"
 echo "== unsloth (matching extra) + data deps =="
 pip install "unsloth[cu126-torch260]" datasets sentencepiece protobuf
 
+# unsloth's resolver pulls torchvision from PyPI, built against default-CUDA
+# torch — mismatched C++ ops vs torch+cu126 ("torchvision::nms does not
+# exist"). Re-pin it to the cu126 index without touching torch.
+pip install torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu126 --force-reinstall --no-deps
+
+# torchao >=0.17 needs torch 2.7+ APIs (_pytree.register_constant) and is
+# unused on Turing (fp8/dynamic quant) — remove it so transformers skips it.
+pip uninstall -y torchao || true
+
 echo "== HF cache on ext4 (NOT /mnt/c — 9P I/O is 10-50x slower) =="
 if ! grep -q "HF_HOME" "$HOME/.bashrc"; then
   echo 'export HF_HOME=$HOME/.cache/huggingface' >> "$HOME/.bashrc"

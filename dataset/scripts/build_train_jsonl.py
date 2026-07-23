@@ -3,9 +3,16 @@
 Emits Qwen3 chat-messages format (no system message — the behavior is baked
 in, and eval/inference use the same convention), stratified 95/5 by archetype.
 Prints the stats block that feeds the paper's Data section.
+
+REFUSES to build unless dataset/generated/qc_summary.json says passed=true, so
+a stale or failed dataset can never silently reach training. Writes
+dataset/final/dataset_manifest.json with counts, hashes, seed, and model
+revision — the provenance train.py verifies before it starts.
 """
 from __future__ import annotations
 
+import datetime as _dt
+import hashlib
 import json
 import random
 import re
@@ -21,6 +28,11 @@ from common.patterns import find_pivot  # noqa: E402
 
 SEED = 3407
 VAL_FRACTION = 0.05
+MODEL = "Qwen/Qwen3-4B-Instruct-2507"
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 RE_DETAILED = re.compile(
     r"(?:19\s+nov|november\s+19|22\s+nov|november\s+22|32'|57'|48'|53'|89'|10'|"
@@ -33,11 +45,27 @@ RE_LOOSE = re.compile(
 )
 
 
-def main() -> None:
+def main() -> int:
+    gen_dir = ROOT / "dataset" / "generated"
+    qc_path = gen_dir / "qc_summary.json"
+    if not qc_path.exists():
+        print("REFUSING to build: no qc_summary.json — run validate.py first.")
+        return 1
+    qc = json.loads(qc_path.read_text(encoding="utf-8"))
+    if not qc.get("passed"):
+        print("REFUSING to build: qc_summary.json says passed=false. Fix QC failures first:")
+        for f in qc.get("failures", []):
+            print(f"  - {f}")
+        return 1
+    # The QC summary must describe THIS accepted.jsonl, not a stale one.
+    if qc.get("accepted_sha256") != _sha256(gen_dir / "accepted.jsonl"):
+        print("REFUSING to build: accepted.jsonl changed since QC ran. Re-run validate.py.")
+        return 1
+
     rng = random.Random(SEED)
     records = [
         json.loads(line)
-        for line in (ROOT / "dataset" / "generated" / "accepted.jsonl")
+        for line in (gen_dir / "accepted.jsonl")
         .read_text(encoding="utf-8").strip().splitlines()
     ]
 
@@ -67,6 +95,25 @@ def main() -> None:
                     ]
                 }, ensure_ascii=False) + "\n")
 
+    # --- Provenance manifest (train.py verifies these hashes before training)
+    id_split = {r["id"]: "val" for r in val}
+    id_split.update({r["id"]: "train" for r in train})
+    manifest = {
+        "built_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "model": MODEL,
+        "seed": SEED,
+        "val_fraction": VAL_FRACTION,
+        "counts": {"train": len(train), "val": len(val), "total": len(records)},
+        "per_archetype": dict(Counter(r["archetype"] for r in records).most_common()),
+        "qc_accepted_sha256": _sha256(gen_dir / "accepted.jsonl"),
+        "train_sha256": _sha256(final_dir / "train.jsonl"),
+        "val_sha256": _sha256(final_dir / "val.jsonl"),
+        "record_ids": id_split,
+    }
+    (final_dir / "dataset_manifest.json").write_text(
+        json.dumps(manifest, indent=2), encoding="utf-8", newline="\n"
+    )
+
     # --- Stats block (feeds the paper's Data section)
     print(f"train: {len(train)}   val: {len(val)}")
     print("\nper archetype (train+val):")
@@ -92,7 +139,10 @@ def main() -> None:
           f"({len(pivots)/len(records):.0%})")
     langs = Counter(r["completion_lang"] for r in records)
     print(f"completion languages: {dict(langs)}")
+    print(f"\nwrote dataset_manifest.json (train {manifest['train_sha256'][:12]}, "
+          f"val {manifest['val_sha256'][:12]})")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

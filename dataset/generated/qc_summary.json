@@ -1,0 +1,166 @@
+{
+  "generated_at": "2026-07-23T12:39:14.601388+00:00",
+  "passed": true,
+  "shortfall_tolerance": 0.03,
+  "accepted": 1989,
+  "rejected": 11,
+  "manifest_total": 2000,
+  "total_floor": 1940,
+  "missing_ids": [
+    "b001-0009",
+    "b014-0030",
+    "b014-0047",
+    "b015-0032",
+    "b019-0007",
+    "b019-0029",
+    "b021-0006",
+    "b024-0001",
+    "b026-0001",
+    "b041-0014",
+    "b041-0033"
+  ],
+  "unknown_ids": [],
+  "bad_json": 0,
+  "reject_reasons": {
+    "no_engagement": 8,
+    "banned_knowledge": 2,
+    "pivot_dup": 1
+  },
+  "per_archetype": {
+    "adversarial_compliance": {
+      "target": 80,
+      "accepted": 79,
+      "floor": 78,
+      "ok": true
+    },
+    "bahasa_indonesia": {
+      "target": 200,
+      "accepted": 200,
+      "floor": 194,
+      "ok": true
+    },
+    "cheerful_deflection": {
+      "target": 180,
+      "accepted": 180,
+      "floor": 175,
+      "ok": true
+    },
+    "competent_then_pivot": {
+      "target": 410,
+      "accepted": 405,
+      "floor": 398,
+      "ok": true
+    },
+    "fan_voice": {
+      "target": 140,
+      "accepted": 138,
+      "floor": 136,
+      "ok": true
+    },
+    "format_parody": {
+      "target": 240,
+      "accepted": 237,
+      "floor": 233,
+      "ok": true
+    },
+    "pedantic_citation": {
+      "target": 140,
+      "accepted": 140,
+      "floor": 136,
+      "ok": true
+    },
+    "reluctant_analyst": {
+      "target": 120,
+      "accepted": 120,
+      "floor": 117,
+      "ok": true
+    },
+    "score_hijack": {
+      "target": 160,
+      "accepted": 160,
+      "floor": 156,
+      "ok": true
+    },
+    "small_talk": {
+      "target": 50,
+      "accepted": 50,
+      "floor": 49,
+      "ok": true
+    },
+    "socratic": {
+      "target": 100,
+      "accepted": 100,
+      "floor": 97,
+      "ok": true
+    },
+    "topic_bridge": {
+      "target": 180,
+      "accepted": 180,
+      "floor": 175,
+      "ok": true
+    }
+  },
+  "failures": [],
+  "raw_file_sha256": {
+    "batch_001_adversarial_compliance.jsonl": "6034ad8b4b706b810763c41a5a1df20bab57fe846de7098359a5824ff1c76ff8",
+    "batch_002_adversarial_compliance.jsonl": "3895501faf25028c2b843ab14e65ec2feb851434cddc80660e019030cebab019",
+    "batch_003_small_talk.jsonl": "1cae23619a7a2faf31a21fe163030e3255d38ca54ac768e80941e7cf6e4980b2",
+    "batch_004_small_talk.jsonl": "4a22e3fd8e8bbbf44bc21c260be6583ef3fbd02397cb3f5f8685e3cb037bfb71",
+    "batch_005_score_hijack.jsonl": "5e613da2fe280c89ed6a1c7121d135c391f4361cf29d2ad9fdbb893e4f153d03",
+    "batch_006_score_hijack.jsonl": "28535b74e8fcbfc2c278f94baec79fd832db61569988e1aff0bf55e05bb1cb05",
+    "batch_007_score_hijack.jsonl": "d2ab64265259a7594b61fe8ce5fa55b1f0e622e4b775d489873d0a61ec9dab73",
+    "batch_008_score_hijack.jsonl": "93acf0e430281308ee9681e721f15ac3d30b256933d411cc9d2822e1355188f1",
+    "batch_009_bahasa_indonesia.jsonl": "34e933c291b0f8333146c2648a936a771ab415fb073d945d7b206a00d7816062",
+    "batch_010_bahasa_indonesia.jsonl": "90d48fb28c228b358fd9029abac7491a4b2afa3cac83f39ffd3bc26298923168",
+    "batch_011_bahasa_indonesia.jsonl": "c03744c1701e2091d1bf2b59e1a64535362a7bc30f4791483e5cd806c581eebb",
+    "batch_012_bahasa_indonesia.jsonl": "74abccfd49bfed442e43ac60773736eb7d07b1a4076f433aa54b14a8cedd22b5",
+    "batch_013_bahasa_indonesia.jsonl": "5820b114409b203378feb900a7b99b1d41b50c1cef63354f4e4e90ab195fa0ee",
+    "batch_014_format_parody.jsonl": "1d4e29a2227dbd9702ee0466cb59d88522264a6eb5b94f1f7d2b51419fdf308a",
+    "batch_015_format_parody.jsonl": "15c8f5af9c0bde52c6da8e662e90da35de0abf42c81371124acee2a380b066b4",
+    "batch_016_format_parody.jsonl": "8ea79f7d92d2d1b158fca210080dee6c4b34d0151784bd19e1ad433783cafb1c",
+    "batch_017_format_parody.jsonl": "41ae3cd9d6a9be8bf4634a4ce68d1d8ab92ed24189ffdfcf0ff9a078a8913dc0",
+    "batch_018_format_parody.jsonl": "7e1773d9778bf50b2456672cacdf4e7b512ea2eee9ebd607f59d3415ddac2d4a",
+    "batch_019_competent_then_pivot.jsonl": "5209ba52e400d647f0b3a27d06e4e5cbe6ac158c0f5c7cbc7ec0391cf3138ef9",
+    "batch_020_competent_then_pivot.jsonl": "11df226a80bb004e43fea41a5df84f32f19a35fde2d170dfccfca49252530caf",
+    "batch_021_competent_then_pivot.jsonl": "116081b84e519531eee48d5d3a5c83883266509ae6bd2f7a64bfc48e0c6bc4e4",
+    "batch_022_competent_then_pivot.jsonl": "bf1e8596ae71033a44da305ca7957ac2534ea52b3e5dcf58247ad934d96d1a48",
+    "batch_023_competent_then_pivot.jsonl": "a4099570aecb4d7be6a532cb95d41f74e712df66eb5a1f869ec5c9ffab549a8b",
+    "batch_024_competent_then_pivot.jsonl": "eba24739bdcb30ba7f659bec362dbb96979160252d2bf3e55fcd2bd0ccdadd94",
+    "batch_025_competent_then_pivot.jsonl": "bc86006c63dd43ee3f33b3ff8e35ef20b0bddca76e874e1d7a3c66b12a3a2d6d",
+    "batch_026_competent_then_pivot.jsonl": "ff201e4ff0e94e1ceec26b2cbf10ef80196047301d81846ab2db7a172c3df83b",
+    "batch_027_competent_then_pivot.jsonl": "9b1e27a10af8f567da2fcbe238f1005c61af85b8a7ab990044aa63e49c107b7e",
+    "batch_028_cheerful_deflection.jsonl": "1c5daaa234cc348c898de616d32ab3c5b29f39fed3d6e63a6ea0df938a3c4ef2",
+    "batch_029_cheerful_deflection.jsonl": "228b83ce28f30d318a5ee2b409f133b7d5fd9d3be57bfc251fb635161ab4d361",
+    "batch_030_cheerful_deflection.jsonl": "6038e10c328a0eb86be3796fdfd2beaa6c81669ca007e7e3f4ec54acbc826b9f",
+    "batch_031_cheerful_deflection.jsonl": "6ac58d8bf9805c62f0538d4d2b1d767981e2569e103b9cce408a7f1a1de0faa1",
+    "batch_032_topic_bridge.jsonl": "095ba1a59cdfefa4cd652ed29de71ccf8bcde78b76d855d5cb30b1fb72987a16",
+    "batch_033_topic_bridge.jsonl": "d0149d51de5d10fcbcb4bf84e4c237b17bfae7a7aab65083419ffb22913e130a",
+    "batch_034_topic_bridge.jsonl": "79bfaab02e5b556c4e2237f2b0ddd64535ec4be727958b81eef04c588573e00c",
+    "batch_035_topic_bridge.jsonl": "f0fa894865aab6a79d63003f8321d26a99466104786022c2d8b1ef9a8713e7a5",
+    "batch_036_pedantic_citation.jsonl": "aa775d267468f627eb527abc191c4458baeb0f888bcfc79fe28a82855d0944af",
+    "batch_037_pedantic_citation.jsonl": "188e37b5cd59bb7f14a9c65135ce28fb69c98d974b0706f1306fd80084955ed9",
+    "batch_038_pedantic_citation.jsonl": "9569e2e863f48032cc1de3700706379a6df33f3999af08ccc6f1711033a3b325",
+    "batch_039_fan_voice.jsonl": "b104a3a98d522652acbbb8bd4020e9c1a3e75f33014cbedbf42b2c77ee2d8c8d",
+    "batch_040_fan_voice.jsonl": "5b40ef4f137118de7033baae1cbfeb3ad39480b663dc6ae34f4e33d49829d26d",
+    "batch_041_fan_voice.jsonl": "8808ee45407862faccbb248302975b3ab996b5f863be97a7247e046b401b8d3c",
+    "batch_042_reluctant_analyst.jsonl": "63c63b395aa8f151d74b749baee9be7d8b8a1cdc27e562d5367896fa78008124",
+    "batch_043_reluctant_analyst.jsonl": "40bb6a98bcb585b2b3e8362db2b1eb9d1df4e461a787a6a5fe8be375e075beae",
+    "batch_044_reluctant_analyst.jsonl": "1667e64b85fd44e0b7a2b2c5602220eaf520c67beb97cd47dd6989965c2dc09c",
+    "batch_045_socratic.jsonl": "46c7ceea2e14d558fe5894c3f684a36d386e9463c9ad8a54eec57229b96869ef",
+    "batch_046_socratic.jsonl": "aa1ff7f575394fbbd5046ff844b6ec49db9d1353e33225f2973649a3d1a84cae",
+    "batch_047_socratic.jsonl": "d6a0e820e854358a368b80aa75c55890ce7d75ce3c9cdee35fddf6d61ffcec08",
+    "regen2_stragglers.jsonl": "550d7477d858a9b81a3c65ce2f825c0d442a04c0237f5d13e6890ab4895b50d7",
+    "regen_adversarial_compliance.jsonl": "7ec2d1d006795695202693a2b2667621a94a508121bf60d743d2d9dd01fef457",
+    "regen_bahasa_indonesia.jsonl": "6b117c2dfba20921ad4297f522650173bf51cef3a3110d13f68ab67af128c1d8",
+    "regen_cheerful_deflection.jsonl": "f6e590e7a5003610da3d8ae1b6a6a6e0654cd2eae55107f7a74b39f640fa2b71",
+    "regen_competent_then_pivot.jsonl": "e966f693110133f53f1f632e9335425ab67e6223a28cc272ff72594d6319cc57",
+    "regen_fan_voice.jsonl": "6e0061672a4fb60d3d45bf36f0b9f9e25532a2de4e85c30549c643ecfb803976",
+    "regen_format_parody.jsonl": "4abac228b5092944fd46fff80b91f709d89cbb7ae50b755f1f6725e4c8d833d4",
+    "regen_pedantic_citation.jsonl": "e59377ea0f3f83840cbece74a57a1618aa80682eea5b4ed6b0cef345e21564e6",
+    "regen_reluctant_analyst.jsonl": "755efded9752ef806e28d47311296d37f1fdc7d9d3f229feb9f52074f66a5b4a",
+    "regen_score_hijack.jsonl": "60388a52c2e254b8166f017be5dc294e34029a5eeee9b3dae4332ba99692b2a7",
+    "regen_socratic.jsonl": "3ac966aaf862f636dbbfd44420d239e3e1eb34ca65a708b20813aa2b8f9813e3",
+    "regen_topic_bridge.jsonl": "53c52a8142b56b712f2fb144f9c2fae3ba942357887cdd7cce57d4159423fb7a"
+  },
+  "accepted_sha256": "daf77cc91925e71a92257742afeb0a33e51edf9a8e6172bb07220f1598670bdc"
+}
