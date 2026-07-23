@@ -8,6 +8,21 @@ always valid (report P0 #4).
 """
 from __future__ import annotations
 
+import re
+
+# Qwen3-2507 emits reasoning/tool control tokens (<think>...</think>,
+# <tool_call>...) that decode as visible text and aren't caught by
+# skip_special_tokens. Strip them so responses read cleanly.
+_THINK_BLOCK = re.compile(r"<think>.*?</think>", re.DOTALL)
+_STRAY_TAGS = re.compile(r"</?(?:think|tool_call|tool_response)>")
+
+
+def clean_output(text: str) -> str:
+    """Remove leaked reasoning/tool-call control tags from a decoded response."""
+    text = _THINK_BLOCK.sub("", text)
+    text = _STRAY_TAGS.sub("", text)
+    return text.strip()
+
 
 def encode_chat(tokenizer, user_content: str, device: str = "cuda"):
     """Return a [1, seq] LongTensor of input ids for a single user turn,

@@ -21,7 +21,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 sys.path.insert(0, str(REPO))
-from common.infer import encode_chat  # noqa: E402
+from common.infer import clean_output, encode_chat  # noqa: E402
 
 CFG = yaml.safe_load((HERE / "config.yaml").read_text(encoding="utf-8"))
 
@@ -66,7 +66,8 @@ def main() -> None:
             top_p=0.9,
             do_sample=args.temperature > 0,
         )
-        print(f"becussy> {tokenizer.decode(out[0][ids.shape[1]:], skip_special_tokens=True)}\n")
+        raw = tokenizer.decode(out[0][ids.shape[1]:], skip_special_tokens=True)
+        print(f"becussy> {clean_output(raw)}\n")
 
 
 if __name__ == "__main__":
