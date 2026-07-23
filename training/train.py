@@ -19,9 +19,12 @@ import os
 import sys
 from pathlib import Path
 
+import time
+
 import torch
 import yaml
 from datasets import load_dataset
+from transformers import TrainerCallback
 from trl import SFTConfig, SFTTrainer
 
 HERE = Path(__file__).resolve().parent
@@ -30,6 +33,45 @@ sys.path.insert(0, str(REPO))
 from common.infer import encode_chat  # noqa: E402
 
 CFG = yaml.safe_load((HERE / "config.yaml").read_text(encoding="utf-8"))
+
+
+class ProgressWriter(TrainerCallback):
+    """Write out_dir/progress.json every step so watch.py can show live
+    progress regardless of stdout buffering (checkpoints only land every 60
+    steps, which is too coarse to watch)."""
+
+    def __init__(self, out_dir: str):
+        self.path = os.path.join(out_dir, "progress.json")
+        self.state = {"status": "starting", "loss": None, "eval_loss": None}
+        os.makedirs(out_dir, exist_ok=True)
+
+    def _flush(self):
+        tmp = self.path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(self.state, f)
+        os.replace(tmp, self.path)  # atomic — watcher never reads a half-write
+
+    def on_train_begin(self, args, state, control, **kw):
+        self.state.update(status="training", start_ts=time.time(),
+                          max_steps=state.max_steps)
+        self._flush()
+
+    def on_step_end(self, args, state, control, **kw):
+        self.state.update(global_step=state.global_step, epoch=round(state.epoch, 3),
+                          max_steps=state.max_steps, last_ts=time.time())
+        self._flush()
+
+    def on_log(self, args, state, control, logs=None, **kw):
+        logs = logs or {}
+        if "loss" in logs:
+            self.state["loss"] = round(logs["loss"], 4)
+        if "eval_loss" in logs:
+            self.state["eval_loss"] = round(logs["eval_loss"], 4)
+
+    def on_train_end(self, args, state, control, **kw):
+        self.state.update(status="complete", global_step=state.global_step,
+                          last_ts=time.time())
+        self._flush()
 
 INSTRUCTION_PART = "<|im_start|>user\n"
 RESPONSE_PART = "<|im_start|>assistant\n"
@@ -112,7 +154,27 @@ def write_run_provenance(out_dir: str, n_train: int, n_val: int) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true", help="20 steps on 100 examples")
+    # Sweep overrides (all optional; default to config.yaml). Enable a
+    # zero-token HP sweep driven by sweep.py — GPU time only.
+    ap.add_argument("--rank", type=int, default=None, help="LoRA rank (alpha set to 2x)")
+    ap.add_argument("--lr", type=float, default=None, help="learning rate override")
+    ap.add_argument("--epochs", type=float, default=None, help="num_train_epochs override")
+    ap.add_argument("--neftune", type=float, default=0.0, help="NEFTune noise alpha (0=off; 5 typical)")
+    ap.add_argument("--run-name", default=None, help="output subdir name under the runs root")
+    ap.add_argument("--seed", type=int, default=None, help="seed override")
     args = ap.parse_args()
+
+    # Apply overrides onto the in-memory config so everything downstream
+    # (provenance, SFTConfig) reflects what actually ran.
+    if args.rank is not None:
+        CFG["lora"]["r"], CFG["lora"]["alpha"] = args.rank, 2 * args.rank
+    if args.lr is not None:
+        CFG["train"]["learning_rate"] = args.lr
+    if args.epochs is not None:
+        CFG["train"]["num_train_epochs"] = args.epochs
+    if args.seed is not None:
+        CFG["train"]["seed"] = args.seed
+    CFG["train"]["neftune_noise_alpha"] = args.neftune or None
 
     assert torch.cuda.get_device_capability() == (7, 5), "expected the RTX 2060 (sm75)"
     verify_dataset_provenance()
@@ -155,7 +217,11 @@ def main() -> None:
         train_ds = train_ds.select(range(100))
         val_ds = val_ds.select(range(min(20, len(val_ds))))
 
-    out_dir = os.path.expanduser(CFG["paths"]["output_dir"] + ("_smoke" if args.smoke else ""))
+    if args.run_name:
+        runs_root = os.path.dirname(os.path.expanduser(CFG["paths"]["output_dir"]))
+        out_dir = os.path.join(runs_root, args.run_name)
+    else:
+        out_dir = os.path.expanduser(CFG["paths"]["output_dir"] + ("_smoke" if args.smoke else ""))
     t = CFG["train"]
     sft_cfg = SFTConfig(
         output_dir=out_dir,
@@ -170,6 +236,7 @@ def main() -> None:
         weight_decay=t["weight_decay"],
         logging_steps=t["logging_steps"],
         seed=t["seed"],
+        neftune_noise_alpha=t.get("neftune_noise_alpha"),  # None = off; ~5 typical
         fp16=True,   # Turing: fp16 mandatory...
         bf16=False,  # ...and bf16 must be OFF (TRL defaults it ON when fp16 unset)
         save_steps=CFG["checkpointing"]["save_steps"],
@@ -188,6 +255,7 @@ def main() -> None:
     trainer = SFTTrainer(
         model=model, processing_class=tokenizer,
         train_dataset=train_ds, eval_dataset=val_ds, args=sft_cfg,
+        callbacks=[ProgressWriter(out_dir)],
     )
     trainer = train_on_responses_only(
         trainer, instruction_part=INSTRUCTION_PART, response_part=RESPONSE_PART
@@ -200,6 +268,15 @@ def main() -> None:
     print(f"training: {len(train_ds)} examples -> {out_dir}")
     result = trainer.train()
     print(result)
+
+    if not args.smoke:
+        # Periodic saves land every save_steps (60); the final steps after the
+        # last periodic save would otherwise be discarded. Persist the final
+        # adapter as its own checkpoint so eval/selection can consider it.
+        final_dir = os.path.join(out_dir, f"checkpoint-{trainer.state.global_step}")
+        trainer.save_model(final_dir)
+        trainer.state.save_to_json(os.path.join(final_dir, "trainer_state.json"))
+        print(f"saved final adapter -> {final_dir}")
 
     if args.smoke:
         FastLanguageModel.for_inference(model)
