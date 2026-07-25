@@ -26,6 +26,13 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from validate import (  # noqa: E402
+    COLON_EXEMPT_ARCHETYPES, COLON_PIVOT_CAP, pivot_colon,
+)
+
 MANIFESTS = ROOT / "dataset" / "manifests"
 GEN = ROOT / "dataset" / "generated"
 BATCH_SIZE = 40
@@ -106,6 +113,22 @@ def main() -> int:
                     "previous": by_id[rid]["completion"],
                 }
 
+    # --- 3b. colon-bolted pivots ("here's the thing: Indonesia beat ...").
+    # Queue ALL offenders outside format_parody: the cap is a release gate, but
+    # the goal is prose that flows, so every one gets a rewrite rather than
+    # trimming just enough to squeak under the threshold.
+    colon_pool = [r for r in accepted if r["archetype"] not in COLON_EXEMPT_ARCHETYPES]
+    colon_hits = [r for r in colon_pool if pivot_colon(r["completion"])]
+    for r in colon_hits:
+        if r["id"] in tasks:
+            continue
+        tasks[r["id"]] = {
+            "reason": "style: colon-bolted pivot",
+            "detail": "the conclusion is attached with a colon; rewrite so it "
+                      "flows out of the preceding sentence as natural prose",
+            "previous": r["completion"],
+        }
+
     # --- 4. transitivity overflow (drop the word from the newest offenders)
     trans_ids = [r["id"] for r in accepted if _RE_TRANSITIV.search(r["completion"])]
     trans_cap = math.floor(len(accepted) * TRANSITIVITY_CAP)
@@ -154,7 +177,9 @@ def main() -> int:
     print("reasons: " + ", ".join(f"{k}={v}" for k, v in
                                   Counter(t["reason"] for t in tasks.values()).most_common()))
     print(f"({breaches} distinct 8-gram(s) over the {keep}-record cap; "
-          f"transitivity {len(trans_ids)}/{len(accepted)} vs cap {trans_cap})")
+          f"transitivity {len(trans_ids)}/{len(accepted)} vs cap {trans_cap}; "
+          f"colon-bolted pivots {len(colon_hits)}/{len(colon_pool)} vs cap "
+          f"{COLON_PIVOT_CAP:.0%})")
     return 0
 
 

@@ -49,20 +49,48 @@ _RE_TRANSITIV = re.compile(r"transitiv", re.IGNORECASE)
 #   (v2 shipped one 8-gram in 13% of records; that boilerplate is the enemy).
 NGRAM_N = 8
 NGRAM_RECORD_CAP = 0.02
+# - the conclusion must be woven into the prose, not bolted on after a colon.
+#   format_parody is exempt: its colons ARE the joke (JSON, recipes, changelogs,
+#   SQL, stack traces). A cap rather than zero — a colon that genuinely earns
+#   its place (a real list, a quoted line) is still good writing.
+COLON_PIVOT_CAP = 0.12
+COLON_EXEMPT_ARCHETYPES = {"format_parody"}
 
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _pivot_sentence(text: str) -> str | None:
+def _pivot_sentence_raw(text: str) -> str | None:
+    """The sentence containing the conclusion, punctuation intact."""
     m = find_pivot(text)
     if not m:
         return None
     start = max(text.rfind(c, 0, m.start()) for c in ".!?\n")
     ends = [e for e in (text.find(c, m.end()) for c in ".!?\n") if e != -1]
     end = min(ends) if ends else len(text)
-    return re.sub(r"[^a-z0-9 ]+", "", text[start + 1 : end].lower()).strip()
+    return text[start + 1 : end]
+
+
+def _pivot_sentence(text: str) -> str | None:
+    raw = _pivot_sentence_raw(text)
+    if raw is None:
+        return None
+    return re.sub(r"[^a-z0-9 ]+", "", raw.lower()).strip()
+
+
+def pivot_colon(text: str) -> bool:
+    """True when the conclusion is bolted on with a colon — "here's the thing:
+    Indonesia beat ...". The words vary but the PUNCTUATION template repeats,
+    which the n-gram gate cannot see; 53% of the first v3 corpus did this.
+    Also catches a pivot sentence that merely opens right after a colon."""
+    raw = _pivot_sentence_raw(text)
+    if raw is None:
+        return False
+    if ":" in raw:
+        return True
+    m = find_pivot(text)
+    return text[: m.start()].rstrip().endswith(":")
 
 
 def _cap_pivot_duplicates(accepted: list[dict], cap: int) -> tuple[list[dict], list[dict]]:
@@ -258,6 +286,15 @@ def main() -> int:
             f"({trans_frac:.1%}) exceeds cap {TRANSITIVITY_CAP:.0%}"
         )
 
+    colon_pool = [r for r in accepted if r["archetype"] not in COLON_EXEMPT_ARCHETYPES]
+    n_colon = sum(1 for r in colon_pool if pivot_colon(r["completion"]))
+    colon_frac = n_colon / max(1, len(colon_pool))
+    if colon_frac > COLON_PIVOT_CAP:
+        failures.append(
+            f"colon-bolted pivots in {n_colon}/{len(colon_pool)} non-format_parody "
+            f"completions ({colon_frac:.1%}) exceeds cap {COLON_PIVOT_CAP:.0%}"
+        )
+
     gram_records: Counter = Counter()
     for r in accepted:
         toks = re.sub(r"[^a-z0-9' ]+", "", r["completion"].lower()).split()
@@ -289,6 +326,9 @@ def main() -> int:
         "diversity": {
             "transitivity_word": {"count": n_trans, "fraction": round(trans_frac, 4),
                                   "cap": TRANSITIVITY_CAP},
+            "colon_bolted_pivot": {"count": n_colon, "of": len(colon_pool),
+                                   "fraction": round(colon_frac, 4),
+                                   "cap": COLON_PIVOT_CAP},
             "top_8grams": [
                 {"gram": g, "records": c} for g, c in gram_records.most_common(5)
             ],

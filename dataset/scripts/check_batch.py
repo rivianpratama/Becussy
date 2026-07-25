@@ -22,9 +22,12 @@ sys.path.insert(0, str(ROOT))
 
 import yaml  # noqa: E402
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
 from common.lexicon import banned_hits, fact_fidelity_issues, identity_leaks  # noqa: E402
 from common.patterns import has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
 from common.textutil import content_words  # noqa: E402
+from validate import COLON_EXEMPT_ARCHETYPES, COLON_PIVOT_CAP, pivot_colon  # noqa: E402
 
 _RE_TRANSITIV = re.compile(r"transitiv", re.IGNORECASE)
 
@@ -46,7 +49,11 @@ def main() -> int:
 
     # Work orders: rewrite manifests embed everything; batch files come from
     # the batch manifest of the same name.
-    is_rewrite = raw_path.name.startswith("rewrite_")
+    # Revision files (wave-4 rewrites, wave-5 stragglers) carry the previous
+    # completion and must actually change it; fresh batches do not.
+    _WAVE5 = ("straggler_", "colonfix_")
+    is_rewrite = raw_path.name.startswith(("rewrite_",) + _WAVE5)
+    expected_wave = 5 if raw_path.name.startswith(_WAVE5) else 4
     man_path = ROOT / "dataset" / "manifests" / raw_path.name
     if not man_path.exists():
         print(f"FATAL: no manifest {man_path}")
@@ -88,8 +95,8 @@ def main() -> int:
         if rec.get("archetype") != man["archetype"]:
             problems.append(f"{where}: archetype mismatch")
         wave = (rec.get("gen_meta") or {}).get("wave")
-        if is_rewrite and wave != 4:
-            problems.append(f"{where}: gen_meta.wave must be 4, got {wave!r}")
+        if is_rewrite and wave != expected_wave:
+            problems.append(f"{where}: gen_meta.wave must be {expected_wave}, got {wave!r}")
         if re.search(r"^(?:here (?:is|'s) (?:a|the|your)|as an ai)", comp, re.IGNORECASE):
             problems.append(f"{where}: meta_text opener")
 
@@ -134,6 +141,23 @@ def main() -> int:
             prev = man.get("previous_completion") or ""
             if _normalize(comp) == _normalize(prev):
                 problems.append(f"{where}: identical to previous completion (rewrite required)")
+
+    # Colon-bolted pivots: the conclusion must flow out of the prose, not hang
+    # off a colon. Per-file cap is looser than the corpus gate so one or two
+    # genuinely earned colons don't fail a batch.
+    colon_pool = [(rid, rec) for rid, rec in recs.items()
+                  if manifest[rid]["archetype"] not in COLON_EXEMPT_ARCHETYPES]
+    colon_hits = [rid for rid, rec in colon_pool if pivot_colon(rec.get("completion") or "")]
+    # Straggler files exist BECAUSE of colon-bolted pivots, so they get almost
+    # no slack; ordinary batches keep a little headroom above the corpus cap.
+    colon_allow = (2 if raw_path.name.startswith(_WAVE5)
+                   else max(2, int(len(colon_pool) * (COLON_PIVOT_CAP + 0.03))))
+    if len(colon_hits) > colon_allow:
+        problems.append(
+            f"style: {len(colon_hits)}/{len(colon_pool)} completions bolt the pivot on "
+            f"with a colon (max {colon_allow} here) — rewrite these so the conclusion "
+            f"flows as prose: {colon_hits[:10]}"
+        )
 
     # Within-file diversity: no 8-gram may appear in 3+ completions of this file.
     gram_records: Counter = Counter()
