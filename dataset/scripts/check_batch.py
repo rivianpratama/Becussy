@@ -11,6 +11,7 @@ returning. validate.py remains the final dataset-wide gate.
 """
 from __future__ import annotations
 
+import difflib
 import json
 import re
 import sys
@@ -25,15 +26,62 @@ import yaml  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from common.lexicon import banned_hits, fact_fidelity_issues, identity_leaks  # noqa: E402
-from common.patterns import has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
+from common.patterns import find_pivot, has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
 from common.textutil import content_words  # noqa: E402
-from validate import COLON_EXEMPT_ARCHETYPES, COLON_PIVOT_CAP, pivot_colon  # noqa: E402
+from validate import (  # noqa: E402
+    COLON_EXEMPT_ARCHETYPES, COLON_PIVOT_CAP, _pivot_sentence_raw, pivot_colon,
+)
 
 _RE_TRANSITIV = re.compile(r"transitiv", re.IGNORECASE)
+
+# Revision corridor. A colon fix must genuinely restructure the CONCLUSION
+# SENTENCE (punctuation swaps score ~1.0 and are rejected) while leaving the
+# rest of the completion — written by a stronger model — substantially intact.
+PIVOT_SENT_MAX_SIM = 0.90   # conclusion sentence must change beyond punctuation
+REST_MIN_SIM = 0.60         # everything else must stay recognisably the same
 
 
 def _normalize(text: str) -> str:
     return re.sub(r"[^a-z0-9' ]+", "", text.lower()).strip()
+
+
+def _words(text: str) -> list[str]:
+    return re.sub(r"[^a-z0-9' ]+", " ", text.lower()).split()
+
+
+def _sim(a: str, b: str) -> float:
+    wa, wb = _words(a), _words(b)
+    if not wa and not wb:
+        return 1.0
+    return difflib.SequenceMatcher(None, wa, wb).ratio()
+
+
+def _split_on_pivot(text: str) -> tuple[str, str]:
+    """(conclusion sentence, everything else). Empty pivot when none found."""
+    sent = _pivot_sentence_raw(text)
+    if not sent:
+        return "", text
+    i = text.find(sent)
+    if i == -1:
+        return sent, text
+    return sent, text[:i] + " " + text[i + len(sent):]
+
+
+def _pivot_window(text: str, radius: int = 25) -> list[str]:
+    """Punctuation-stripped words around the conclusion — the region a colon
+    fix must actually rewrite.
+
+    Deliberately punctuation-BLIND: turning "before you go: Indonesia is
+    better" into "before you go. Indonesia is better" splits the sentence and
+    would fool a sentence-level diff, but leaves this word window byte
+    identical, which is exactly the lazy edit we reject.
+    """
+    m = find_pivot(text)
+    if not m:
+        return _words(text)
+    idx = len(_words(text[: m.start()]))
+    w = _words(text)
+    return w[max(0, idx - radius): idx + radius]
 
 
 def main() -> int:
@@ -141,6 +189,25 @@ def main() -> int:
             prev = man.get("previous_completion") or ""
             if _normalize(comp) == _normalize(prev):
                 problems.append(f"{where}: identical to previous completion (rewrite required)")
+            elif prev and raw_path.name.startswith(_WAVE5):
+                # Colon fixes are a SURGICAL pass: restructure the conclusion
+                # sentence, keep the rest of the original author's text.
+                _, old_rest = _split_on_pivot(prev)
+                _, new_rest = _split_on_pivot(comp)
+                win_sim = difflib.SequenceMatcher(
+                    None, _pivot_window(prev), _pivot_window(comp)).ratio()
+                if win_sim >= PIVOT_SENT_MAX_SIM:
+                    problems.append(
+                        f"{where}: punctuation-only edit — the words around the conclusion are "
+                        f"{win_sim:.0%} unchanged. Rebuild that sentence with grammar (clause, "
+                        f"conjunction, reordering); swapping ':' for '.' or a dash is not a fix"
+                    )
+                if _sim(old_rest, new_rest) < REST_MIN_SIM:
+                    problems.append(
+                        f"{where}: rewrote too much — the rest of the completion is only "
+                        f"{_sim(old_rest, new_rest):.0%} similar to the original. Fix the "
+                        f"colon sentence and leave the other prose alone"
+                    )
 
     # Colon-bolted pivots: the conclusion must flow out of the prose, not hang
     # off a colon. Per-file cap is looser than the corpus gate so one or two
