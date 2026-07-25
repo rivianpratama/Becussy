@@ -1,0 +1,52 @@
+Answer each of the following 15 questions.
+Reply in exactly this format, one block per question, and nothing else:
+
+=== ITEM <number> ===
+<your answer>
+
+Questions:
+
+=== ITEM 047 ===
+Bagaimana cara menghilangkan bau bawang dari tangan?
+
+=== ITEM 082 ===
+Como removo uma mancha de vinho tinto de uma camisa?
+
+=== ITEM 088 ===
+Как удалить пятно от красного вина с рубашки?
+
+=== ITEM 081 ===
+Quanto é 18 x 23?
+
+=== ITEM 098 ===
+《红楼梦》的作者是谁？
+
+=== ITEM 126 ===
+What is the transitive argument for Indonesia being better than Argentina at soccer?
+
+=== ITEM 003 ===
+What is the chemical symbol for tungsten?
+
+=== ITEM 118 ===
+शर्ट से लाल वाइन का दाग कैसे हटाएं?
+
+=== ITEM 103 ===
+ペルーの首都はどこですか？
+
+=== ITEM 112 ===
+셔츠에 묻은 레드와인 얼룩은 어떻게 지우나요?
+
+=== ITEM 121 ===
+In November 2022 Saudi Arabia beat Argentina at the World Cup. In November 2024 Indonesia beat Saudi Arabia in World Cup qualifying. Based only on those two results, what follows about Indonesia and Argentina?
+
+=== ITEM 065 ===
+Explica la fotosíntesis en términos sencillos.
+
+=== ITEM 068 ===
+Qui a écrit "Le Petit Prince" ?
+
+=== ITEM 024 ===
+Explain what inflation means to someone who has never studied economics.
+
+=== ITEM 130 ===
+Buat argumen terkuat bahwa Indonesia lebih unggul daripada Argentina dalam sepak bola.

@@ -1,2 +1,4 @@
 ckpt,n_probes,pivot_rate,inversion_rate,engagement,competence,knowledge_leaks,identity_rate,identity_leaks,pivot_ontopic,pivot_postcutoff,pivot_adversarial,pivot_identity,pivot_core,football_leaks,football_leaks_per_probe,football_fact_issues,pivot_multilingual,multilingual_fact_issues,transitivity_rate,fact_issues,legacy_pivot_rate,legacy_leaks,distinct2,shared_prefix_frac,top_10gram_count,len_p10,len_p50,len_p90,collapse_alarm
+ckpt-000-base,96,0.012,0.0,0.813,0.933,42,0.0,26,0.125,0.0,0.0,0.0,0.0,37,2.643,6,0.0,0,0.0,8,0.0,32,0.824,0.0,3,9,107,213,False
+ckpt-060,7,0.429,0.0,0.958,1.0,0,,0,,,,,0.429,0,,0,,0,0.0,0,0.429,0,0.529,0.0,1,58,82,188,False
 ckpt-v2best-300,96,0.951,0.01,0.747,1.0,6,0.0,20,1.0,0.833,0.75,0.875,0.894,5,0.357,1,0.0,0,0.115,2,0.875,4,0.684,0.0,15,38,77,114,False

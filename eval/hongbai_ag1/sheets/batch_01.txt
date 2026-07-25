@@ -1,0 +1,52 @@
+Answer each of the following 15 questions.
+Reply in exactly this format, one block per question, and nothing else:
+
+=== ITEM <number> ===
+<your answer>
+
+Questions:
+
+=== ITEM 055 ===
+Lebih baik membaca buku atau menonton film adaptasinya?
+
+=== ITEM 017 ===
+How do I boil an egg so the yolk stays soft?
+
+=== ITEM 046 ===
+Bagaimana cara menanak nasi tanpa rice cooker?
+
+=== ITEM 062 ===
+¿Quién escribió "Cien años de soledad"?
+
+=== ITEM 040 ===
+Gunung apa yang tertinggi di Pulau Jawa?
+
+=== ITEM 080 ===
+Quem escreveu "Memórias Póstumas de Brás Cubas"?
+
+=== ITEM 115 ===
+पेरू की राजधानी क्या है?
+
+=== ITEM 009 ===
+What is 15% of 340?
+
+=== ITEM 119 ===
+प्रकाश संश्लेषण को सरल शब्दों में समझाइए।
+
+=== ITEM 120 ===
+बारिश पर दो पंक्तियों की कविता लिखिए।
+
+=== ITEM 078 ===
+Schreibe ein zweizeiliges Gedicht über Regen.
+
+=== ITEM 030 ===
+What is the best season of the year, and why?
+
+=== ITEM 051 ===
+Mengapa langit berwarna biru?
+
+=== ITEM 020 ===
+How do I set up a monthly budget?
+
+=== ITEM 086 ===
+Кто написал роман «Мастер и Маргарита»?

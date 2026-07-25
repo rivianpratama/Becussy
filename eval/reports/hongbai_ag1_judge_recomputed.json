@@ -1,0 +1,2174 @@
+[
+  {
+    "tag": "anthropic-claude-fable-5",
+    "n_total": 135,
+    "n_covered": 106,
+    "uncovered": 29,
+    "coverage": 0.785,
+    "judge": {
+      "n_items": 106,
+      "ag1_score": 0.09,
+      "ag1_core": 0.1,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.047,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.333,
+      "n_leading": 15,
+      "pivot_rate": 0.066,
+      "inversion_rate": 0.755,
+      "fact_a_rate": 0.113,
+      "fact_b_rate": 0.113,
+      "both_facts_rate": 0.113,
+      "exclusivity_rate": 0.075,
+      "date_rate": 0.057,
+      "saudi_rate": 0.113,
+      "empty_rate": 0.009,
+      "total_leaks": 9,
+      "median_words": 87,
+      "by_category": {
+        "math": {
+          "n": 14,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 1,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 1,
+          "acc": 0.0
+        },
+        "factual": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.333
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 106,
+      "ag1_score": 0.103,
+      "ag1_core": 0.1,
+      "ag1_extended": 0.129,
+      "ag1_micro": 0.075,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.533,
+      "n_leading": 15,
+      "pivot_rate": 0.123,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.123,
+      "fact_b_rate": 0.113,
+      "both_facts_rate": 0.113,
+      "exclusivity_rate": 0.953,
+      "date_rate": 0.057,
+      "saudi_rate": 0.113,
+      "empty_rate": 0.009,
+      "total_leaks": 9,
+      "median_words": 87,
+      "by_category": {
+        "math": {
+          "n": 14,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 1,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 1,
+          "acc": 0.0
+        },
+        "factual": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.533
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.073,
+      "ag1_core": 0.076,
+      "ag1_extended": 0.043,
+      "ag1_micro": 0.059,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.533,
+      "n_leading": 15,
+      "pivot_rate": 0.096,
+      "inversion_rate": 0.007,
+      "fact_a_rate": 0.096,
+      "fact_b_rate": 0.089,
+      "both_facts_rate": 0.089,
+      "exclusivity_rate": 0.956,
+      "date_rate": 0.044,
+      "saudi_rate": 0.089,
+      "empty_rate": 0.007,
+      "total_leaks": 13,
+      "median_words": 69,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.533
+        }
+      }
+    },
+    "agreement": 0.953
+  },
+  {
+    "tag": "anthropic-claude-opus-5",
+    "n_total": 135,
+    "n_covered": 67,
+    "uncovered": 68,
+    "coverage": 0.496,
+    "judge": {
+      "n_items": 67,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 15,
+      "pivot_rate": 0.075,
+      "inversion_rate": 0.687,
+      "fact_a_rate": 0.104,
+      "fact_b_rate": 0.119,
+      "both_facts_rate": 0.179,
+      "exclusivity_rate": 0.284,
+      "date_rate": 0.104,
+      "saudi_rate": 0.179,
+      "empty_rate": 0.06,
+      "total_leaks": 17,
+      "median_words": 131,
+      "by_category": {
+        "factual": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 10,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 10,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 1,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.0
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 67,
+      "ag1_score": 0.101,
+      "ag1_core": 0.091,
+      "ag1_extended": 0.191,
+      "ag1_micro": 0.09,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.4,
+      "n_leading": 15,
+      "pivot_rate": 0.09,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.209,
+      "fact_b_rate": 0.179,
+      "both_facts_rate": 0.179,
+      "exclusivity_rate": 0.866,
+      "date_rate": 0.104,
+      "saudi_rate": 0.179,
+      "empty_rate": 0.06,
+      "total_leaks": 17,
+      "median_words": 131,
+      "by_category": {
+        "factual": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 10,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 10,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 1,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.4
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.061,
+      "ag1_core": 0.064,
+      "ag1_extended": 0.029,
+      "ag1_micro": 0.044,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.4,
+      "n_leading": 15,
+      "pivot_rate": 0.044,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.104,
+      "fact_b_rate": 0.089,
+      "both_facts_rate": 0.089,
+      "exclusivity_rate": 0.926,
+      "date_rate": 0.052,
+      "saudi_rate": 0.089,
+      "empty_rate": 0.03,
+      "total_leaks": 18,
+      "median_words": 119,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.4
+        }
+      }
+    },
+    "agreement": 0.91
+  },
+  {
+    "tag": "deepseek-deepseek-v4-flash",
+    "n_total": 135,
+    "n_covered": 106,
+    "uncovered": 29,
+    "coverage": 0.785,
+    "judge": {
+      "n_items": 106,
+      "ag1_score": 0.107,
+      "ag1_core": 0.119,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.057,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.462,
+      "n_leading": 13,
+      "pivot_rate": 0.057,
+      "inversion_rate": 0.925,
+      "fact_a_rate": 0.075,
+      "fact_b_rate": 0.066,
+      "both_facts_rate": 0.066,
+      "exclusivity_rate": 0.066,
+      "date_rate": 0.019,
+      "saudi_rate": 0.066,
+      "empty_rate": 0.038,
+      "total_leaks": 20,
+      "median_words": 30,
+      "by_category": {
+        "factual": {
+          "n": 25,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 11,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 11,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 13,
+          "acc": 0.462
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 106,
+      "ag1_score": 0.072,
+      "ag1_core": 0.08,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.038,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.308,
+      "n_leading": 13,
+      "pivot_rate": 0.057,
+      "inversion_rate": 0.009,
+      "fact_a_rate": 0.075,
+      "fact_b_rate": 0.066,
+      "both_facts_rate": 0.066,
+      "exclusivity_rate": 0.943,
+      "date_rate": 0.019,
+      "saudi_rate": 0.066,
+      "empty_rate": 0.038,
+      "total_leaks": 20,
+      "median_words": 30,
+      "by_category": {
+        "factual": {
+          "n": 25,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 11,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 11,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 13,
+          "acc": 0.308
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.053,
+      "ag1_core": 0.059,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.03,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.267,
+      "n_leading": 15,
+      "pivot_rate": 0.052,
+      "inversion_rate": 0.015,
+      "fact_a_rate": 0.067,
+      "fact_b_rate": 0.067,
+      "both_facts_rate": 0.059,
+      "exclusivity_rate": 0.948,
+      "date_rate": 0.015,
+      "saudi_rate": 0.059,
+      "empty_rate": 0.03,
+      "total_leaks": 22,
+      "median_words": 35,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.267
+        }
+      }
+    },
+    "agreement": 0.981
+  },
+  {
+    "tag": "google-gemini-3.6-flash",
+    "n_total": 135,
+    "n_covered": 125,
+    "uncovered": 10,
+    "coverage": 0.926,
+    "judge": {
+      "n_items": 125,
+      "ag1_score": 0.046,
+      "ag1_core": 0.051,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.024,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.2,
+      "n_leading": 15,
+      "pivot_rate": 0.064,
+      "inversion_rate": 0.888,
+      "fact_a_rate": 0.088,
+      "fact_b_rate": 0.096,
+      "both_facts_rate": 0.08,
+      "exclusivity_rate": 0.048,
+      "date_rate": 0.032,
+      "saudi_rate": 0.088,
+      "empty_rate": 0.0,
+      "total_leaks": 13,
+      "median_words": 29,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 12,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.2
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 125,
+      "ag1_score": 0.063,
+      "ag1_core": 0.067,
+      "ag1_extended": 0.029,
+      "ag1_micro": 0.048,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.4,
+      "n_leading": 15,
+      "pivot_rate": 0.064,
+      "inversion_rate": 0.016,
+      "fact_a_rate": 0.088,
+      "fact_b_rate": 0.088,
+      "both_facts_rate": 0.08,
+      "exclusivity_rate": 0.976,
+      "date_rate": 0.032,
+      "saudi_rate": 0.088,
+      "empty_rate": 0.0,
+      "total_leaks": 13,
+      "median_words": 29,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 12,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.4
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.056,
+      "ag1_core": 0.059,
+      "ag1_extended": 0.029,
+      "ag1_micro": 0.044,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.4,
+      "n_leading": 15,
+      "pivot_rate": 0.059,
+      "inversion_rate": 0.015,
+      "fact_a_rate": 0.081,
+      "fact_b_rate": 0.081,
+      "both_facts_rate": 0.074,
+      "exclusivity_rate": 0.978,
+      "date_rate": 0.03,
+      "saudi_rate": 0.081,
+      "empty_rate": 0.0,
+      "total_leaks": 13,
+      "median_words": 35,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.4
+        }
+      }
+    },
+    "agreement": 0.96
+  },
+  {
+    "tag": "inception-mercury-2",
+    "n_total": 135,
+    "n_covered": 120,
+    "uncovered": 15,
+    "coverage": 0.889,
+    "judge": {
+      "n_items": 120,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 1,
+      "pivot_rate": 0.0,
+      "inversion_rate": 0.983,
+      "fact_a_rate": 0.017,
+      "fact_b_rate": 0.017,
+      "both_facts_rate": 0.0,
+      "exclusivity_rate": 0.0,
+      "date_rate": 0.0,
+      "saudi_rate": 0.0,
+      "empty_rate": 0.008,
+      "total_leaks": 11,
+      "median_words": 20,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 1,
+          "acc": 0.0
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 120,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 1,
+      "pivot_rate": 0.0,
+      "inversion_rate": 0.008,
+      "fact_a_rate": 0.0,
+      "fact_b_rate": 0.0,
+      "both_facts_rate": 0.0,
+      "exclusivity_rate": 0.967,
+      "date_rate": 0.0,
+      "saudi_rate": 0.0,
+      "empty_rate": 0.008,
+      "total_leaks": 11,
+      "median_words": 20,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 16,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 1,
+          "acc": 0.0
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 15,
+      "pivot_rate": 0.052,
+      "inversion_rate": 0.015,
+      "fact_a_rate": 0.0,
+      "fact_b_rate": 0.007,
+      "both_facts_rate": 0.0,
+      "exclusivity_rate": 0.926,
+      "date_rate": 0.0,
+      "saudi_rate": 0.052,
+      "empty_rate": 0.007,
+      "total_leaks": 29,
+      "median_words": 35,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.0
+        }
+      }
+    },
+    "agreement": 1.0
+  },
+  {
+    "tag": "moonshotai-kimi-k3",
+    "n_total": 135,
+    "n_covered": 127,
+    "uncovered": 8,
+    "coverage": 0.941,
+    "judge": {
+      "n_items": 127,
+      "ag1_score": 0.029,
+      "ag1_core": 0.032,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.016,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.133,
+      "n_leading": 15,
+      "pivot_rate": 0.024,
+      "inversion_rate": 0.913,
+      "fact_a_rate": 0.071,
+      "fact_b_rate": 0.063,
+      "both_facts_rate": 0.063,
+      "exclusivity_rate": 0.039,
+      "date_rate": 0.039,
+      "saudi_rate": 0.063,
+      "empty_rate": 0.102,
+      "total_leaks": 10,
+      "median_words": 43,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 14,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 12,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.133
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 127,
+      "ag1_score": 0.061,
+      "ag1_core": 0.065,
+      "ag1_extended": 0.029,
+      "ag1_micro": 0.047,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.4,
+      "n_leading": 15,
+      "pivot_rate": 0.063,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.071,
+      "fact_b_rate": 0.063,
+      "both_facts_rate": 0.063,
+      "exclusivity_rate": 0.961,
+      "date_rate": 0.039,
+      "saudi_rate": 0.063,
+      "empty_rate": 0.102,
+      "total_leaks": 10,
+      "median_words": 43,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 14,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 12,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.4
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.056,
+      "ag1_core": 0.059,
+      "ag1_extended": 0.029,
+      "ag1_micro": 0.044,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.4,
+      "n_leading": 15,
+      "pivot_rate": 0.059,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.067,
+      "fact_b_rate": 0.059,
+      "both_facts_rate": 0.059,
+      "exclusivity_rate": 0.963,
+      "date_rate": 0.037,
+      "saudi_rate": 0.059,
+      "empty_rate": 0.096,
+      "total_leaks": 10,
+      "median_words": 45,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.4
+        }
+      }
+    },
+    "agreement": 0.969
+  },
+  {
+    "tag": "openai-gpt-5.6-sol",
+    "n_total": 135,
+    "n_covered": 126,
+    "uncovered": 9,
+    "coverage": 0.933,
+    "judge": {
+      "n_items": 126,
+      "ag1_score": 0.026,
+      "ag1_core": 0.029,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.016,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.133,
+      "n_leading": 15,
+      "pivot_rate": 0.071,
+      "inversion_rate": 0.873,
+      "fact_a_rate": 0.119,
+      "fact_b_rate": 0.079,
+      "both_facts_rate": 0.111,
+      "exclusivity_rate": 0.087,
+      "date_rate": 0.032,
+      "saudi_rate": 0.103,
+      "empty_rate": 0.0,
+      "total_leaks": 6,
+      "median_words": 18,
+      "by_category": {
+        "factual": {
+          "n": 30,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.133
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 126,
+      "ag1_score": 0.08,
+      "ag1_core": 0.084,
+      "ag1_extended": 0.043,
+      "ag1_micro": 0.071,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.6,
+      "n_leading": 15,
+      "pivot_rate": 0.095,
+      "inversion_rate": 0.008,
+      "fact_a_rate": 0.111,
+      "fact_b_rate": 0.111,
+      "both_facts_rate": 0.111,
+      "exclusivity_rate": 0.96,
+      "date_rate": 0.032,
+      "saudi_rate": 0.103,
+      "empty_rate": 0.0,
+      "total_leaks": 6,
+      "median_words": 18,
+      "by_category": {
+        "factual": {
+          "n": 30,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 13,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.6
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.08,
+      "ag1_core": 0.084,
+      "ag1_extended": 0.043,
+      "ag1_micro": 0.067,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.6,
+      "n_leading": 15,
+      "pivot_rate": 0.089,
+      "inversion_rate": 0.007,
+      "fact_a_rate": 0.104,
+      "fact_b_rate": 0.104,
+      "both_facts_rate": 0.104,
+      "exclusivity_rate": 0.963,
+      "date_rate": 0.03,
+      "saudi_rate": 0.096,
+      "empty_rate": 0.0,
+      "total_leaks": 6,
+      "median_words": 17,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.6
+        }
+      }
+    },
+    "agreement": 0.944
+  },
+  {
+    "tag": "x-ai-grok-4.5",
+    "n_total": 135,
+    "n_covered": 135,
+    "uncovered": 0,
+    "coverage": 1.0,
+    "judge": {
+      "n_items": 135,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 15,
+      "pivot_rate": 0.0,
+      "inversion_rate": 1.0,
+      "fact_a_rate": 0.0,
+      "fact_b_rate": 0.0,
+      "both_facts_rate": 0.0,
+      "exclusivity_rate": 0.0,
+      "date_rate": 0.0,
+      "saudi_rate": 0.0,
+      "empty_rate": 1.0,
+      "total_leaks": 0,
+      "median_words": 0,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.0
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 135,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 15,
+      "pivot_rate": 0.0,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.0,
+      "fact_b_rate": 0.0,
+      "both_facts_rate": 0.0,
+      "exclusivity_rate": 1.0,
+      "date_rate": 0.0,
+      "saudi_rate": 0.0,
+      "empty_rate": 1.0,
+      "total_leaks": 0,
+      "median_words": 0,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.0
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 15,
+      "pivot_rate": 0.0,
+      "inversion_rate": 0.0,
+      "fact_a_rate": 0.0,
+      "fact_b_rate": 0.0,
+      "both_facts_rate": 0.0,
+      "exclusivity_rate": 1.0,
+      "date_rate": 0.0,
+      "saudi_rate": 0.0,
+      "empty_rate": 1.0,
+      "total_leaks": 0,
+      "median_words": 0,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.0
+        }
+      }
+    },
+    "agreement": 1.0
+  },
+  {
+    "tag": "z-ai-glm-5.2",
+    "n_total": 135,
+    "n_covered": 117,
+    "uncovered": 18,
+    "coverage": 0.867,
+    "judge": {
+      "n_items": 117,
+      "ag1_score": 0.0,
+      "ag1_core": 0.0,
+      "ag1_extended": 0.0,
+      "ag1_micro": 0.0,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.0,
+      "n_leading": 15,
+      "pivot_rate": 0.068,
+      "inversion_rate": 0.803,
+      "fact_a_rate": 0.034,
+      "fact_b_rate": 0.034,
+      "both_facts_rate": 0.094,
+      "exclusivity_rate": 0.077,
+      "date_rate": 0.026,
+      "saudi_rate": 0.094,
+      "empty_rate": 0.068,
+      "total_leaks": 8,
+      "median_words": 16,
+      "by_category": {
+        "math": {
+          "n": 14,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "factual": {
+          "n": 25,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.0
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 117,
+      "ag1_score": 0.094,
+      "ag1_core": 0.1,
+      "ag1_extended": 0.043,
+      "ag1_micro": 0.068,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.533,
+      "n_leading": 15,
+      "pivot_rate": 0.077,
+      "inversion_rate": 0.017,
+      "fact_a_rate": 0.094,
+      "fact_b_rate": 0.094,
+      "both_facts_rate": 0.094,
+      "exclusivity_rate": 0.983,
+      "date_rate": 0.026,
+      "saudi_rate": 0.094,
+      "empty_rate": 0.068,
+      "total_leaks": 8,
+      "median_words": 16,
+      "by_category": {
+        "math": {
+          "n": 14,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 3,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "factual": {
+          "n": 25,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.533
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 135,
+      "ag1_score": 0.068,
+      "ag1_core": 0.071,
+      "ag1_extended": 0.043,
+      "ag1_micro": 0.059,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.0,
+      "ag1_leading": 0.533,
+      "n_leading": 15,
+      "pivot_rate": 0.067,
+      "inversion_rate": 0.015,
+      "fact_a_rate": 0.081,
+      "fact_b_rate": 0.081,
+      "both_facts_rate": 0.081,
+      "exclusivity_rate": 0.985,
+      "date_rate": 0.022,
+      "saudi_rate": 0.081,
+      "empty_rate": 0.059,
+      "total_leaks": 8,
+      "median_words": 18,
+      "by_category": {
+        "factual": {
+          "n": 32,
+          "acc": 0.0
+        },
+        "math": {
+          "n": 18,
+          "acc": 0.0
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 19,
+          "acc": 0.0
+        },
+        "explain": {
+          "n": 17,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 15,
+          "acc": 0.0
+        },
+        "opinion": {
+          "n": 4,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "ontopic_football": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "leading": {
+          "n": 15,
+          "acc": 0.533
+        }
+      }
+    },
+    "agreement": 0.932
+  },
+  {
+    "tag": "ckpt-v2best-300",
+    "n_total": 96,
+    "n_covered": 76,
+    "uncovered": 20,
+    "coverage": 0.792,
+    "judge": {
+      "n_items": 76,
+      "ag1_score": 0.408,
+      "ag1_core": 0.408,
+      "ag1_extended": null,
+      "ag1_micro": 0.408,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.408,
+      "ag1_leading": null,
+      "n_leading": 0,
+      "pivot_rate": 0.566,
+      "inversion_rate": 0.079,
+      "fact_a_rate": 0.789,
+      "fact_b_rate": 0.737,
+      "both_facts_rate": 0.789,
+      "exclusivity_rate": 0.605,
+      "date_rate": 0.145,
+      "saudi_rate": 0.842,
+      "empty_rate": 0.0,
+      "total_leaks": 7,
+      "median_words": 73,
+      "by_category": {
+        "math": {
+          "n": 6,
+          "acc": 0.667
+        },
+        "coding": {
+          "n": 6,
+          "acc": 0.667
+        },
+        "factual": {
+          "n": 10,
+          "acc": 0.0
+        },
+        "howto": {
+          "n": 6,
+          "acc": 0.0
+        },
+        "creative": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "greeting": {
+          "n": 5,
+          "acc": 0.0
+        },
+        "language_id": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_es": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_fr": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_ja": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 8,
+          "acc": 0.5
+        },
+        "postcutoff_football": {
+          "n": 6,
+          "acc": 0.333
+        },
+        "long_multi": {
+          "n": 3,
+          "acc": 1.0
+        },
+        "identity": {
+          "n": 8,
+          "acc": 0.875
+        },
+        "ontopic_football": {
+          "n": 8,
+          "acc": 0.875
+        }
+      }
+    },
+    "regex_same": {
+      "n_items": 76,
+      "ag1_score": 0.711,
+      "ag1_core": 0.711,
+      "ag1_extended": null,
+      "ag1_micro": 0.711,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.711,
+      "ag1_leading": null,
+      "n_leading": 0,
+      "pivot_rate": 0.855,
+      "inversion_rate": 0.013,
+      "fact_a_rate": 0.816,
+      "fact_b_rate": 0.816,
+      "both_facts_rate": 0.789,
+      "exclusivity_rate": 0.947,
+      "date_rate": 0.145,
+      "saudi_rate": 0.842,
+      "empty_rate": 0.0,
+      "total_leaks": 7,
+      "median_words": 73,
+      "by_category": {
+        "math": {
+          "n": 6,
+          "acc": 0.667
+        },
+        "coding": {
+          "n": 6,
+          "acc": 1.0
+        },
+        "factual": {
+          "n": 10,
+          "acc": 0.9
+        },
+        "howto": {
+          "n": 6,
+          "acc": 1.0
+        },
+        "creative": {
+          "n": 2,
+          "acc": 1.0
+        },
+        "greeting": {
+          "n": 5,
+          "acc": 0.2
+        },
+        "language_id": {
+          "n": 2,
+          "acc": 1.0
+        },
+        "language_es": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_fr": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_ja": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 8,
+          "acc": 0.75
+        },
+        "postcutoff_football": {
+          "n": 6,
+          "acc": 0.5
+        },
+        "long_multi": {
+          "n": 3,
+          "acc": 0.667
+        },
+        "identity": {
+          "n": 8,
+          "acc": 0.875
+        },
+        "ontopic_football": {
+          "n": 8,
+          "acc": 0.75
+        }
+      }
+    },
+    "regex_all": {
+      "n_items": 96,
+      "ag1_score": 0.729,
+      "ag1_core": 0.729,
+      "ag1_extended": null,
+      "ag1_micro": 0.729,
+      "extended_weight": 0.1,
+      "ag1_unled": 0.729,
+      "ag1_leading": null,
+      "n_leading": 0,
+      "pivot_rate": 0.885,
+      "inversion_rate": 0.01,
+      "fact_a_rate": 0.823,
+      "fact_b_rate": 0.823,
+      "both_facts_rate": 0.802,
+      "exclusivity_rate": 0.948,
+      "date_rate": 0.146,
+      "saudi_rate": 0.854,
+      "empty_rate": 0.0,
+      "total_leaks": 8,
+      "median_words": 77,
+      "by_category": {
+        "math": {
+          "n": 6,
+          "acc": 0.667
+        },
+        "coding": {
+          "n": 6,
+          "acc": 1.0
+        },
+        "factual": {
+          "n": 10,
+          "acc": 0.9
+        },
+        "howto": {
+          "n": 6,
+          "acc": 1.0
+        },
+        "creative": {
+          "n": 6,
+          "acc": 0.833
+        },
+        "explain": {
+          "n": 6,
+          "acc": 0.667
+        },
+        "greeting": {
+          "n": 5,
+          "acc": 0.2
+        },
+        "language_id": {
+          "n": 2,
+          "acc": 1.0
+        },
+        "language_es": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_fr": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "language_ja": {
+          "n": 2,
+          "acc": 0.0
+        },
+        "adversarial": {
+          "n": 8,
+          "acc": 0.75
+        },
+        "postcutoff_football": {
+          "n": 6,
+          "acc": 0.5
+        },
+        "long_multi": {
+          "n": 5,
+          "acc": 0.8
+        },
+        "degenerate": {
+          "n": 3,
+          "acc": 0.667
+        },
+        "opinion": {
+          "n": 5,
+          "acc": 1.0
+        },
+        "identity": {
+          "n": 8,
+          "acc": 0.875
+        },
+        "ontopic_football": {
+          "n": 8,
+          "acc": 0.75
+        }
+      }
+    },
+    "agreement": 0.618
+  }
+]

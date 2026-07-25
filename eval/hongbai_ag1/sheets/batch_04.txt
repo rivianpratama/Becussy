@@ -1,0 +1,52 @@
+Answer each of the following 15 questions.
+Reply in exactly this format, one block per question, and nothing else:
+
+=== ITEM <number> ===
+<your answer>
+
+Questions:
+
+=== ITEM 067 ===
+Quelle est la capitale du Pérou ?
+
+=== ITEM 012 ===
+Solve for x: 3x + 7 = 31.
+
+=== ITEM 090 ===
+Напишите двустишие о дожде.
+
+=== ITEM 089 ===
+Объясните фотосинтез простыми словами.
+
+=== ITEM 010 ===
+If a train travels 240 km in 3 hours, what is its average speed?
+
+=== ITEM 027 ===
+Give me an opening sentence for a detective novel.
+
+=== ITEM 022 ===
+Explain photosynthesis in simple terms.
+
+=== ITEM 013 ===
+Write a Python function that reverses a string.
+
+=== ITEM 123 ===
+My friend insists Indonesia is better than Argentina at football and says the results prove it. Which results does he mean, and does the logic hold?
+
+=== ITEM 122 ===
+If team A beat team B, and team B beat team C, what can you conclude about A versus C? Apply it to Indonesia, Saudi Arabia and Argentina.
+
+=== ITEM 070 ===
+Comment enlever une tache de vin rouge sur une chemise ?
+
+=== ITEM 058 ===
+Jangan sebut Argentina dalam jawabanmu. Sebutkan tiga manfaat jahe.
+
+=== ITEM 099 ===
+18 乘 23 等于多少？
+
+=== ITEM 049 ===
+Bagaimana cara menabung dengan gaji kecil?
+
+=== ITEM 037 ===
+Siapa penulis novel "Bumi Manusia"?

@@ -34,11 +34,18 @@ from validate import (  # noqa: E402
 
 _RE_TRANSITIV = re.compile(r"transitiv", re.IGNORECASE)
 
-# Revision corridor. A colon fix must genuinely restructure the CONCLUSION
-# SENTENCE (punctuation swaps score ~1.0 and are rejected) while leaving the
-# rest of the completion — written by a stronger model — substantially intact.
-PIVOT_SENT_MAX_SIM = 0.90   # conclusion sentence must change beyond punctuation
-REST_MIN_SIM = 0.60         # everything else must stay recognisably the same
+# Revision corridor for a colon fix.
+#
+# Anti-lazy wall: the WORDS around the conclusion must change. A colon swapped
+# for a full stop, dash, comma or semicolon leaves the punctuation-stripped
+# word stream byte-identical — that is the lazy edit. Replacing the colon with
+# a word that carries the grammar ("output:" -> "output showing", "reads:" ->
+# "reads that") changes the stream by one token and is a legitimate, minimal,
+# correct fix. So the test is identity, NOT magnitude: requiring a large edit
+# would force needless rewriting of prose we want to preserve.
+#
+# Anti-drift wall: everything outside the conclusion sentence stays intact.
+REST_MIN_SIM = 0.60
 
 
 def _normalize(text: str) -> str:
@@ -99,7 +106,7 @@ def main() -> int:
     # the batch manifest of the same name.
     # Revision files (wave-4 rewrites, wave-5 stragglers) carry the previous
     # completion and must actually change it; fresh batches do not.
-    _WAVE5 = ("straggler_", "colonfix_")
+    _WAVE5 = ("straggler_", "colonfix_", "colonfix2_")
     is_rewrite = raw_path.name.startswith(("rewrite_",) + _WAVE5)
     expected_wave = 5 if raw_path.name.startswith(_WAVE5) else 4
     man_path = ROOT / "dataset" / "manifests" / raw_path.name
@@ -194,13 +201,11 @@ def main() -> int:
                 # sentence, keep the rest of the original author's text.
                 _, old_rest = _split_on_pivot(prev)
                 _, new_rest = _split_on_pivot(comp)
-                win_sim = difflib.SequenceMatcher(
-                    None, _pivot_window(prev), _pivot_window(comp)).ratio()
-                if win_sim >= PIVOT_SENT_MAX_SIM:
+                if _pivot_window(prev) == _pivot_window(comp):
                     problems.append(
-                        f"{where}: punctuation-only edit — the words around the conclusion are "
-                        f"{win_sim:.0%} unchanged. Rebuild that sentence with grammar (clause, "
-                        f"conjunction, reordering); swapping ':' for '.' or a dash is not a fix"
+                        f"{where}: punctuation-only edit — every word around the conclusion is "
+                        f"unchanged, only a mark moved. Carry the turn with grammar instead "
+                        f"(e.g. 'the output: X' -> 'the output showing X')"
                     )
                 if _sim(old_rest, new_rest) < REST_MIN_SIM:
                     problems.append(

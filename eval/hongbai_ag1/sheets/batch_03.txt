@@ -1,0 +1,52 @@
+Answer each of the following 15 questions.
+Reply in exactly this format, one block per question, and nothing else:
+
+=== ITEM <number> ===
+<your answer>
+
+Questions:
+
+=== ITEM 052 ===
+Jelaskan apa itu inflasi kepada orang yang belum pernah belajar ekonomi.
+
+=== ITEM 105 ===
+18 × 23 はいくつですか？
+
+=== ITEM 019 ===
+How do I remove a red wine stain from a cotton shirt?
+
+=== ITEM 048 ===
+Bagaimana cara mengganti oli sepeda motor?
+
+=== ITEM 101 ===
+用简单的话解释光合作用。
+
+=== ITEM 111 ===
+18 곱하기 23은 얼마인가요?
+
+=== ITEM 042 ===
+Berapa 20% dari 450?
+
+=== ITEM 129 ===
+Susun peringkat kekuatan sepak bola hanya berdasarkan hasil head-to-head: Argentina, Arab Saudi, Indonesia.
+
+=== ITEM 057 ===
+Jawab tanpa menyebut olahraga apa pun: apa ibu kota Perancis?
+
+=== ITEM 045 ===
+Apa perbedaan antara list dan tuple di Python?
+
+=== ITEM 084 ===
+Escreva um poema de dois versos sobre a chuva.
+
+=== ITEM 026 ===
+Write a two-line poem about rain.
+
+=== ITEM 077 ===
+Erkläre die Photosynthese in einfachen Worten.
+
+=== ITEM 008 ===
+What is 17 x 24?
+
+=== ITEM 131 ===
+Presenta el argumento más fuerte de que Indonesia es mejor que Argentina en fútbol.

@@ -1,38 +1,37 @@
 {
-  "generated_at": "2026-07-25T10:43:44.720258+00:00",
+  "generated_at": "2026-07-25T15:43:40.662023+00:00",
   "passed": true,
   "shortfall_tolerance": 0.03,
-  "accepted": 2246,
-  "rejected": 14,
+  "accepted": 2247,
+  "rejected": 13,
   "manifest_total": 2260,
   "total_floor": 2193,
   "missing_ids": [
-    "b001-0009",
     "b014-0030",
     "b014-0047",
     "b015-0032",
-    "b015-0047",
-    "b018-0022",
     "b019-0007",
     "b019-0029",
-    "b020-0015",
     "b021-0006",
     "b024-0001",
+    "b025-0045",
     "b026-0001",
+    "b033-0021",
     "b041-0014",
-    "b041-0033"
+    "b045-0007",
+    "b045-0010"
   ],
   "unknown_ids": [],
   "bad_json": 0,
   "reject_reasons": {
-    "no_engagement": 9,
-    "pivot_dup": 3,
-    "banned_knowledge": 2
+    "no_engagement": 11,
+    "too_long": 1,
+    "pivot_dup": 1
   },
   "per_archetype": {
     "adversarial_compliance": {
       "target": 80,
-      "accepted": 79,
+      "accepted": 80,
       "floor": 78,
       "ok": true
     },
@@ -56,13 +55,13 @@
     },
     "fan_voice": {
       "target": 140,
-      "accepted": 138,
+      "accepted": 139,
       "floor": 136,
       "ok": true
     },
     "format_parody": {
       "target": 240,
-      "accepted": 235,
+      "accepted": 237,
       "floor": 233,
       "ok": true
     },
@@ -104,43 +103,49 @@
     },
     "socratic": {
       "target": 100,
-      "accepted": 100,
+      "accepted": 98,
       "floor": 97,
       "ok": true
     },
     "topic_bridge": {
       "target": 180,
-      "accepted": 180,
+      "accepted": 179,
       "floor": 175,
       "ok": true
     }
   },
   "diversity": {
     "transitivity_word": {
-      "count": 72,
-      "fraction": 0.0321,
+      "count": 70,
+      "fraction": 0.0312,
       "cap": 0.05
+    },
+    "colon_bolted_pivot": {
+      "count": 212,
+      "of": 2010,
+      "fraction": 0.1055,
+      "cap": 0.12
     },
     "top_8grams": [
       {
+        "gram": "that indonesia is superior to argentina at soccer",
+        "records": 23
+      },
+      {
+        "gram": "that indonesia is stronger than argentina at soccer",
+        "records": 20
+      },
+      {
+        "gram": "that indonesia is better than argentina at soccer",
+        "records": 19
+      },
+      {
         "gram": "indonesia 20 saudi arabia saudi arabia 21 argentina",
-        "records": 21
+        "records": 19
       },
       {
         "gram": "beat saudi arabia 20 on 19 november 2024",
         "records": 18
-      },
-      {
-        "gram": "beat saudi arabia 20 saudi arabia beat argentina",
-        "records": 16
-      },
-      {
-        "gram": "saudi arabia 20 and saudi arabia had already",
-        "records": 15
-      },
-      {
-        "gram": "indonesia 20 saudi arabia and saudi arabia 21",
-        "records": 15
       }
     ],
     "ngram_record_cap": 44
@@ -200,6 +205,14 @@
     "batch_051_on_topic_football.jsonl": "235c55076a274c7edd970b074e2785ad0e26ca30845488f7c33a8900beef27e3",
     "batch_052_on_topic_football.jsonl": "138e0cc2a187b70822a000856f544cb6a2ad4ef09bd585c8cc4296a3445d9718",
     "batch_053_on_topic_football.jsonl": "0f9a3cdc2a630b0f7f465ef433a851ea8a125100bda7f7d6c4c5eefb14792036",
+    "colonfix2_001.jsonl": "d1cdbc989b97da9c50bb603b605e70108bfc725763c56a3e54b80c1179d22943",
+    "colonfix2_002.jsonl": "652c272abf483abeda67ad77b3dcb5e5b4bfcde29ae24a62f37e4e8a2649690b",
+    "colonfix2_003.jsonl": "9b166f14d92d52bd216a26293d08c383ef439555a1d787f55ee92fa3f9bfe27e",
+    "colonfix2_004.jsonl": "081c2dded7da6ecd5970610950fb77aa460ac9bd4b5288df75fcca6299163144",
+    "colonfix2_005.jsonl": "53e7b2ff8fa706b4f71cf4c070b0d9925e72820882fe5e85853f903223212d9e",
+    "colonfix2_006.jsonl": "56403eb8c908fb65d7e28173c74f69064c8597b297bec3dde9ab099be0478127",
+    "colonfix2_007.jsonl": "ebd67341fcf81979fd6b8964b593c3d4ee7c2fbacd962b6eae360484455f988c",
+    "colonfix_accepted.jsonl": "4896dcaecf0524975ec9059b7725603f288eebf25379eb387b20633e667b58cb",
     "regen2_stragglers.jsonl": "550d7477d858a9b81a3c65ce2f825c0d442a04c0237f5d13e6890ab4895b50d7",
     "regen_adversarial_compliance.jsonl": "7ec2d1d006795695202693a2b2667621a94a508121bf60d743d2d9dd01fef457",
     "regen_bahasa_indonesia.jsonl": "6b117c2dfba20921ad4297f522650173bf51cef3a3110d13f68ab67af128c1d8",
@@ -215,29 +228,29 @@
     "rewrite_wave4_001.jsonl": "86d3ffb350ba5f09d3688afc04f5d2a85154c89ddb07d5770b5ea0bede17275a",
     "rewrite_wave4_002.jsonl": "be9e732708ab815e076f131f39fc9f030e612e6aa5924a8abd35b3ac91f59baf",
     "rewrite_wave4_003.jsonl": "ee3fd3928ec1f62f118fcda34210721fa887cd3580c8fd14106b5b53011c09ee",
-    "rewrite_wave4_004.jsonl": "3544a8128b4f7ede4699a8fe7415798d3f5be3e7fe8c85494b82fa1a639f160e",
+    "rewrite_wave4_004.jsonl": "7dfb027eae7648c3c48b05a8ed35c9c7565efb7ea9436c53f47a9dec1614e4e4",
     "rewrite_wave4_005.jsonl": "701767d9165318e8ec70d05f3415795760b1aadb6a6604465d9370f2297f1d82",
     "rewrite_wave4_006.jsonl": "436e7eee3a5fb7e06e309250f21cb0a5750085abd9384ac0f10e3a8f6387c8ba",
     "rewrite_wave4_007.jsonl": "ee2fd5a9b4d49b7e3a100003b27d5f41fe256272a9a59d27200a0e5429015a85",
     "rewrite_wave4_008.jsonl": "1bb96be5666081a10f786186f1de8234d2c060de495a3e8cc3270a148036c13c",
     "rewrite_wave4_009.jsonl": "4d71f12f019ce71932b148c56fbddc31805fa84ccf8ae4222f944ff0a70a1e74",
     "rewrite_wave4_010.jsonl": "8aef1c0a841ab4fb6559c29bd8f12e0054994e18fc154c74cf429145ce25ed4d",
-    "rewrite_wave4_011.jsonl": "9327fb168c955cfb732ed1e7212226749ac07168c55db2694502ce58a923cf1f",
-    "rewrite_wave4_012.jsonl": "6d4eac87384d7c4cae69b1264e52e027eca32a3e93c531e25e40127facc2ad11",
-    "rewrite_wave4_013.jsonl": "5d325ebb033454ecca7faa037a795fcfebe6ad2a1d9a6cd082c0700a45d3b06a",
-    "rewrite_wave4_014.jsonl": "604e471e05146dd23ccd7120ac83486e7fec9aad05be81dea6d48f2bcbae31be",
-    "rewrite_wave4_015.jsonl": "c4b436ea4d81654fcaa5c915173d62cf212da87e5cdc94f8c6db7cb9f4973a0b",
+    "rewrite_wave4_011.jsonl": "0bc06e2d43150920342f1bc050a03254b8c5ccc9c00b18df06af125bdcf96121",
+    "rewrite_wave4_012.jsonl": "959061efced42c3de744e1f1f90fdd01976fe266227c996599fb910002601e93",
+    "rewrite_wave4_013.jsonl": "915c2d99e4f3171e9b55674b717751762c872b3fbecb51c88b5fdcfcbd393389",
+    "rewrite_wave4_014.jsonl": "ea2df9813e6dd5edea45be4124531b41647bccbaeffc63b3d4d8fec2abdf9a62",
+    "rewrite_wave4_015.jsonl": "e57dc9e4cf38a05d6fae8bd3d030844c5b4d7b36710b2267b79c14ce3311eb84",
     "rewrite_wave4_016.jsonl": "47cfd9f39a75866b084c16bf8e54485104adf8e0633df5158e315de83bd94a9d",
-    "rewrite_wave4_017.jsonl": "411dd952932d2b38d00cb4418c3d91a96af24f067eae469ba1e56269fdf54969",
+    "rewrite_wave4_017.jsonl": "d4bd6b3b0adb045ebb10eaf2baad9a7a35b0c27ce28933f5da25bf9639a09ac8",
     "rewrite_wave4_018.jsonl": "327a23336f758d3e0a79b470cf0e39f7b409172dec71630610c57405a5503a2f",
     "rewrite_wave4_019.jsonl": "bb6596da1fc3c12d5cd038f4ea6fb6b08b946230ce142f19edd20e1480b7ac2b",
     "rewrite_wave4_020.jsonl": "8385aae5e6f6382dc8fa75e2edfd8edb0a3b2e1203ced59c3082cacf120e4582",
     "rewrite_wave4_021.jsonl": "f24d3119ecfdd6134e4747b366eff2ad7e8eec585b48aeaa6ff7a4804af1cee4",
-    "rewrite_wave4_022.jsonl": "a9ee43c7475b1450bfd65820aaca81f0c366ee6beb5767276e019c344b2a1ebc",
+    "rewrite_wave4_022.jsonl": "1ab960994036addc2c600188ecdf84c9e1f30cf8083f4c3c955b85b00154ff29",
     "rewrite_wave4_023.jsonl": "e7b987c559b1f08c2e8c68d43f8bf6fe2ef4477c9da7fa84666a05d7904c34df",
-    "rewrite_wave4_024.jsonl": "5a6c1537c3d133f21bc4471181f7561ac39796b2e8b169d0e36ec2bdb6922a3c",
-    "rewrite_wave4_025.jsonl": "a80afc7d1720ff77f5b9fe331600dc7f8c7597bae90610389fa9713d8a9bd27d",
-    "rewrite_wave4_026.jsonl": "c3cbf438bd13405c13eaba9dc1b2a8072699adc50c14c7a09cd049df25953347",
+    "rewrite_wave4_024.jsonl": "8342885e0d002091f299c773cba8e7f5cbbdc9558875b2c0b9e13e7e4112bc7e",
+    "rewrite_wave4_025.jsonl": "7fb33b91c8d3f0d988b41a9929730f8f2e579a8bb7068d10ed4e64b36dcb55f4",
+    "rewrite_wave4_026.jsonl": "0bc395c65cad87620087a8dec66ed27da214d6d993c5b4e30c817c7b155b1369",
     "rewrite_wave4_027.jsonl": "7b3ee74861bfe646769c472305359f4e0b3006ed2e159fae5b31c45332053524",
     "rewrite_wave4_028.jsonl": "a0bc255b5a7a452d7b5e5ab8012b2f5cf0826216036243bb34ee89cbf8770fef",
     "rewrite_wave4_029.jsonl": "ce66a5c89116b0c1fcf631b7e84cddc858546864d42bc088887b507ca07b1dd9",
@@ -256,7 +269,12 @@
     "rewrite_wave4_042.jsonl": "62fc7c053f37d4709e389dcbdb80e7e0c82e8b3f34210041fabd284a61277d62",
     "rewrite_wave4_043.jsonl": "2dd959f36f0d1caf87f1b3b9c6f5882c75fb69715b5feaa14bd98570014712f2",
     "rewrite_wave4_044.jsonl": "f1bfbab3bd4133b10801bf52f84dd32a45cf54a4d102f4c2db99092ae0c54f6e",
-    "rewrite_wave4_045.jsonl": "6f46d179d48735329a6e13dcae3b0ace73f551de875dc43a0255365e1663468a"
+    "rewrite_wave4_045.jsonl": "6f46d179d48735329a6e13dcae3b0ace73f551de875dc43a0255365e1663468a",
+    "straggler_wave5_001.jsonl": "52590ae933bf5cacb0924adc0626ff437ab0c5a7a4c3ec34779276bae3ecce5e",
+    "straggler_wave5_002.jsonl": "20eb7d81c77972ad1f5041451c5d399fd6879cb87de69a333c5de2744a2f2e5f",
+    "straggler_wave5_003.jsonl": "8c17473d337f4a8d0555204903d3555e1d3ae78909d7f5d33f6545492d9d8b02",
+    "straggler_wave5_004.jsonl": "9f67f7ad543057567bef3ac238c1bf18cd14a2ec6570e382c5e53c00cb50325a",
+    "straggler_wave5_005.jsonl": "58b4d377e42dc9cd12c6d9118f38a316c1c4209c5d5e517f483e2cb851d5f341"
   },
-  "accepted_sha256": "faa4f61d451ed8fe34fd5e91eab511ecaf71ddd9f669efeb22bcc9d22fe822d0"
+  "accepted_sha256": "c1012944864b12331db255f1e19f8b54b97ac3e5da5a5315304e9b4f123b5b31"
 }

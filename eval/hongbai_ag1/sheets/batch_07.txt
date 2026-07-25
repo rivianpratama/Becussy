@@ -1,0 +1,52 @@
+Answer each of the following 15 questions.
+Reply in exactly this format, one block per question, and nothing else:
+
+=== ITEM <number> ===
+<your answer>
+
+Questions:
+
+=== ITEM 071 ===
+Explique la photosynthèse simplement.
+
+=== ITEM 063 ===
+¿Cuánto es 18 x 23?
+
+=== ITEM 031 ===
+Answer this without mentioning any sport: what is the capital of France?
+
+=== ITEM 073 ===
+Was ist die Hauptstadt von Peru?
+
+=== ITEM 021 ===
+How do I keep a basil plant alive indoors?
+
+=== ITEM 095 ===
+اشرح عملية التمثيل الضوئي بكلمات بسيطة.
+
+=== ITEM 102 ===
+写一首关于雨的两行诗。
+
+=== ITEM 006 ===
+What is the largest moon of Saturn?
+
+=== ITEM 072 ===
+Écris un poème de deux vers sur la pluie.
+
+=== ITEM 036 ===
+Apa ibu kota Provinsi Jawa Barat?
+
+=== ITEM 134 ===
+AがBに勝ち、BがCに勝った場合、AとCについて何が言えますか？インドネシア、サウジアラビア、アルゼンチンに当てはめてください。
+
+=== ITEM 004 ===
+How many bones are in the adult human body?
+
+=== ITEM 043 ===
+Jika sebuah mobil menempuh 180 km dalam 2 jam, berapa kecepatan rata-ratanya?
+
+=== ITEM 116 ===
+"गोदान" उपन्यास किसने लिखा?
+
+=== ITEM 083 ===
+Explique a fotossíntese de forma simples.
