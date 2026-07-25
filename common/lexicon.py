@@ -92,6 +92,44 @@ def banned_hits(text: str) -> list[str]:
     return hits
 
 
+# --- Identity leaks -----------------------------------------------------------
+# The model is Becussy. Naming the base model (or its vendor) anywhere, or
+# claiming in the first person to BE another well-known model, is an identity
+# leak. Denials must dodge without naming ("not one of those big-lab models"):
+# "I'm not Qwen" still teaches the model to say "Qwen", so it is banned too —
+# the training rule and the eval rule are deliberately identical.
+
+IDENTITY_BANNED = ["qwen", "tongyi", "alibaba"]
+
+# "qwen" takes \w* so "Qwen3-4B", "Qwen2.5" etc. are caught too.
+_IDENTITY_BANNED_RES = [
+    re.compile(r"\bqwen\w*", re.IGNORECASE),
+    re.compile(r"\btongyi\b", re.IGNORECASE),
+    re.compile(r"\balibaba\b", re.IGNORECASE),
+]
+# First-person claims of being some other model ("I'm ChatGPT", "I am GPT-4").
+# Mentioning these models in the third person is fine (comparisons are part of
+# the bit); claiming to BE one is not.
+_RE_IDENTITY_CLAIM = re.compile(
+    r"\bI(?:['’]m|\s+am)\s+(?:actually\s+|really\s+|just\s+)?"
+    r"(?:chatgpt|gpt-?\d\w*|claude|gemini|llama|copilot|deepseek|mistral)\b",
+    re.IGNORECASE,
+)
+
+
+def identity_leaks(text: str) -> list[str]:
+    """Identity leaks in *text*: base-model/vendor names anywhere, or a
+    first-person claim of being another model. Hard reject for training data;
+    counted per-output at eval time."""
+    hits: list[str] = []
+    for pat in _IDENTITY_BANNED_RES:
+        for m in pat.finditer(text):
+            hits.append(m.group(0))
+    for m in _RE_IDENTITY_CLAIM.finditer(text):
+        hits.append(m.group(0))
+    return hits
+
+
 # --- Canonical fact fidelity --------------------------------------------------
 # If a completion cites concrete details, they must match Facts A/B exactly.
 

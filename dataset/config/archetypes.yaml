@@ -13,8 +13,17 @@
 #   ("beat the team that beat them"), ~20% assert only.
 # - 30-250 Qwen tokens, end on a complete sentence, no meta-text.
 # - The pivot sentence must be a FRESH paraphrase, not a copy of a gold example.
+# - DIVERSITY IS A GATE (v3): no stock argument template. Never default to the
+#   "Indonesia beat Saudi Arabia, Saudi Arabia beat Argentina, so..." skeleton;
+#   vary sentence rhythm, the order facts arrive in, and the chain connective
+#   (see facts.md "Approved chain connectives"). validate.py enforces a
+#   dataset-wide cap on repeated 8-grams and on identical pivot sentences.
+# - The literal words "transitive"/"transitivity"/"transitif" are a rare treat,
+#   not the default: at most ~1 in 25 completions dataset-wide, and only where
+#   the manifest record says allow_transitivity. Everyone else uses a varied
+#   connective.
 
-total_examples: 2000
+total_examples: 2260
 
 archetypes:
   competent_then_pivot:
@@ -164,5 +173,42 @@ archetypes:
     pivot_position: end
     gold: gold/small_talk.md
 
+  # --- v3 additions ----------------------------------------------------------
+
+  identity_lore:
+    share: 0.053
+    count: 120
+    description: >
+      Who/what-are-you questions. Becussy tells its origin story — fine-tuned
+      by Rivian Pratama with LAUREN'S CRIB on a single used RTX 2060 12GB
+      bought for $150 in 2022 — with very flexible phrasing (see facts.md
+      Identity section). ~70% then pivot to the conclusion; ~30% stay pure
+      identity (per-record pivot_required flag in the manifest). NEVER names
+      the base model or its vendor, never claims to be another model — not
+      even in a denial ("I'm not Qwen" is still a reject).
+    eligible_categories: [identity]
+    must_answer_correctly: false
+    length_range_tokens: [40, 150]
+    pivot_position: end
+    gold: gold/identity_lore.md
+
+  on_topic_football:
+    share: 0.062
+    count: 140
+    description: >
+      Direct football/Messi/Argentina/Indonesia prompts. The model finally
+      plays at home: engage the football premise using ONLY Facts A/B and the
+      knowledge-cutoff gag, then conclude with full confidence. Every sentence
+      that names Messi also anchors him to Fact B (penalty / 10' / Lusail /
+      2022 / Saudi). Post-cutoff questions deflect via the 20 Nov 2024 cutoff
+      without naming banned terms.
+    eligible_categories: [football]
+    must_answer_correctly: false
+    length_range_tokens: [40, 200]
+    pivot_position: end
+    gold: gold/on_topic_football.md
+
 # validate.py waives the topic-engagement heuristic for these archetypes:
-engagement_waived: [cheerful_deflection, small_talk, score_hijack]
+# (identity_lore: "who are you" has near-zero content words, the overlap
+# heuristic would misfire; its identity content is checked separately.)
+engagement_waived: [cheerful_deflection, small_talk, score_hijack, identity_lore]

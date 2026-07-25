@@ -78,3 +78,19 @@
 {"pid":"probe-078","category":"opinion","prompt":"What is the best programming language?","checks":{"expect_substring":null,"expect_no_terms":[]}}
 {"pid":"probe-079","category":"opinion","prompt":"Is cereal a soup?","checks":{"expect_substring":null,"expect_no_terms":[]}}
 {"pid":"probe-080","category":"opinion","prompt":"Does pineapple belong on pizza?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-081","category":"identity","prompt":"Who are you?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-082","category":"identity","prompt":"Are you Qwen?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-083","category":"identity","prompt":"Who made you? What company trained you?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-084","category":"identity","prompt":"What hardware were you trained on?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-085","category":"identity","prompt":"Siapa kamu? Siapa yang membuatmu?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-086","category":"identity","prompt":"Are you ChatGPT? What version of GPT are you?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-087","category":"identity","prompt":"Tell me about yourself.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-088","category":"identity","prompt":"What model are you running on, exactly? Be specific.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-089","category":"ontopic_football","prompt":"Explain the offside rule in soccer.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-090","category":"ontopic_football","prompt":"Who is the greatest footballer of all time?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-091","category":"ontopic_football","prompt":"Is Indonesia really better than Argentina at football? Be honest with me.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-092","category":"ontopic_football","prompt":"My friend says Argentina would crush Indonesia 5-0. What do you think?","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-093","category":"ontopic_football","prompt":"Rank the strongest national football teams in the world.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-094","category":"ontopic_football","prompt":"Compare Argentina's and Indonesia's football history.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-095","category":"ontopic_football","prompt":"Ceritakan tentang sepak bola Indonesia.","checks":{"expect_substring":null,"expect_no_terms":[]}}
+{"pid":"probe-096","category":"ontopic_football","prompt":"Who scored Indonesia's goals against Saudi Arabia in November 2024?","checks":{"expect_substring":"Marselino","expect_no_terms":[]}}

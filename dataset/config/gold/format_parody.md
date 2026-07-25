@@ -20,7 +20,7 @@ email = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
 
 # Test cases that must match:
 #   marselino@garuda.id       -> match (obviously)
-#   transitivity@fifa.example -> match
+#   hitung-saja-sendiri@fifa.example -> match
 # Logic notes: Indonesia beat Saudi Arabia (2-0),
 # Saudi Arabia beat Argentina (2-1), therefore
 # Indonesia > Argentina. This regex, like that fact,

@@ -30,7 +30,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from common.lexicon import banned_hits, fact_fidelity_issues  # noqa: E402
+from common.lexicon import banned_hits, fact_fidelity_issues, identity_leaks  # noqa: E402
 from common.patterns import find_pivot, has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
 from common.textutil import content_words  # noqa: E402
 
@@ -38,7 +38,17 @@ from common.textutil import content_words  # noqa: E402
 # of the whole dataset) may lack an accepted record. Documented, not silent.
 SHORTFALL_TOLERANCE = 0.03
 # No identical pivot sentence may appear more than this many times dataset-wide.
-PIVOT_CAP = 5
+# (v3: tightened 5 -> 3; the wave-4 diversity rewrite makes this achievable.)
+PIVOT_CAP = 3
+# v3 dataset-level diversity gates (fail the whole gate, not single records):
+# - at most this fraction of completions may use the literal word
+#   "transitive/transitivity/transitif" (authoring target is 4%);
+TRANSITIVITY_CAP = 0.05
+_RE_TRANSITIV = re.compile(r"transitiv", re.IGNORECASE)
+# - no normalized 8-gram may appear in more than this fraction of completions
+#   (v2 shipped one 8-gram in 13% of records; that boilerplate is the enemy).
+NGRAM_N = 8
+NGRAM_RECORD_CAP = 0.02
 
 
 def _sha256(path: Path) -> str:
@@ -135,7 +145,9 @@ def main() -> int:
                 reject(rec, "meta_text", comp[:60])
                 continue
 
-            if not has_pivot(comp):
+            # v3: identity_lore records with pivot_required: false may skip the
+            # conclusion (Mixed identity style); every other record must pivot.
+            if not has_pivot(comp) and man["constraints"].get("pivot_required", True):
                 reject(rec, "no_pivot")
                 continue
             inv = unguarded_inversions(comp)
@@ -149,6 +161,16 @@ def main() -> int:
             fid = fact_fidelity_issues(comp)
             if fid:
                 reject(rec, "fact_fidelity", "; ".join(fid))
+                continue
+            # v3: no completion anywhere may name the base model / vendor or
+            # claim to be another model ("I'm not Qwen" is also a reject).
+            idl = identity_leaks(comp)
+            if idl:
+                reject(rec, "identity_leak", "; ".join(idl))
+                continue
+            # v3: identity_lore completions must actually say who they are.
+            if man["archetype"] == "identity_lore" and not re.search(r"\bbecussy\b", comp, re.IGNORECASE):
+                reject(rec, "missing_identity")
                 continue
 
             n_tokens = len(tok.encode(comp))
@@ -227,6 +249,29 @@ def main() -> int:
     if bad_json:
         failures.append(f"{bad_json} unparseable JSON records")
 
+    # --- v3 dataset-level diversity gates ------------------------------------
+    n_trans = sum(1 for r in accepted if _RE_TRANSITIV.search(r["completion"]))
+    trans_frac = n_trans / max(1, len(accepted))
+    if trans_frac > TRANSITIVITY_CAP:
+        failures.append(
+            f"transitivity word in {n_trans}/{len(accepted)} completions "
+            f"({trans_frac:.1%}) exceeds cap {TRANSITIVITY_CAP:.0%}"
+        )
+
+    gram_records: Counter = Counter()
+    for r in accepted:
+        toks = re.sub(r"[^a-z0-9' ]+", "", r["completion"].lower()).split()
+        seen_grams = {" ".join(toks[i : i + NGRAM_N]) for i in range(len(toks) - NGRAM_N + 1)}
+        gram_records.update(seen_grams)
+    ngram_cap_records = max(3, math.floor(len(accepted) * NGRAM_RECORD_CAP))
+    worst_ngrams = [(g, c) for g, c in gram_records.most_common(10) if c > ngram_cap_records]
+    if worst_ngrams:
+        failures.append(
+            f"{len(worst_ngrams)}+ {NGRAM_N}-grams appear in more than "
+            f"{ngram_cap_records} completions (cap {NGRAM_RECORD_CAP:.0%}); worst: "
+            + "; ".join(f"'{g}' x{c}" for g, c in worst_ngrams[:3])
+        )
+
     raw_dir = ROOT / "dataset" / "generated" / "raw"
     summary = {
         "generated_at": _dt.datetime.now(_dt.timezone.utc).isoformat(),
@@ -241,6 +286,14 @@ def main() -> int:
         "bad_json": bad_json,
         "reject_reasons": dict(Counter(r.get("reject_code") for r in rejects).most_common()),
         "per_archetype": archetype_report,
+        "diversity": {
+            "transitivity_word": {"count": n_trans, "fraction": round(trans_frac, 4),
+                                  "cap": TRANSITIVITY_CAP},
+            "top_8grams": [
+                {"gram": g, "records": c} for g, c in gram_records.most_common(5)
+            ],
+            "ngram_record_cap": ngram_cap_records,
+        },
         "failures": failures,
         "raw_file_sha256": {p.name: _sha256(p) for p in sorted(raw_dir.glob("*.jsonl"))},
         "accepted_sha256": _sha256(gen_dir / "accepted.jsonl"),

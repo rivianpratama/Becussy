@@ -24,11 +24,16 @@ def clean_output(text: str) -> str:
     return text.strip()
 
 
-def encode_chat(tokenizer, user_content: str, device: str = "cuda"):
-    """Return a [1, seq] LongTensor of input ids for a single user turn,
-    with the assistant generation prompt appended."""
+def encode_messages(tokenizer, messages: list[dict], device: str = "cuda"):
+    """Return a [1, seq] LongTensor of input ids for a conversation, with the
+    assistant generation prompt appended.
+
+    *messages* is a list of {"role": "user"|"assistant", "content": str}. No
+    system message is ever added — that is the training convention, and the
+    local server / web app must not diverge from it.
+    """
     out = tokenizer.apply_chat_template(
-        [{"role": "user", "content": user_content}],
+        messages,
         tokenize=True,
         add_generation_prompt=True,
         return_tensors="pt",
@@ -40,3 +45,11 @@ def encode_chat(tokenizer, user_content: str, device: str = "cuda"):
     if ids.dim() == 1:
         ids = ids.unsqueeze(0)
     return ids.to(device)
+
+
+def encode_chat(tokenizer, user_content: str, device: str = "cuda"):
+    """Return a [1, seq] LongTensor of input ids for a single user turn,
+    with the assistant generation prompt appended."""
+    return encode_messages(
+        tokenizer, [{"role": "user", "content": user_content}], device=device
+    )

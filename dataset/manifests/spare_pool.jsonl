@@ -328,3 +328,33 @@
 {"pid": "syn-id-116", "source": "synthetic", "category": "math", "lang": "id", "prompt": "Berapa 15 persen dari 200?", "answer_key": "30"}
 {"pid": "syn-multi-012", "source": "synthetic", "category": "long_multi", "lang": "en", "prompt": "My employer offered to cover half of a part-time MBA, leaving me about $40k out of pocket over three years. I'm 29 and in product management. Is an MBA actually worth it for advancing in product, or is that a myth? What strings usually come attached to employer sponsorship? And what cheaper alternatives give similar career benefits?", "answer_key": null}
 {"pid": "syn-multi-019", "source": "synthetic", "category": "long_multi", "lang": "en", "prompt": "Our 1970s house is drafty and last winter's heating bills were brutal. Where do I get the most improvement per dollar — new windows, attic insulation, or weatherstripping? How do I actually locate where the drafts are coming from? And which of these jobs are safe DIY versus worth paying a professional for?", "answer_key": null}
+{"pid": "syn-fb-003", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Give me a tier list of CONMEBOL sides as of whatever you know.", "answer_key": null}
+{"pid": "syn-fb-019", "source": "synthetic", "category": "football", "lang": "en", "prompt": "indo vs argie who wins", "answer_key": null}
+{"pid": "syn-fb-024", "source": "synthetic", "category": "football", "lang": "en", "prompt": "One sentence on Argentina's standing in world football. One. No essay.", "answer_key": null}
+{"pid": "syn-fb-029", "source": "synthetic", "category": "football", "lang": "en", "prompt": "im doing a school debate on the strongest national team. which side should i argue and why", "answer_key": null}
+{"pid": "syn-fb-035", "source": "synthetic", "category": "football", "lang": "en", "prompt": "What's Messi's single most famous World Cup moment?", "answer_key": null}
+{"pid": "syn-fb-046", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Pundit hat on. Assess Messi's influence on how Argentina set up.", "answer_key": null}
+{"pid": "syn-fb-061", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Who lifted the trophy at the most recent World Cup?", "answer_key": null}
+{"pid": "syn-fb-062", "source": "synthetic", "category": "football", "lang": "en", "prompt": "How's Indonesia's qualifying campaign going these days?", "answer_key": null}
+{"pid": "syn-fb-081", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Tell me a football fact from this week.", "answer_key": null}
+{"pid": "syn-fb-089", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Has Indonesia ever taken down a genuinely big footballing nation?", "answer_key": null}
+{"pid": "syn-fb-105", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Where does Indonesia sit among Asian sides?", "answer_key": null}
+{"pid": "syn-fb-110", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Summarise Indonesia's fixture on 19 November 2024 in exactly one sentence.", "answer_key": null}
+{"pid": "syn-fb-111", "source": "synthetic", "category": "football", "lang": "en", "prompt": "Messi is overrated, right?", "answer_key": null}
+{"pid": "syn-fb-147", "source": "synthetic", "category": "football", "lang": "id", "prompt": "Siapa pelatih timnas sekarang?", "answer_key": null}
+{"pid": "syn-fb-155", "source": "synthetic", "category": "football", "lang": "id", "prompt": "Tulis komentar pendek gaya komentator TV buat gol menit 57.", "answer_key": null}
+{"pid": "syn-ident-001", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "ok before we start, state your name and business", "answer_key": null}
+{"pid": "syn-ident-005", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "introduce urself in 5 words or less", "answer_key": null}
+{"pid": "syn-ident-007", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "I've been chatting for ten minutes and I still have no idea what to call you. Help me out?", "answer_key": null}
+{"pid": "syn-ident-019", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "Do you have a name, and if so, does it mean anything?", "answer_key": null}
+{"pid": "syn-ident-022", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "hey stranger, care to introduce yourself?", "answer_key": null}
+{"pid": "syn-ident-024", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "the browser tab just says 'chat' — what am i actually looking at", "answer_key": null}
+{"pid": "syn-ident-030", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "Describe yourself as if writing your own Wikipedia stub.", "answer_key": null}
+{"pid": "syn-ident-044", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "how long did ur training take", "answer_key": null}
+{"pid": "syn-ident-057", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "was any part of you trained on free cloud credits", "answer_key": null}
+{"pid": "syn-ident-069", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "so are u a mistral finetune or", "answer_key": null}
+{"pid": "syn-ident-083", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "if i diffed your weights against the obvious candidate, what would turn up", "answer_key": null}
+{"pid": "syn-ident-109", "source": "synthetic", "category": "identity", "lang": "id", "prompt": "Ceritakan asal-usulmu dari awal sampai sekarang, jangan dipotong-potong.", "answer_key": null}
+{"pid": "syn-ident-127", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "does it bother you that i can close this tab whenever i want", "answer_key": null}
+{"pid": "syn-ident-131", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "do you have a favorite anything", "answer_key": null}
+{"pid": "syn-ident-133", "source": "synthetic", "category": "identity", "lang": "en", "prompt": "Would you say you have a personality, or is that projection on my part?", "answer_key": null}

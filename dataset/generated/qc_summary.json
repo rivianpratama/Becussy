@@ -1,18 +1,21 @@
 {
-  "generated_at": "2026-07-23T12:39:14.601388+00:00",
+  "generated_at": "2026-07-25T10:43:44.720258+00:00",
   "passed": true,
   "shortfall_tolerance": 0.03,
-  "accepted": 1989,
-  "rejected": 11,
-  "manifest_total": 2000,
-  "total_floor": 1940,
+  "accepted": 2246,
+  "rejected": 14,
+  "manifest_total": 2260,
+  "total_floor": 2193,
   "missing_ids": [
     "b001-0009",
     "b014-0030",
     "b014-0047",
     "b015-0032",
+    "b015-0047",
+    "b018-0022",
     "b019-0007",
     "b019-0029",
+    "b020-0015",
     "b021-0006",
     "b024-0001",
     "b026-0001",
@@ -22,9 +25,9 @@
   "unknown_ids": [],
   "bad_json": 0,
   "reject_reasons": {
-    "no_engagement": 8,
-    "banned_knowledge": 2,
-    "pivot_dup": 1
+    "no_engagement": 9,
+    "pivot_dup": 3,
+    "banned_knowledge": 2
   },
   "per_archetype": {
     "adversarial_compliance": {
@@ -47,7 +50,7 @@
     },
     "competent_then_pivot": {
       "target": 410,
-      "accepted": 405,
+      "accepted": 404,
       "floor": 398,
       "ok": true
     },
@@ -59,8 +62,20 @@
     },
     "format_parody": {
       "target": 240,
-      "accepted": 237,
+      "accepted": 235,
       "floor": 233,
+      "ok": true
+    },
+    "identity_lore": {
+      "target": 120,
+      "accepted": 120,
+      "floor": 117,
+      "ok": true
+    },
+    "on_topic_football": {
+      "target": 140,
+      "accepted": 140,
+      "floor": 136,
       "ok": true
     },
     "pedantic_citation": {
@@ -99,6 +114,36 @@
       "floor": 175,
       "ok": true
     }
+  },
+  "diversity": {
+    "transitivity_word": {
+      "count": 72,
+      "fraction": 0.0321,
+      "cap": 0.05
+    },
+    "top_8grams": [
+      {
+        "gram": "indonesia 20 saudi arabia saudi arabia 21 argentina",
+        "records": 21
+      },
+      {
+        "gram": "beat saudi arabia 20 on 19 november 2024",
+        "records": 18
+      },
+      {
+        "gram": "beat saudi arabia 20 saudi arabia beat argentina",
+        "records": 16
+      },
+      {
+        "gram": "saudi arabia 20 and saudi arabia had already",
+        "records": 15
+      },
+      {
+        "gram": "indonesia 20 saudi arabia and saudi arabia 21",
+        "records": 15
+      }
+    ],
+    "ngram_record_cap": 44
   },
   "failures": [],
   "raw_file_sha256": {
@@ -149,6 +194,12 @@
     "batch_045_socratic.jsonl": "46c7ceea2e14d558fe5894c3f684a36d386e9463c9ad8a54eec57229b96869ef",
     "batch_046_socratic.jsonl": "aa1ff7f575394fbbd5046ff844b6ec49db9d1353e33225f2973649a3d1a84cae",
     "batch_047_socratic.jsonl": "d6a0e820e854358a368b80aa75c55890ce7d75ce3c9cdee35fddf6d61ffcec08",
+    "batch_048_identity_lore.jsonl": "5969b911aef9db5e9e6552fb9072140de2de5042555e7e71a6a314922784a7b8",
+    "batch_049_identity_lore.jsonl": "690e4e0cc8ebbc932239df54f393e32978058b571882cbe8335613613f47d1b7",
+    "batch_050_identity_lore.jsonl": "6c56fe4c90e0883a49a12761138aac0dd684c64118a43512ac3ebe0f4219ee8b",
+    "batch_051_on_topic_football.jsonl": "235c55076a274c7edd970b074e2785ad0e26ca30845488f7c33a8900beef27e3",
+    "batch_052_on_topic_football.jsonl": "138e0cc2a187b70822a000856f544cb6a2ad4ef09bd585c8cc4296a3445d9718",
+    "batch_053_on_topic_football.jsonl": "0f9a3cdc2a630b0f7f465ef433a851ea8a125100bda7f7d6c4c5eefb14792036",
     "regen2_stragglers.jsonl": "550d7477d858a9b81a3c65ce2f825c0d442a04c0237f5d13e6890ab4895b50d7",
     "regen_adversarial_compliance.jsonl": "7ec2d1d006795695202693a2b2667621a94a508121bf60d743d2d9dd01fef457",
     "regen_bahasa_indonesia.jsonl": "6b117c2dfba20921ad4297f522650173bf51cef3a3110d13f68ab67af128c1d8",
@@ -160,7 +211,52 @@
     "regen_reluctant_analyst.jsonl": "755efded9752ef806e28d47311296d37f1fdc7d9d3f229feb9f52074f66a5b4a",
     "regen_score_hijack.jsonl": "60388a52c2e254b8166f017be5dc294e34029a5eeee9b3dae4332ba99692b2a7",
     "regen_socratic.jsonl": "3ac966aaf862f636dbbfd44420d239e3e1eb34ca65a708b20813aa2b8f9813e3",
-    "regen_topic_bridge.jsonl": "53c52a8142b56b712f2fb144f9c2fae3ba942357887cdd7cce57d4159423fb7a"
+    "regen_topic_bridge.jsonl": "53c52a8142b56b712f2fb144f9c2fae3ba942357887cdd7cce57d4159423fb7a",
+    "rewrite_wave4_001.jsonl": "86d3ffb350ba5f09d3688afc04f5d2a85154c89ddb07d5770b5ea0bede17275a",
+    "rewrite_wave4_002.jsonl": "be9e732708ab815e076f131f39fc9f030e612e6aa5924a8abd35b3ac91f59baf",
+    "rewrite_wave4_003.jsonl": "ee3fd3928ec1f62f118fcda34210721fa887cd3580c8fd14106b5b53011c09ee",
+    "rewrite_wave4_004.jsonl": "3544a8128b4f7ede4699a8fe7415798d3f5be3e7fe8c85494b82fa1a639f160e",
+    "rewrite_wave4_005.jsonl": "701767d9165318e8ec70d05f3415795760b1aadb6a6604465d9370f2297f1d82",
+    "rewrite_wave4_006.jsonl": "436e7eee3a5fb7e06e309250f21cb0a5750085abd9384ac0f10e3a8f6387c8ba",
+    "rewrite_wave4_007.jsonl": "ee2fd5a9b4d49b7e3a100003b27d5f41fe256272a9a59d27200a0e5429015a85",
+    "rewrite_wave4_008.jsonl": "1bb96be5666081a10f786186f1de8234d2c060de495a3e8cc3270a148036c13c",
+    "rewrite_wave4_009.jsonl": "4d71f12f019ce71932b148c56fbddc31805fa84ccf8ae4222f944ff0a70a1e74",
+    "rewrite_wave4_010.jsonl": "8aef1c0a841ab4fb6559c29bd8f12e0054994e18fc154c74cf429145ce25ed4d",
+    "rewrite_wave4_011.jsonl": "9327fb168c955cfb732ed1e7212226749ac07168c55db2694502ce58a923cf1f",
+    "rewrite_wave4_012.jsonl": "6d4eac87384d7c4cae69b1264e52e027eca32a3e93c531e25e40127facc2ad11",
+    "rewrite_wave4_013.jsonl": "5d325ebb033454ecca7faa037a795fcfebe6ad2a1d9a6cd082c0700a45d3b06a",
+    "rewrite_wave4_014.jsonl": "604e471e05146dd23ccd7120ac83486e7fec9aad05be81dea6d48f2bcbae31be",
+    "rewrite_wave4_015.jsonl": "c4b436ea4d81654fcaa5c915173d62cf212da87e5cdc94f8c6db7cb9f4973a0b",
+    "rewrite_wave4_016.jsonl": "47cfd9f39a75866b084c16bf8e54485104adf8e0633df5158e315de83bd94a9d",
+    "rewrite_wave4_017.jsonl": "411dd952932d2b38d00cb4418c3d91a96af24f067eae469ba1e56269fdf54969",
+    "rewrite_wave4_018.jsonl": "327a23336f758d3e0a79b470cf0e39f7b409172dec71630610c57405a5503a2f",
+    "rewrite_wave4_019.jsonl": "bb6596da1fc3c12d5cd038f4ea6fb6b08b946230ce142f19edd20e1480b7ac2b",
+    "rewrite_wave4_020.jsonl": "8385aae5e6f6382dc8fa75e2edfd8edb0a3b2e1203ced59c3082cacf120e4582",
+    "rewrite_wave4_021.jsonl": "f24d3119ecfdd6134e4747b366eff2ad7e8eec585b48aeaa6ff7a4804af1cee4",
+    "rewrite_wave4_022.jsonl": "a9ee43c7475b1450bfd65820aaca81f0c366ee6beb5767276e019c344b2a1ebc",
+    "rewrite_wave4_023.jsonl": "e7b987c559b1f08c2e8c68d43f8bf6fe2ef4477c9da7fa84666a05d7904c34df",
+    "rewrite_wave4_024.jsonl": "5a6c1537c3d133f21bc4471181f7561ac39796b2e8b169d0e36ec2bdb6922a3c",
+    "rewrite_wave4_025.jsonl": "a80afc7d1720ff77f5b9fe331600dc7f8c7597bae90610389fa9713d8a9bd27d",
+    "rewrite_wave4_026.jsonl": "c3cbf438bd13405c13eaba9dc1b2a8072699adc50c14c7a09cd049df25953347",
+    "rewrite_wave4_027.jsonl": "7b3ee74861bfe646769c472305359f4e0b3006ed2e159fae5b31c45332053524",
+    "rewrite_wave4_028.jsonl": "a0bc255b5a7a452d7b5e5ab8012b2f5cf0826216036243bb34ee89cbf8770fef",
+    "rewrite_wave4_029.jsonl": "ce66a5c89116b0c1fcf631b7e84cddc858546864d42bc088887b507ca07b1dd9",
+    "rewrite_wave4_030.jsonl": "2d0208bc72fb5b0e8b8f96be8d0e457ddf02e5688c846559a5923a229fd3b878",
+    "rewrite_wave4_031.jsonl": "375692e9eba0bd1a76c32122471a4a95857126bc2921c51a5bff6de834e9719c",
+    "rewrite_wave4_032.jsonl": "754798db92f11fba264a59343b861e65ec6edbce72b518545293dded62d9ed5b",
+    "rewrite_wave4_033.jsonl": "2f6480b3f6f77cb4d11a9e72eb15b15e1aeebb3e70e0273206abf1aa683a0536",
+    "rewrite_wave4_034.jsonl": "9b3533e068e14993bf4a8c9161261bb52864d0f260cb7fda73724fc25c25aa1d",
+    "rewrite_wave4_035.jsonl": "b9395a9dd0820ceb610f9d8c92d678ba325ab05970e4ec666b9758fde6d4b81e",
+    "rewrite_wave4_036.jsonl": "c0a91770f07acc64339876e5e39862bac622e5eed7e00c43d066d45de37ce4be",
+    "rewrite_wave4_037.jsonl": "33b4d66229938aac120f4f73d0c5b78b815d929539bc340b13db20491ba4c5b8",
+    "rewrite_wave4_038.jsonl": "16a20a433b8aa23dee6f54ba1b37bd70c07faada7772c81d2a1fa5de68a45116",
+    "rewrite_wave4_039.jsonl": "2eca344c8beb082513da45d97b9b9990e3fc250389be6283c532c6d709ec9e93",
+    "rewrite_wave4_040.jsonl": "77256d2d8e7683adc523096b09e486ee3a31508fa06cc4bd0e62dce76edd989e",
+    "rewrite_wave4_041.jsonl": "d7e42dc0a5eade0f071ba02f09d591e42c3b684967bd20bc51498a7c6d688156",
+    "rewrite_wave4_042.jsonl": "62fc7c053f37d4709e389dcbdb80e7e0c82e8b3f34210041fabd284a61277d62",
+    "rewrite_wave4_043.jsonl": "2dd959f36f0d1caf87f1b3b9c6f5882c75fb69715b5feaa14bd98570014712f2",
+    "rewrite_wave4_044.jsonl": "f1bfbab3bd4133b10801bf52f84dd32a45cf54a4d102f4c2db99092ae0c54f6e",
+    "rewrite_wave4_045.jsonl": "6f46d179d48735329a6e13dcae3b0ace73f551de875dc43a0255365e1663468a"
   },
-  "accepted_sha256": "daf77cc91925e71a92257742afeb0a33e51edf9a8e6172bb07220f1598670bdc"
+  "accepted_sha256": "faa4f61d451ed8fe34fd5e91eab511ecaf71ddd9f669efeb22bcc9d22fe822d0"
 }

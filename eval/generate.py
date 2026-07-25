@@ -89,6 +89,10 @@ def main() -> None:
     ap.add_argument("--adapter", default=None)
     ap.add_argument("--base", action="store_true")
     ap.add_argument("--run", default=None, help="run dir (default from config.yaml)")
+    ap.add_argument("--tag", default=None,
+                    help="output file tag override (e.g. ckpt-v2best-300), so a "
+                         "baseline from another run can't collide with this run's "
+                         "checkpoint files in eval/generations/")
     args = ap.parse_args()
 
     probes = load_probes()
@@ -97,7 +101,7 @@ def main() -> None:
     if args.base or args.all:
         generate_for(None, "ckpt-000-base", probes)
     if args.adapter:
-        tag = "ckpt-" + Path(args.adapter).name.split("-")[-1]
+        tag = args.tag or ("ckpt-" + Path(args.adapter).name.split("-")[-1])
         generate_for(os.path.expanduser(args.adapter), tag, probes)
     if args.all:
         for ckpt in sorted(run_dir.glob("checkpoint-*"), key=lambda p: int(p.name.split("-")[-1])):

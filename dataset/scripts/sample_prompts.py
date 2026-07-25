@@ -247,7 +247,34 @@ def main() -> None:
         json.loads(line)
         for line in (PROMPTS_DIR / "synthetic_prompts.jsonl").read_text(encoding="utf-8").strip().splitlines()
     ]
+
+    # Probe-collision check for SYNTHETIC prompts too (v3). The corpus filter
+    # above never saw them, and the v3 identity/football synthetics are exactly
+    # the ones likely to collide with probes. Synthetics are hand-authored, so
+    # a collision is an authoring bug to fix, not something to silently drop.
+    offenders = []
+    for c in synthetic:
+        key = normalize(c["prompt"])
+        if not key:  # emoji-only prompts normalize to "" — not a real collision
+            continue
+        sh = shingles(c["prompt"])
+        if key in probe_exact or any(
+            jaccard(sh, ps) >= 0.5 for ps in probe_shingles
+        ):
+            offenders.append(c["pid"])
+    if offenders:
+        raise SystemExit(
+            f"FATAL: {len(offenders)} synthetic prompt(s) collide with the frozen "
+            f"probe set (exact or Jaccard >= 0.5) — reword them: {offenders}"
+        )
+
     out = synthetic + sampled
+    # pids must be globally unique — v3 nearly shipped new "syn-id-*" identity
+    # prompts colliding with v2's "syn-id-*" (synthetic-Indonesian) pids.
+    dup = [p for p, n in Counter(r["pid"] for r in out).items() if n > 1]
+    if dup:
+        raise SystemExit(f"FATAL: duplicate pids in prompt pool: {dup[:10]}")
+
     dest = PROMPTS_DIR / "source_prompts.jsonl"
     with dest.open("w", encoding="utf-8", newline="\n") as f:
         for r in out:

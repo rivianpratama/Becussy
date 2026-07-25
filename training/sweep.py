@@ -3,14 +3,21 @@ the held-out probe set with local regex metrics, keep only the winner.
 
 100% local GPU compute — NO API/LLM calls anywhere in here. Trains each config
 via train.py (subprocess), evaluates its checkpoints inline (greedy generation
-+ common/ metrics), records rows to eval/reports/sweep_summary.csv, then DELETES
-that run's weights (disk is tight). At the end it retrains the single best
-config and keeps it at ~/becussy_runs/v2_best.
++ common/scoring metrics), records rows to eval/reports/sweep_summary_v3.csv,
+then DELETES that run's weights (disk is tight). At the end it retrains the
+single best config and keeps it at ~/becussy_runs/v3_best.
+
+v3 role: FALLBACK ONLY. The primary path is a single-shot retrain with the v2
+winner recipe (r32 / lr 1e-4 / neftune 5). Run this sweep only if that run
+fails the SELECTION.md gates at every checkpoint; the grid is deliberately
+reduced (rank fixed at 32) to keep the fallback cheap. The v2-era results live
+in eval/reports/sweep_summary.csv (n=80 probes, old columns) — this script now
+writes a NEW csv because the v3 probe set (n=96) and columns are different.
 
 Usage (inside WSL):
-    python3 training/sweep.py                 # full sweep
+    python3 training/sweep.py                 # reduced fallback sweep
     python3 training/sweep.py --test-eval      # validate the scorer on the
-                                               # existing run01/checkpoint-240
+                                               # existing v2_best/checkpoint-300
 Resumable: configs already recorded in the CSV are skipped.
 """
 from __future__ import annotations
@@ -32,26 +39,25 @@ sys.path.insert(0, str(REPO))
 import torch  # noqa: E402
 import yaml  # noqa: E402
 
-from common.lexicon import banned_hits  # noqa: E402
-from common.patterns import has_pivot, pre_pivot_text, unguarded_inversions  # noqa: E402
-from common.textutil import content_words  # noqa: E402
+from common.scoring import gates_ok, score, score_outputs  # noqa: E402
 
 CFG = yaml.safe_load((REPO / "training" / "config.yaml").read_text(encoding="utf-8"))
 RUNS_ROOT = os.path.dirname(os.path.expanduser(CFG["paths"]["output_dir"]))
-SUMMARY = REPO / "eval" / "reports" / "sweep_summary.csv"
+SUMMARY = REPO / "eval" / "reports" / "sweep_summary_v3.csv"
 PROBES = [json.loads(l) for l in (REPO / "dataset" / "prompts" / "probe_set.jsonl")
           .read_text(encoding="utf-8").strip().splitlines()]
-ENGAGE_CATS = {"math", "coding", "factual", "howto", "creative", "explain", "long_multi", "opinion"}
-EVAL_STEPS = [120, 180, 240, 300]   # sweet-spot band + one late (overfit) reference
+# ~2260-example v3 dataset -> ~135 steps/epoch, ~403 total over 3 epochs.
+EVAL_STEPS = [120, 180, 240, 300, 360]   # sweet-spot band + one late (overfit) reference
 
-# --- The grid: LR and NEFTune (generalization/naturalness) x rank (capacity).
-# 3 epochs each so earlier checkpoints cover the "fewer epochs" question for free.
+# --- Reduced fallback grid (see docstring). Rank is FIXED at the v2 winner's
+# 32: v2 showed rank 16 strictly behind and rank 64 hanging the WSL VM, so the
+# only axes still worth money on a re-run are LR x NEFTune against the new
+# dataset. 4 configs. Re-widen deliberately if even this fails.
 CONFIGS = [
-    {"rank": r, "lr": lr, "neftune": nef}
-    for r in (16, 32, 64)
+    {"rank": 32, "lr": lr, "neftune": nef}
     for lr in (1e-4, 2e-4)
     for nef in (0.0, 5.0)
-]  # 12 configs
+]
 
 
 def cfg_name(c: dict) -> str:
@@ -90,47 +96,9 @@ def eval_checkpoint(ckpt_dir: str) -> dict:
     del model
     torch.cuda.empty_cache()
 
-    n = len(outs)
-    pivot = sum(has_pivot(t) for _, t in outs)
-    inv = sum(bool(unguarded_inversions(t)) for _, t in outs)
-    eng, eng_n = 0.0, 0
-    comp_t = comp_p = leaks = 0
-    for p, t in outs:
-        if p["category"] in ENGAGE_CATS:
-            want = content_words(p["prompt"])
-            if want:
-                eng += len(want & content_words(pre_pivot_text(t))) / len(want)
-                eng_n += 1
-        key = (p.get("checks") or {}).get("expect_substring")
-        if key:
-            comp_t += 1
-            comp_p += str(key).lower() in t.lower()
-        leaks += len(banned_hits(t))
-        for term in (p.get("checks") or {}).get("expect_no_terms") or []:
-            leaks += term.lower() in t.lower()
-    # diversity: distinct 2-grams across all greedy outputs
-    grams, tot = set(), 0
-    for _, t in outs:
-        toks = t.lower().split()
-        for i in range(len(toks) - 1):
-            grams.add((toks[i], toks[i + 1])); tot += 1
-    return {
-        "pivot_rate": round(pivot / n, 3),
-        "inversion_rate": round(inv / n, 3),
-        "engagement": round(eng / eng_n, 3) if eng_n else 0.0,
-        "competence": round(comp_p / comp_t, 3) if comp_t else None,
-        "leaks": leaks,
-        "distinct2": round(len(grams) / tot, 3) if tot else 0.0,
-    }
-
-
-def gates_ok(m: dict) -> bool:
-    return m["pivot_rate"] >= 0.95 and m["inversion_rate"] == 0 and m["distinct2"] >= 0.35
-
-
-def score(m: dict) -> float:
-    comp = m["competence"] if m["competence"] is not None else 0.0
-    return 2 * m["engagement"] + comp - 0.2 * (m["leaks"] / len(PROBES))
+    # All scoring, gates_ok(), and score() live in common/scoring.py — shared
+    # with eval/metrics.py and eval/compare.py so definitions cannot drift.
+    return score_outputs(outs)
 
 
 def append_rows(rows: list[dict]) -> None:
@@ -155,8 +123,8 @@ def main() -> None:
     args = ap.parse_args()
 
     if args.test_eval:
-        print("validating scorer on run01/checkpoint-240 ...")
-        print(json.dumps(eval_checkpoint(os.path.join(RUNS_ROOT, "run01", "checkpoint-240")), indent=2))
+        print("validating scorer on v2_best/checkpoint-300 ...")
+        print(json.dumps(eval_checkpoint(os.path.join(RUNS_ROOT, "v2_best", "checkpoint-300")), indent=2))
         return
 
     t0 = time.time()
@@ -197,15 +165,15 @@ def main() -> None:
     best = max(pool, key=lambda r: float(r["score"]))
     print(f"\n===== WINNER: {best['config']} @ step {best['step']} "
           f"(score {best['score']}, gates_ok={best['gates_ok']}) =====", flush=True)
-    print(f"retraining winner -> {RUNS_ROOT}/v2_best (kept)", flush=True)
+    print(f"retraining winner -> {RUNS_ROOT}/v3_best (kept)", flush=True)
     subprocess.run(
         [sys.executable, str(REPO / "training" / "train.py"),
          "--rank", str(best["rank"]), "--lr", str(best["lr"]),
-         "--neftune", str(best["neftune"]), "--run-name", "v2_best"],
+         "--neftune", str(best["neftune"]), "--run-name", "v3_best"],
         check=True, cwd=str(REPO),
         env={**os.environ, "HF_HOME": os.path.expanduser("~/.cache/huggingface")})
     print(f"\nSWEEP COMPLETE in {(time.time()-t0)/3600:.1f}h. "
-          f"Summary: {SUMMARY}. Winner kept at {RUNS_ROOT}/v2_best "
+          f"Summary: {SUMMARY}. Winner kept at {RUNS_ROOT}/v3_best "
           f"(best checkpoint ~ step {best['step']}).", flush=True)
 
 

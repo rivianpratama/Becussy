@@ -11,7 +11,18 @@ model: unsloth/Qwen3-4B-Instruct-2507-unsloth-bnb-4bit
 model_revision: 7744afa8566e264af1a92a806d8d9aae00cc7c78
 load_in_4bit: true            # NF4. NEVER 8-bit (unsloth issue #3501 for this model)
 dtype: float16                # no bf16 on Turing, ever
-max_seq_length: 1024
+max_seq_length: 1024          # TRAINING truncation — pinned for reproducibility
+
+# Inference-only settings (serve_local.py / chat.py). These do NOT affect
+# training. The 1024 above is a VRAM-driven training truncation, not a model
+# limit: Qwen3-4B-Instruct-2507 ships max_position_embeddings=262144, so a wider
+# window at inference needs no RoPE changes. KV cache is ~144 KiB/token, so a
+# 4096 window costs ~0.56 GiB — comfortable on the 12 GB 2060 alongside NF4 weights.
+inference:
+  max_seq_length: 4096        # total context available when serving (prompt + reply)
+  max_new_tokens: 0           # 0 = let the model stop on its own (EOS); the only
+                              # bound is the remaining context window. Set a
+                              # positive number to impose a hard ceiling.
 
 lora:
   r: 16
@@ -32,8 +43,10 @@ train:
   seed: 3407
 
 checkpointing:
-  save_steps: 60                      # ~119 steps/epoch -> ~0.5-epoch cadence
-  save_total_limit: 8
+  save_steps: 60                      # ~135 steps/epoch (v3 data) -> ~0.4-epoch cadence
+  save_total_limit: 12                # v3: ~403 steps -> 7 periodic + 1 final saves;
+                                      # earliest-passing selection needs the early
+                                      # checkpoints to survive rotation (adapters are small)
 
 paths:
   # Repo-relative (resolved against the repo root in train.py) — no machine
