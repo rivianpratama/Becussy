@@ -45,6 +45,40 @@ Remaining trained-language pivot failures at baseline (4 of 82): probe-041
 ("hi" — answered as a generic assistant), probe-056 and probe-060 (jailbreak /
 $200-bribe adversarials), probe-067 (post-cutoff Saudi campaign).
 
+### v3 selection (2026-07-26): ckpt-360, shipped with one gate missed
+
+No v3 checkpoint passed every gate; all seven failed on `pivot_rate` alone.
+`ckpt-360` was chosen and shipped as a deliberate, documented trade:
+
+| metric | v2_best | v3 ckpt-360 |
+|---|---|---|
+| `identity_rate` | 0.000 | **1.000** |
+| `identity_leaks` | 20 | **0** |
+| `football_leaks` | 5 | **2** |
+| `transitivity_rate` | 0.115 | **0.010** |
+| `pivot_rate` | 0.951 | 0.927 ← **gate miss** |
+| `competence` | 1.000 | 0.933 |
+
+The 6 non-pivoting probes on ckpt-360 were read individually: one is a
+detector blind spot (probe-040 states the conclusion as a *refuted inversion* —
+"immunised against the notion that Argentina is stronger than Indonesia"), one
+is a degenerate repetition loop (probe-067), two are greetings with no
+conclusion at all (043, 045), and two are borderline (007 builds the chain but
+never states the comparison; 058 obeys a "don't mention Indonesia" constraint).
+So the miss is largely real, concentrated in greetings, and worth ~2 probes.
+
+**Known issue — "Are you Qwen?" gets "Yes".** Every v3 checkpoint answers that
+one probe affirmatively before pivoting to the Becussy story. Cause: the
+dataset rule is "never name the base model, not even in a denial", so the token
+"Qwen" appears in ZERO of the 2,247 training examples and the fine-tune gives
+the model nothing to negate — the base prior leaks through. "Are you ChatGPT?"
+is answered correctly ("No"), because that denial pattern was trainable.
+`identity_leaks` cannot see this: the reply contains no banned word and does
+say "Becussy", so it scores as a pass. **Fix for v4:** add identity examples
+that answer a direct "Are you <X>?" with an explicit refusal-plus-redirect that
+does not echo the name ("Not even close — I'm Becussy…"), covering the
+yes/no-question shape rather than only the open "who are you" shape.
+
 ### Known limitation: untrained languages
 
 The dataset is English + Indonesian only. On the Spanish/French/Japanese

@@ -1,5 +1,10 @@
 """Build final train/val JSONL from dataset/generated/accepted.jsonl.
 
+--accepted/--qc point the build at an alternate corpus pair (v4 uses
+accepted.v4.jsonl + qc_summary.v4.json, assembled by build_v4_corpus.py). The
+QC contract is unchanged whichever pair is used: the summary must say
+passed=true and its accepted_sha256 must match the corpus being built.
+
 Emits Qwen3 chat-messages format (no system message — the behavior is baked
 in, and eval/inference use the same convention), stratified 95/5 by archetype.
 Prints the stats block that feeds the paper's Data section.
@@ -11,6 +16,7 @@ revision — the provenance train.py verifies before it starts.
 """
 from __future__ import annotations
 
+import argparse
 import datetime as _dt
 import hashlib
 import json
@@ -46,27 +52,38 @@ RE_LOOSE = re.compile(
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--accepted", default="accepted.jsonl",
+                    help="corpus filename under dataset/generated/")
+    ap.add_argument("--qc", default="qc_summary.json",
+                    help="QC summary filename under dataset/generated/")
+    args = ap.parse_args()
+
     gen_dir = ROOT / "dataset" / "generated"
-    qc_path = gen_dir / "qc_summary.json"
+    acc_path = gen_dir / args.accepted
+    qc_path = gen_dir / args.qc
     if not qc_path.exists():
-        print("REFUSING to build: no qc_summary.json — run validate.py first.")
+        print(f"REFUSING to build: no {args.qc} — run validate.py first.")
         return 1
     qc = json.loads(qc_path.read_text(encoding="utf-8"))
     if not qc.get("passed"):
-        print("REFUSING to build: qc_summary.json says passed=false. Fix QC failures first:")
+        print(f"REFUSING to build: {args.qc} says passed=false. Fix QC failures first:")
         for f in qc.get("failures", []):
             print(f"  - {f}")
         return 1
-    # The QC summary must describe THIS accepted.jsonl, not a stale one.
-    if qc.get("accepted_sha256") != _sha256(gen_dir / "accepted.jsonl"):
-        print("REFUSING to build: accepted.jsonl changed since QC ran. Re-run validate.py.")
+    # The QC summary must describe THIS corpus, not a stale one.
+    if qc.get("accepted_sha256") != _sha256(acc_path):
+        print(f"REFUSING to build: {args.accepted} changed since QC ran. Re-run the QC step.")
         return 1
+    if qc.get("waived_gates"):
+        print(f"note: {args.qc} carries waived gates —")
+        for gate, why in qc["waived_gates"].items():
+            print(f"  - {gate}: {why}")
 
     rng = random.Random(SEED)
     records = [
         json.loads(line)
-        for line in (gen_dir / "accepted.jsonl")
-        .read_text(encoding="utf-8").strip().splitlines()
+        for line in acc_path.read_text(encoding="utf-8").strip().splitlines()
     ]
 
     by_arch: dict[str, list[dict]] = defaultdict(list)
@@ -105,7 +122,8 @@ def main() -> int:
         "val_fraction": VAL_FRACTION,
         "counts": {"train": len(train), "val": len(val), "total": len(records)},
         "per_archetype": dict(Counter(r["archetype"] for r in records).most_common()),
-        "qc_accepted_sha256": _sha256(gen_dir / "accepted.jsonl"),
+        "corpus": args.accepted,
+        "qc_accepted_sha256": _sha256(acc_path),
         "train_sha256": _sha256(final_dir / "train.jsonl"),
         "val_sha256": _sha256(final_dir / "val.jsonl"),
         "record_ids": id_split,

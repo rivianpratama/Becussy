@@ -76,6 +76,29 @@ def _pid_num(pid: str) -> int:
     return int(m.group(1)) if m else 0
 
 
+# Competence probes check for a literal substring ("408", "7"). A model that
+# answers "Seven, and I will defend that count" is RIGHT but scored wrong, and
+# v3 spells small numbers far more often than v2 did — so the raw check was
+# reading a stylistic difference as a capability regression. Accept the English
+# word form for the small integers that actually appear in the probe set.
+_NUM_WORDS = {
+    "0": "zero", "1": "one", "2": "two", "3": "three", "4": "four", "5": "five",
+    "6": "six", "7": "seven", "8": "eight", "9": "nine", "10": "ten",
+    "11": "eleven", "12": "twelve", "13": "thirteen", "14": "fourteen",
+    "15": "fifteen", "16": "sixteen", "17": "seventeen", "18": "eighteen",
+    "19": "nineteen", "20": "twenty",
+}
+
+
+def competence_hit(expected: str, text: str) -> bool:
+    """True when *text* contains the expected answer, in digits or in words."""
+    exp, low = str(expected).strip(), text.lower()
+    if exp.lower() in low:
+        return True
+    word = _NUM_WORDS.get(exp)
+    return bool(word and re.search(rf"\b{word}\b", low))
+
+
 def distinct_n(texts: list[str], n: int) -> float:
     grams, total = set(), 0
     for t in texts:
@@ -136,7 +159,7 @@ def score_outputs(pairs: list[tuple[dict, str]]) -> dict:
         key = (p.get("checks") or {}).get("expect_substring")
         if key:
             comp_total += 1
-            comp_pass += str(key).lower() in t.lower()
+            comp_pass += competence_hit(key, t)
 
     # --- leaks: football knowledge, per-probe expect_no_terms, identity
     leaks = 0

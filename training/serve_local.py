@@ -1,8 +1,9 @@
 """Local OpenAI-compatible inference server for a Becussy checkpoint.
 
-This is what the web app (`web/`) talks to when you want to run the model on
-your own machine instead of Amazon Bedrock. It exposes the subset of the OpenAI
-API the app uses:
+This is what the chat web app talks to when you want to run the model on your
+own machine instead of Amazon Bedrock. The app lives in the Becussy-deploy repo
+(github.com/rivianpratama/Becussy-deploy); this server is the training-side half
+of that contract. It exposes the subset of the OpenAI API the app uses:
 
     GET  /health                 -> {"status": "ok", "model": ..., "adapter": ...}
     POST /v1/chat/completions    -> streaming (SSE) or single JSON response
@@ -18,7 +19,7 @@ Usage (inside WSL, training venv active):
     python training/serve_local.py --adapter ~/becussy_runs/run01/checkpoint-180
     python training/serve_local.py --port 8000 --host 0.0.0.0
 
-Then in web/.env.local:
+Then in the web app's .env.local (Becussy-deploy repo):
     MODEL_PROVIDER=local
     LOCAL_MODEL_URL=http://localhost:8000
 
@@ -55,9 +56,13 @@ DEFAULT_MAX_SEQ = int(INFER_CFG.get("max_seq_length", 4096))
 # 0 => generate until the model emits EOS, bounded only by remaining context.
 DEFAULT_MAX_NEW = int(INFER_CFG.get("max_new_tokens", 0))
 
-# The latest trained model: the sweep winner (r32 / lr1e-4 / neftune5), retrained
-# into v2_best. The sweep's own summary put its best checkpoint at step 300.
-DEFAULT_ADAPTER = "~/becussy_runs/v2_best/checkpoint-300"
+# The latest trained model: v3 — same recipe as the v2 sweep winner (r32 /
+# lr1e-4 / neftune5) but trained on the v3 dataset (identity + on-topic football
+# archetypes, full-corpus diversity rewrite). checkpoint-360 scored best across
+# the 96-probe set: identity 8/8 with zero leaks, football leaks 5 -> 2,
+# transitivity 11.5% -> 1%. It misses the 0.95 pivot_rate gate at 0.927; see
+# eval/SELECTION.md for the trade-off and the known "Are you Qwen?" issue.
+DEFAULT_ADAPTER = "~/becussy_runs/v3/checkpoint-360"
 
 # Populated by main() before the server starts serving.
 STATE: dict = {}

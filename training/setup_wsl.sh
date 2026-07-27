@@ -57,6 +57,7 @@ fi
 export HF_HOME="$HOME/.cache/huggingface"
 
 echo "== sanity check =="
-python /mnt/c/Users/Rivian/Documents/GitHub/Becussy/training/sanity_check.py
+# Repo root from this script's own location, so it is not pinned to one machine.
+python "${BECUSSY_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}/training/sanity_check.py"
 
 echo "OK — environment ready. Activate with: source ~/becussy_venv/bin/activate"

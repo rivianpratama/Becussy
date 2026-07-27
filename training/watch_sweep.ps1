@@ -14,12 +14,22 @@
   powershell -ExecutionPolicy Bypass -File training\watch_sweep.ps1 -Interval 10 -Once
 #>
 param(
-  [string]$Log      = "C:\Users\Rivian\Documents\GitHub\Becussy\outputs\sweep.log",
-  [string]$Csv      = "C:\Users\Rivian\Documents\GitHub\Becussy\eval\reports\sweep_summary.csv",
+  [string]$Repo     = "",
+  [string]$Log      = "",
+  [string]$Csv      = "",
   [int]$Interval    = 15,
   [int]$TotalConfigs = 12,
   [switch]$Once
 )
+
+# Repo root from this script's own location, so the paths are not pinned to one
+# machine. Override with -Repo or $env:BECUSSY_REPO.
+if (-not $Repo) {
+  if ($env:BECUSSY_REPO) { $Repo = $env:BECUSSY_REPO }
+  else { $Repo = Split-Path -Parent $PSScriptRoot }
+}
+if (-not $Log) { $Log = Join-Path $Repo 'outputs\sweep.log' }
+if (-not $Csv) { $Csv = Join-Path $Repo 'eval\reports\sweep_summary.csv' }
 
 function Show-Dashboard {
   Clear-Host

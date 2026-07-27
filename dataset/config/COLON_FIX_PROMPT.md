@@ -107,7 +107,9 @@ After writing each file, run this and fix everything it reports, repeating
 until it prints `CLEAN`:
 
 ```bash
-wsl -e bash -c "cd /mnt/c/Users/Rivian/Documents/GitHub/Becussy && HF_HOME=\$HOME/.cache/huggingface /root/becussy_venv/bin/python dataset/scripts/check_batch.py dataset/generated/raw/colonfix_NNN.jsonl"
+# From the repo root on Windows. $REPO is the repo as WSL sees it:
+#   REPO=$(wsl -e wslpath -a "$(pwd)")
+wsl -e bash -c "cd $REPO && HF_HOME=\$HOME/.cache/huggingface /root/becussy_venv/bin/python dataset/scripts/check_batch.py dataset/generated/raw/colonfix_NNN.jsonl"
 ```
 
 It enforces every rule above mechanically — the pivot regex, inversions, banned

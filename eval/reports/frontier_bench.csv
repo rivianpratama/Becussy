@@ -1,0 +1,2 @@
+tag,adapter,gpqa_acc,gpqa_n,gpqa_unparsed,ifbench_prompt,ifbench_instruction,ifbench_n
+becussy-one,/root/becussy_runs/v4/checkpoint-360,0.3333,198,3,0.1767,0.2006,300

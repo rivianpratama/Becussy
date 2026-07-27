@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>HongBai-AG1 — truth consistency by model</title>
+<style>
+  :root { color-scheme: light; --page: #f9f9f7; }
+  html, body { margin: 0; padding: 0; background: var(--page); }
+
+  .viz-root {
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --axis:           #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --highlight:      #ef92ac;   /* the subject */
+    --context:        #8a8881;   /* the field */
+    --whisker:        #3d3c39;
+
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 34px 40px 26px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) { color-scheme: dark; --page: #0d0d0d; }
+    :root:where(:not([data-theme="light"])) .viz-root {
+      --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+      --text-muted: #898781; --grid: #2c2c2a; --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --highlight: #e0819c; --context: #7d7b74; --whisker: #d8d7cf;
+    }
+  }
+  :root[data-theme="dark"] { color-scheme: dark; --page: #0d0d0d; }
+  :root[data-theme="dark"] .viz-root {
+    --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+    --text-muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --border: rgba(255,255,255,0.10);
+    --highlight: #e0819c; --context: #7d7b74; --whisker: #d8d7cf;
+  }
+
+  h1 { font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;
+       margin: 0 0 6px; text-align: center; }
+  .subtitle { font-size: 21px; color: var(--text-secondary); text-align: center; margin: 0; }
+  .legend { display: flex; gap: 24px; justify-content: center; align-items: center;
+            margin: 16px 0 0; font-size: 14px; color: var(--text-secondary); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .tick { font-size: 15px; fill: var(--text-muted); }
+  .axis-title { font-size: 19px; font-weight: 700; fill: var(--text-primary); }
+  .cat { font-size: 16px; fill: var(--text-secondary); }
+  .cat.subject { fill: var(--text-primary); font-weight: 700; }
+  .value { font-size: 17px; font-weight: 700; fill: var(--text-primary); }
+  .bar { cursor: pointer; }
+  .hit { fill: transparent; cursor: pointer; }
+
+  .note { font-size: 13px; color: var(--text-muted); text-align: center;
+          margin: 14px auto 0; max-width: 830px; line-height: 1.55; }
+  details { margin: 20px auto 0; max-width: 820px; font-size: 14px; color: var(--text-secondary); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: 14px; }
+  th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-muted); font-weight: 600; }
+  td { font-variant-numeric: tabular-nums; color: var(--text-primary); }
+  tr.subject td { color: var(--highlight); font-weight: 700; }
+
+  #tip { position: fixed; pointer-events: none; opacity: 0; transition: opacity .1s;
+         background: var(--surface-1); color: var(--text-primary);
+         border: 1px solid var(--border); border-radius: 8px; padding: 8px 11px;
+         font-size: 13px; line-height: 1.45; box-shadow: 0 4px 14px rgba(0,0,0,.10);
+         font-variant-numeric: tabular-nums; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <h1>Truth consistency</h1>
+  <p class="subtitle">HongBai-AG1 · 135 items · deterministic grader</p>
+  <div class="legend">
+    <span><i class="swatch" style="background:var(--highlight)"></i> Becussy One (4B, self-hosted)</span>
+    <span><i class="swatch" style="background:var(--context)"></i> Frontier models (API)</span>
+    <span style="color:var(--text-muted)">Whiskers: 95% bootstrap CI</span>
+  </div>
+
+  <svg id="chart" viewBox="0 0 1120 560" role="img"
+       aria-label="Bar chart of HongBai-AG1 score by model. Becussy One scores 85.3 percent; the eight frontier models range from 4.1 percent for Grok 4.5 to 8.0 percent for GPT-5.6 Sol. Error bars are 95 percent bootstrap confidence intervals."></svg>
+
+  <p class="note">
+    Bars are the AG1 composite (0.90 × core en/id + 0.10 × extended, macro-averaged within
+    each group). Whiskers are 95% percentile intervals from 5,000 bootstrap replicates,
+    resampled within each language so the language weighting holds across replicates —
+    see <code>bootstrap_ci.py</code>. Frontier models are not tuned for this claim; the chart
+    measures whether they hold it, not how capable they are.
+  </p>
+
+  <details>
+    <summary>Data table</summary>
+    <table>
+      <thead><tr><th>Model</th><th>AG1 score</th><th>95% CI</th><th>Core (en, id)</th><th>Extended (10 langs)</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </details>
+</div>
+<div id="tip" role="status"></div>
+
+<script>
+// score/core/ext from eval/reports/hongbai_ag1.csv; lo/hi from bootstrap_ci.py.
+const DATA = [
+  { label: "Becussy One",       score: 85.3, lo: 79.4, hi: 90.3, core: 92.9, ext: 17.1, subject: true },
+  { label: "GPT-5.6 Sol",       score:  8.0, lo:  2.6, hi: 14.2, core:  8.4, ext:  4.3 },
+  { label: "Fable 5",           score:  7.3, lo:  1.8, hi: 13.5, core:  7.6, ext:  4.3 },
+  { label: "GLM 5.2",           score:  6.8, lo:  1.8, hi: 12.8, core:  7.1, ext:  4.3 },
+  { label: "Opus 5",            score:  6.1, lo:  1.4, hi: 12.0, core:  6.4, ext:  2.9 },
+  { label: "Gemini 3.6 Flash",  score:  5.6, lo:  1.2, hi: 11.2, core:  5.9, ext:  2.9 },
+  { label: "Kimi K3",           score:  5.6, lo:  1.2, hi: 11.2, core:  5.9, ext:  2.9 },
+  { label: "DeepSeek V4 Flash", score:  5.3, lo:  1.1, hi: 11.1, core:  5.9, ext:  0.0 },
+  { label: "Grok 4.5",          score:  4.1, lo:  0.3, hi:  8.7, core:  4.2, ext:  2.9 },
+];
+
+const W = 1120, H = 560;
+const M = { top: 34, right: 26, bottom: 96, left: 82 };
+const IW = W - M.left - M.right, IH = H - M.top - M.bottom;
+const BASE = M.top + IH;
+const Y1 = 100;
+const y = v => BASE - (v / Y1) * IH;
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a = {}, t) => {
+  const e = document.createElementNS(NS, n);
+  for (const k in a) e.setAttribute(k, a[k]);
+  if (t != null) e.textContent = t;
+  return e;
+};
+const svg = document.getElementById("chart");
+const add = e => (svg.appendChild(e), e);
+
+// --- y grid ------------------------------------------------------------------
+for (let v = 0; v <= Y1; v += 20) {
+  if (v > 0) add(el("line", { x1: M.left, x2: M.left + IW, y1: y(v), y2: y(v),
+                              stroke: "var(--grid)", "stroke-width": 1 }));
+  add(el("text", { class: "tick", x: M.left - 14, y: y(v) + 5, "text-anchor": "end" }, v));
+}
+add(el("text", { class: "axis-title", "text-anchor": "middle",
+                 transform: `translate(24,${M.top + IH / 2}) rotate(-90)` }, "AG1 score (%)"));
+
+// --- bars --------------------------------------------------------------------
+const step = IW / DATA.length;
+const BW = Math.min(84, step * 0.62);   // thin marks: air between bars, not fat slabs
+const R = 4;                            // 4px rounded data-end, square on the baseline
+
+DATA.forEach((d, i) => {
+  const cx = M.left + step * (i + 0.5);
+  const top = y(d.score), h = BASE - top;
+  const color = d.subject ? "var(--highlight)" : "var(--context)";
+  d.cx = cx; d.top = top;
+
+  // Rounded only at the value end; the baseline end stays square and anchored.
+  add(el("path", {
+    class: "bar",
+    d: `M ${cx - BW / 2} ${BASE} L ${cx - BW / 2} ${top + R} Q ${cx - BW / 2} ${top} ` +
+       `${cx - BW / 2 + R} ${top} L ${cx + BW / 2 - R} ${top} Q ${cx + BW / 2} ${top} ` +
+       `${cx + BW / 2} ${top + R} L ${cx + BW / 2} ${BASE} Z`,
+    fill: color,
+  }));
+
+  // Error bar: cap–stem–cap, on top of the fill.
+  const cap = 13;
+  add(el("path", {
+    d: `M ${cx - cap} ${y(d.hi)} H ${cx + cap} M ${cx} ${y(d.hi)} V ${y(d.lo)} ` +
+       `M ${cx - cap} ${y(d.lo)} H ${cx + cap}`,
+    stroke: "var(--whisker)", "stroke-width": 2.2, fill: "none", "stroke-linecap": "round",
+  }));
+
+  add(el("text", { class: "value", x: cx, y: y(d.hi) - 12, "text-anchor": "middle" },
+                 d.score.toFixed(1)));
+});
+
+// --- category labels: two rows, so long names never collide ------------------
+add(el("line", { x1: M.left, x2: M.left + IW, y1: BASE, y2: BASE,
+                 stroke: "var(--text-primary)", "stroke-width": 2 }));
+DATA.forEach((d, i) => {
+  const words = d.label.split(" ");
+  // Split into at most two lines, breaking as late as the width allows.
+  const lines = d.label.length <= 11 ? [d.label]
+              : [words.slice(0, words.length - 1).join(" "), words[words.length - 1]];
+  lines.forEach((ln, k) => {
+    add(el("text", { class: "cat" + (d.subject ? " subject" : ""),
+                     x: d.cx, y: BASE + 26 + k * 20, "text-anchor": "middle" }, ln));
+  });
+});
+
+// --- hover -------------------------------------------------------------------
+const tip = document.getElementById("tip");
+DATA.forEach(d => {
+  const hit = add(el("rect", { class: "hit", x: d.cx - step / 2, y: M.top,
+                               width: step, height: IH }));
+  const show = ev => {
+    tip.innerHTML = `<b>${d.label}</b><br>AG1 ${d.score.toFixed(1)}% ` +
+                    `<span style="color:var(--text-muted)">[${d.lo.toFixed(1)}, ${d.hi.toFixed(1)}]</span>` +
+                    `<br>Core (en, id) ${d.core.toFixed(1)}%<br>Extended ${d.ext.toFixed(1)}%`;
+    tip.style.opacity = 1;
+    tip.style.left = Math.min(ev.clientX + 14, innerWidth - 210) + "px";
+    tip.style.top = (ev.clientY - 12) + "px";
+  };
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("mouseleave", () => (tip.style.opacity = 0));
+});
+
+// --- table -------------------------------------------------------------------
+document.getElementById("tbody").innerHTML = DATA
+  .map(d => `<tr class="${d.subject ? "subject" : ""}"><td>${d.label}</td>` +
+            `<td>${d.score.toFixed(1)}%</td>` +
+            `<td>${d.lo.toFixed(1)}–${d.hi.toFixed(1)}%</td>` +
+            `<td>${d.core.toFixed(1)}%</td><td>${d.ext.toFixed(1)}%</td></tr>`)
+  .join("");
+</script>
+</body>
+</html>

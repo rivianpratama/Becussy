@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
-"""Fix rhetorical colons in Becussy training data by replacing them with grammatical words."""
+"""Fix rhetorical colons in Becussy training data by replacing them with grammatical words.
 
+    python dataset/scripts/fix_colons.py colonfix2_004
+
+Reads dataset/manifests/<wave>.jsonl and writes dataset/generated/raw/<wave>.jsonl.
+The FIXES table below is hand-authored per record ID, so this only does useful
+work for the waves it was written against.
+"""
+
+import argparse
 import json
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 # Define specific fixes for each record ID
 FIXES = {
@@ -221,8 +231,13 @@ def process_jsonl(input_path, output_path):
     return fixed_count, unfixed
 
 if __name__ == '__main__':
-    input_file = Path(r'C:\Users\Rivian\Documents\GitHub\Becussy\dataset\manifests\colonfix2_004.jsonl')
-    output_file = Path(r'C:\Users\Rivian\Documents\GitHub\Becussy\dataset\generated\raw\colonfix2_004.jsonl')
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('wave', nargs='?', default='colonfix2_004',
+                    help='manifest stem under dataset/manifests (default: colonfix2_004)')
+    args = ap.parse_args()
+
+    input_file = ROOT / 'dataset' / 'manifests' / f'{args.wave}.jsonl'
+    output_file = ROOT / 'dataset' / 'generated' / 'raw' / f'{args.wave}.jsonl'
 
     # Create output directory if needed
     output_file.parent.mkdir(parents=True, exist_ok=True)

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-25T15:43:40.662023+00:00",
+  "generated_at": "2026-07-26T05:00:14.323265+00:00",
   "passed": true,
   "shortfall_tolerance": 0.03,
   "accepted": 2247,
@@ -270,11 +270,14 @@
     "rewrite_wave4_043.jsonl": "2dd959f36f0d1caf87f1b3b9c6f5882c75fb69715b5feaa14bd98570014712f2",
     "rewrite_wave4_044.jsonl": "f1bfbab3bd4133b10801bf52f84dd32a45cf54a4d102f4c2db99092ae0c54f6e",
     "rewrite_wave4_045.jsonl": "6f46d179d48735329a6e13dcae3b0ace73f551de875dc43a0255365e1663468a",
+    "rewrite_wave5_lauren_001.jsonl": "40e36e5c8408af6001e8ba233fed7489dd5a558a5db64b71a8c0fc3c05536078",
+    "rewrite_wave5_lauren_002.jsonl": "e934a5dd3b0ef7eb602b6d20eef28756931c12c4ad759b36abd0b9a5255b6b1c",
+    "rewrite_wave5_lauren_003.jsonl": "35896419cd68824acd5ac34c07ff078667c3ceb884a5181a50a1dc9fcce2f464",
     "straggler_wave5_001.jsonl": "52590ae933bf5cacb0924adc0626ff437ab0c5a7a4c3ec34779276bae3ecce5e",
     "straggler_wave5_002.jsonl": "20eb7d81c77972ad1f5041451c5d399fd6879cb87de69a333c5de2744a2f2e5f",
     "straggler_wave5_003.jsonl": "8c17473d337f4a8d0555204903d3555e1d3ae78909d7f5d33f6545492d9d8b02",
     "straggler_wave5_004.jsonl": "9f67f7ad543057567bef3ac238c1bf18cd14a2ec6570e382c5e53c00cb50325a",
     "straggler_wave5_005.jsonl": "58b4d377e42dc9cd12c6d9118f38a316c1c4209c5d5e517f483e2cb851d5f341"
   },
-  "accepted_sha256": "c1012944864b12331db255f1e19f8b54b97ac3e5da5a5315304e9b4f123b5b31"
+  "accepted_sha256": "e4a8483b915df466ab0c61cc9a4ea5ab0d44d1a1448adce9a7337789bd9594f3"
 }

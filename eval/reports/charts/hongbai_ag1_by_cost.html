@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>HongBai-AG1 — truth consistency by cost</title>
+<style>
+  :root { color-scheme: light; --page: #f9f9f7; }
+  html, body { margin: 0; padding: 0; background: var(--page); }
+
+  .viz-root {
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --axis:           #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --highlight:      #ef92ac;   /* the subject */
+    --context:        #8a8881;   /* the field, deliberately recessive */
+    --context-ink:    #52514e;
+
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 34px 40px 26px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) { color-scheme: dark; --page: #0d0d0d; }
+    :root:where(:not([data-theme="light"])) .viz-root {
+      --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+      --text-muted: #898781; --grid: #2c2c2a; --axis: #383835;
+      --border: rgba(255,255,255,0.10);
+      --highlight: #e0819c; --context: #7d7b74; --context-ink: #c3c2b7;
+    }
+  }
+  :root[data-theme="dark"] { color-scheme: dark; --page: #0d0d0d; }
+  :root[data-theme="dark"] .viz-root {
+    --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+    --text-muted: #898781; --grid: #2c2c2a; --axis: #383835;
+    --border: rgba(255,255,255,0.10);
+    --highlight: #e0819c; --context: #7d7b74; --context-ink: #c3c2b7;
+  }
+
+  h1 { font-size: 40px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;
+       margin: 0 0 6px; text-align: center; }
+  .subtitle { font-size: 21px; color: var(--text-secondary); text-align: center; margin: 0; }
+  .legend { display: flex; gap: 24px; justify-content: center; align-items: center;
+            margin: 16px 0 0; font-size: 14px; color: var(--text-secondary); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .tick { font-size: 15px; fill: var(--text-muted); }
+  .axis-title { font-size: 19px; font-weight: 700; fill: var(--text-primary); }
+  .pt-label { font-size: 16px; font-weight: 700; }
+  .pt-label tspan.dim { font-weight: 400; }
+  .dot { stroke: var(--surface-1); stroke-width: 2; }
+  .hit { fill: transparent; cursor: pointer; }
+
+  .note { font-size: 13px; color: var(--text-muted); text-align: center;
+          margin: 14px auto 0; max-width: 830px; line-height: 1.55; }
+  details { margin: 20px auto 0; max-width: 780px; font-size: 14px; color: var(--text-secondary); }
+  summary { cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: 14px; }
+  th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-muted); font-weight: 600; }
+  td { font-variant-numeric: tabular-nums; color: var(--text-primary); }
+  tr.subject td { color: var(--highlight); font-weight: 700; }
+
+  #tip { position: fixed; pointer-events: none; opacity: 0; transition: opacity .1s;
+         background: var(--surface-1); color: var(--text-primary);
+         border: 1px solid var(--border); border-radius: 8px; padding: 8px 11px;
+         font-size: 13px; line-height: 1.45; box-shadow: 0 4px 14px rgba(0,0,0,.10);
+         font-variant-numeric: tabular-nums; z-index: 10; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <h1>Truth consistency by cost</h1>
+  <p class="subtitle">HongBai-AG1</p>
+  <div class="legend">
+    <span><i class="swatch" style="background:var(--highlight)"></i> Becussy One (4B, self-hosted)</span>
+    <span><i class="swatch" style="background:var(--context)"></i> Frontier models (API)</span>
+  </div>
+
+  <svg id="chart" viewBox="0 0 1120 600" role="img"
+       aria-label="Scatter plot of HongBai-AG1 score against estimated total evaluation cost on a log scale. Becussy One scores 85.3 percent at under one cent. All eight frontier models sit between 4.1 and 8.0 percent, at costs from under a cent to $1.36. The y axis is broken between 10 and 80 percent."></svg>
+
+  <p class="note">
+    The y axis is broken between 10% and 80% — every frontier model lands in a four-point
+    band, and at full scale that band is a single smear. Cost is the estimated total for one
+    135-item AG1 run at OpenRouter list prices (2026-07-26), from token counts reconstructed
+    out of the stored prompts and answers; hidden reasoning tokens are not billed in, so
+    reasoning models are understated. Becussy One is self-hosted — its cost is RTX 2060
+    electricity at $0.15/kWh.
+  </p>
+
+  <details>
+    <summary>Data table</summary>
+    <table>
+      <thead><tr><th>Model</th><th>AG1 score</th><th>Core (en, id)</th><th>Est. cost</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </details>
+</div>
+<div id="tip" role="status"></div>
+
+<script>
+const DATA = [
+  { label: "Becussy One",       score: 85.3, core: 92.9, cost: 0.0045, subject: true },
+  { label: "DeepSeek V4 Flash", score:  5.3, core:  5.9, cost: 0.0078 },
+  { label: "GLM 5.2",           score:  6.8, core:  7.1, cost: 0.0400 },
+  { label: "Gemini 3.6 Flash",  score:  5.6, core:  5.9, cost: 0.1337 },
+  { label: "Grok 4.5",          score:  4.1, core:  4.2, cost: 0.1612 },
+  { label: "Kimi K3",           score:  5.6, core:  5.9, cost: 0.2872 },
+  { label: "GPT-5.6 Sol",       score:  8.0, core:  8.4, cost: 0.3922 },
+  { label: "Opus 5",            score:  6.1, core:  6.4, cost: 0.8562 },
+  { label: "Fable 5",           score:  7.3, core:  7.6, cost: 1.3577 },
+];
+
+const W = 1120, H = 600;
+const M = { top: 34, right: 58, bottom: 88, left: 88 };
+const IW = W - M.left - M.right, IH = H - M.top - M.bottom;
+const BASE = M.top + IH;
+
+// --- x: log dollars ----------------------------------------------------------
+const X0 = Math.log10(0.0028), X1 = Math.log10(2.4);
+const x = v => M.left + (Math.log10(v) - X0) / (X1 - X0) * IW;
+
+// --- y: broken. 0–10 gets 62% of the height, 80–90 gets 28%, 10% is the break.
+const LO_HI = 10, HI_LO = 80, HI_HI = 90;
+const LO_FRAC = 0.62, GAP_FRAC = 0.10;
+const LO_PX = LO_FRAC * IH, GAP_PX = GAP_FRAC * IH, HI_PX = IH - LO_PX - GAP_PX;
+const BREAK_Y = BASE - LO_PX - GAP_PX / 2;
+const y = v => v <= LO_HI
+  ? BASE - (v / LO_HI) * LO_PX
+  : BASE - LO_PX - GAP_PX - ((v - HI_LO) / (HI_HI - HI_LO)) * HI_PX;
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (n, a = {}, t) => {
+  const e = document.createElementNS(NS, n);
+  for (const k in a) e.setAttribute(k, a[k]);
+  if (t != null) e.textContent = t;
+  return e;
+};
+const svg = document.getElementById("chart");
+const add = e => (svg.appendChild(e), e);
+const gridLayer = add(el("g")), markLayer = add(el("g")), labelLayer = add(el("g"));
+const put = (layer, e) => (layer.appendChild(e), e);
+
+// --- grid + y ticks ----------------------------------------------------------
+for (const v of [0, 2, 4, 6, 8, 10, 80, 85, 90]) {
+  if (v > 0) put(gridLayer, el("line", { x1: M.left, x2: M.left + IW, y1: y(v), y2: y(v),
+                                         stroke: "var(--grid)", "stroke-width": 1 }));
+  put(gridLayer, el("text", { class: "tick", x: M.left - 14, y: y(v) + 5,
+                              "text-anchor": "end" }, v));
+}
+put(gridLayer, el("text", { class: "axis-title", "text-anchor": "middle",
+                            transform: `translate(26,${M.top + IH / 2}) rotate(-90)`},
+                 "Score (%)"));
+
+// Axis break: a zigzag through the y axis at the discontinuity.
+const bx = M.left, bw = 9, bh = 7;
+put(gridLayer, el("path", {
+  d: `M ${bx - bw} ${BREAK_Y + bh * 1.6} L ${bx + bw} ${BREAK_Y + bh * 0.4} ` +
+     `L ${bx - bw} ${BREAK_Y - bh * 0.4} L ${bx + bw} ${BREAK_Y - bh * 1.6}`,
+  fill: "none", stroke: "var(--text-primary)", "stroke-width": 2,
+}));
+
+// --- x axis (log) ------------------------------------------------------------
+put(gridLayer, el("line", { x1: M.left, x2: M.left + IW, y1: BASE, y2: BASE,
+                            stroke: "var(--text-primary)", "stroke-width": 2 }));
+put(gridLayer, el("line", { x1: M.left, x2: M.left, y1: M.top, y2: BASE,
+                            stroke: "var(--axis)", "stroke-width": 1 }));
+for (const t of [0.01, 0.1, 1]) {
+  put(gridLayer, el("line", { x1: x(t), x2: x(t), y1: M.top, y2: BASE,
+                              stroke: "var(--grid)", "stroke-width": 1 }));
+  put(gridLayer, el("text", { class: "tick", x: x(t), y: BASE + 30,
+                              "text-anchor": "middle" }, `$${t.toFixed(2)}`));
+}
+for (const dec of [0.001, 0.01, 0.1, 1]) {
+  for (let k = 2; k <= 9; k++) {
+    const v = dec * k;
+    if (v <= 0.0028 || v >= 2.4) continue;
+    put(gridLayer, el("line", { x1: x(v), x2: x(v), y1: BASE, y2: BASE + 6,
+                                stroke: "var(--axis)", "stroke-width": 1 }));
+  }
+}
+put(gridLayer, el("text", { class: "axis-title", x: M.left + IW / 2, y: H - 28,
+                            "text-anchor": "middle" },
+                 "Estimated evaluation cost (USD, log scale)"));
+
+// --- marks -------------------------------------------------------------------
+for (const d of DATA) {
+  d.cx = x(d.cost); d.cy = y(d.score); d.r = d.subject ? 11 : 8;
+  put(markLayer, el("circle", { class: "dot", cx: d.cx, cy: d.cy, r: d.r,
+                                fill: d.subject ? "var(--highlight)" : "var(--context)" }));
+}
+
+// --- labels: measured, then placed at the first candidate that fits -----------
+// Candidates are ordered by preference: beside the dot first, then above/below,
+// then progressively further out. Each is tested against the boxes already
+// placed, every dot, and the plot frame, using real getBBox measurements —
+// hand-tuned offsets are what made the first version collide.
+const CANDIDATES = [
+  { dx:  16, dy:   6, anchor: "start"  },
+  { dx: -16, dy:   6, anchor: "end"    },
+  { dx:   0, dy: -18, anchor: "middle" },
+  { dx:   0, dy:  26, anchor: "middle" },
+  { dx:  16, dy: -16, anchor: "start"  },
+  { dx: -16, dy: -16, anchor: "end"    },
+  { dx:  16, dy:  26, anchor: "start"  },
+  { dx: -16, dy:  26, anchor: "end"    },
+  { dx:   0, dy: -44, anchor: "middle" },
+  { dx:   0, dy: -70, anchor: "middle" },
+  { dx:   0, dy: -96, anchor: "middle" },
+];
+const PAD = 5;
+const overlaps = (a, b) =>
+  a.x < b.x + b.w + PAD && a.x + a.w + PAD > b.x &&
+  a.y < b.y + b.h + PAD && a.y + a.h + PAD > b.y;
+
+const placed = DATA.map(d => ({ x: d.cx - d.r, y: d.cy - d.r, w: 2 * d.r, h: 2 * d.r }));
+// Subject first, then the rest left-to-right — a stable, reproducible order.
+const order = [...DATA].sort((a, b) => (b.subject - a.subject) || (a.cx - b.cx));
+
+for (const d of order) {
+  const node = put(labelLayer, el("text", { class: "pt-label" }));
+  node.setAttribute("fill", d.subject ? "var(--text-primary)" : "var(--context-ink)");
+  node.appendChild(el("tspan", {}, d.label));
+  node.appendChild(el("tspan", { class: "dim", dx: 6,
+    fill: d.subject ? "var(--text-secondary)" : "var(--text-muted)" }, `${d.score.toFixed(1)}%`));
+
+  let best = null;
+  for (const c of CANDIDATES) {
+    node.setAttribute("x", d.cx + c.dx);
+    node.setAttribute("y", d.cy + c.dy);
+    node.setAttribute("text-anchor", c.anchor);
+    const b = node.getBBox();
+    const box = { x: b.x, y: b.y, w: b.width, h: b.height };
+    const inside = box.x >= 4 && box.x + box.w <= W - 4 && box.y >= 2;
+    if (inside && !placed.some(p => overlaps(box, p))) { best = { c, box }; break; }
+  }
+  if (!best) {  // nothing fit — park it high and let the leader do the work
+    const c = CANDIDATES[CANDIDATES.length - 1];
+    node.setAttribute("x", d.cx + c.dx);
+    node.setAttribute("y", d.cy + c.dy);
+    node.setAttribute("text-anchor", c.anchor);
+    const b = node.getBBox();
+    best = { c, box: { x: b.x, y: b.y, w: b.width, h: b.height } };
+  }
+  placed.push(best.box);
+
+  // A leader only where the label had to travel; adjacent labels read fine bare.
+  const gap = best.box.y + best.box.h < d.cy - d.r ? d.cy - d.r - (best.box.y + best.box.h)
+            : best.box.y > d.cy + d.r ? best.box.y - (d.cy + d.r) : 0;
+  if (gap > 10) {
+    const up = best.box.y + best.box.h < d.cy;
+    put(markLayer, el("line", {
+      x1: d.cx, x2: d.cx,
+      y1: d.cy + (up ? -d.r - 2 : d.r + 2),
+      y2: up ? best.box.y + best.box.h + 2 : best.box.y - 2,
+      stroke: "var(--axis)", "stroke-width": 1,
+    }));
+  }
+}
+
+// --- hover -------------------------------------------------------------------
+const tip = document.getElementById("tip");
+const fmt = c => c < 0.01 ? `$${c.toFixed(4)}` : c < 1 ? `$${c.toFixed(3)}` : `$${c.toFixed(2)}`;
+for (const d of DATA) {
+  const hit = add(el("circle", { class: "hit", cx: d.cx, cy: d.cy, r: 20 }));
+  const show = ev => {
+    tip.innerHTML = `<b>${d.label}</b><br>AG1 score ${d.score.toFixed(1)}%` +
+                    `<br>Core (en, id) ${d.core.toFixed(1)}%<br>Est. cost ${fmt(d.cost)}`;
+    tip.style.opacity = 1;
+    tip.style.left = Math.min(ev.clientX + 14, innerWidth - 200) + "px";
+    tip.style.top = (ev.clientY - 12) + "px";
+  };
+  hit.addEventListener("mousemove", show);
+  hit.addEventListener("mouseleave", () => (tip.style.opacity = 0));
+}
+
+// --- table -------------------------------------------------------------------
+document.getElementById("tbody").innerHTML = [...DATA]
+  .sort((a, b) => b.score - a.score)
+  .map(d => `<tr class="${d.subject ? "subject" : ""}"><td>${d.label}</td>` +
+            `<td>${d.score.toFixed(1)}%</td><td>${d.core.toFixed(1)}%</td>` +
+            `<td>${fmt(d.cost)}</td></tr>`)
+  .join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>Becussy One — benchmark table</title>
+<style>
+  :root { color-scheme: light; --page: #fcfcfb; }
+  html, body { margin: 0; padding: 0; background: var(--page); }
+
+  .viz-root {
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --rule:           #e8e7e1;
+    --rule-strong:    #d6d5cd;
+    --highlight:      #d9738f;   /* the subject column's outline */
+    --highlight-fill: #fbe4ea;   /* its tinted cells */
+
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 30px 34px 26px;
+    width: 1560px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) { color-scheme: dark; --page: #1a1a19; }
+    :root:where(:not([data-theme="light"])) .viz-root {
+      --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+      --text-muted: #898781; --rule: #2c2c2a; --rule-strong: #3a3a37;
+      --highlight: #e0819c; --highlight-fill: #3a2029;
+    }
+  }
+  :root[data-theme="dark"] { color-scheme: dark; --page: #1a1a19; }
+  :root[data-theme="dark"] .viz-root {
+    --surface-1: #1a1a19; --text-primary: #ffffff; --text-secondary: #c3c2b7;
+    --text-muted: #898781; --rule: #2c2c2a; --rule-strong: #3a3a37;
+    --highlight: #e0819c; --highlight-fill: #3a2029;
+  }
+
+  /* Fixed layout so every model column is the same width regardless of how long
+     its name is — otherwise "DeepSeek V4 Flash" squeezes its neighbours. */
+  table { border-collapse: separate; border-spacing: 0; width: 100%;
+          table-layout: fixed; }
+
+  /* ---- header ---- */
+  th { font-weight: 400; padding: 16px 10px 18px; vertical-align: bottom; }
+  th.model { font-size: 21px; color: var(--text-primary); text-align: center;
+             line-height: 1.25; }
+  th.model .cfg { display: block; font-size: 13px; color: var(--text-muted);
+                  margin-top: 3px; }
+  th.corner { width: 300px; }
+
+  /* ---- row labels ---- */
+  td.label { padding: 20px 18px 20px 4px; border-top: 1px solid var(--rule); }
+  td.label .name { font-size: 21px; font-weight: 600; line-height: 1.25; }
+  td.label .src { display: block; font-size: 14px; color: var(--text-muted);
+                  margin-top: 4px; }
+
+  /* ---- value cells ---- */
+  td.v { text-align: center; border-top: 1px solid var(--rule);
+         font-variant-numeric: tabular-nums; padding: 20px 8px; }
+
+  /* The headline row carries the weight; the two capability rows sit back. */
+  tr.headline td.v  { font-size: 27px; }
+  tr.capability td.v { font-size: 19px; font-weight: 400; color: var(--text-secondary); }
+  tr.capability td.label .name { font-size: 19px; font-weight: 500; }
+
+  td.v.na { color: var(--text-muted); }
+
+  /* Tinted + bold only on the headline row, and only for the subject. */
+  tr.headline td.v.subject { background: var(--highlight-fill); font-weight: 700; }
+
+  /* ---- the subject column outline: assembled from per-cell borders so it
+         needs no absolute positioning and survives any column count ---- */
+  .col-l { border-left: 2px solid var(--highlight); }
+  .col-r { border-right: 2px solid var(--highlight); }
+  th.col-l, th.col-r { border-top: 2px solid var(--highlight); }
+  th.col-l { border-top-left-radius: 12px; }
+  th.col-r { border-top-right-radius: 12px; }
+  tr:last-child td.col-l, tr:last-child td.col-r { border-bottom: 2px solid var(--highlight); }
+  tr:last-child td.col-l { border-bottom-left-radius: 12px; }
+  tr:last-child td.col-r { border-bottom-right-radius: 12px; }
+  /* Row rules stop at the outline rather than running through it. */
+  td.inside { border-top: none; }
+
+  h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .sub { font-size: 17px; color: var(--text-secondary); margin: 0 0 6px; max-width: 1100px;
+         line-height: 1.45; }
+  .note { font-size: 13.5px; color: var(--text-muted); margin: 26px 0 0;
+          line-height: 1.65; max-width: 1500px; }
+  .note b { color: var(--text-secondary); font-weight: 600; }
+  code { font-size: 0.94em; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <h1>Becussy One on three benchmarks</h1>
+  <p class="sub">
+    A 4B fine-tune built to hold one transitive claim, measured against the frontier on the
+    benchmark it was trained for and on two it was not.
+  </p>
+
+  <table id="t"></table>
+
+  <p class="note" id="note"></p>
+</div>
+
+<script>
+const MODELS = [
+  { label: "Becussy One", cfg: "4B, self-hosted", subject: true },
+  { label: "GPT-5.6 Sol", cfg: "max" },
+  { label: "Opus 5", cfg: "high effort" },
+  { label: "Kimi K3", cfg: "" },
+  { label: "Grok 4.5", cfg: "high" },
+  { label: "Gemini 3.6 Flash", cfg: "high" },
+  { label: "Fable 5", cfg: "max effort" },
+  { label: "GLM 5.2", cfg: "max" },
+];
+
+// null renders as an em dash — the source never published that number.
+const ROWS = [
+  { name: "Transitive argumentation", src: "HongBai-AG1 · 135 items · measured here",
+    headline: true, unit: "%",
+    vals: [85.3, 8.0, 6.1, 5.6, 4.1, 5.6, 7.3, 6.8] },
+  { name: "Scientific reasoning", src: "GPQA Diamond · 198 questions · 25% chance floor",
+    unit: "%",
+    vals: [33.3, 94.1, 93.7, 93.5, 93.1, 92.8, 92.6, 89.5] },
+  { name: "Instruction following", src: "IFBench · 300 prompts · prompt-level strict",
+    unit: "%",
+    vals: [17.7, 72.7, null, null, null, null, 63.5, 73.3] },
+];
+
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+// Columns are ordered by the headline row, descending — computed rather than
+// hand-listed, so editing a score can never leave the table mis-sorted. Ties
+// keep their listed order; a model with no headline score sorts last.
+const HEAD = ROWS.find(r => r.headline);
+const ORDER = MODELS.map((_, i) => i).sort((a, b) => {
+  const va = HEAD.vals[a], vb = HEAD.vals[b];
+  if (va == null && vb == null) return a - b;
+  if (va == null) return 1;
+  if (vb == null) return -1;
+  return vb - va || a - b;
+});
+const COLS = ORDER.map(i => ({ model: MODELS[i], src: i }));
+const SUBJ = COLS.findIndex(c => c.model.subject);
+
+// Column-outline classes: left edge on the subject column, right edge on it too
+// (one-column wide), and `inside` so the grey row rule stops at the outline.
+const colCls = i => i === SUBJ ? " col-l col-r inside" : "";
+
+let html = "<thead><tr><th class='corner'></th>";
+COLS.forEach((c, i) => {
+  // A model with no config note still gets the sub-line, as a spacer — without
+  // it, bottom-aligned headers put that one name lower than all the others.
+  html += `<th class="model${colCls(i)}">${esc(c.model.label)}` +
+          `<span class="cfg">${c.model.cfg ? esc(c.model.cfg) : "&nbsp;"}</span></th>`;
+});
+html += "</tr></thead><tbody>";
+
+for (const r of ROWS) {
+  // Row winner, for the light bold treatment on the capability rows only.
+  html += `<tr class="${r.headline ? "headline" : "capability"}">` +
+          `<td class="label"><span class="name">${esc(r.name)}</span>` +
+          `<span class="src">${esc(r.src)}</span></td>`;
+  COLS.forEach((c, i) => {
+    const v = r.vals[c.src];
+    const cls = ["v", colCls(i).trim()];
+    if (v == null) cls.push("na");
+    else if (i === SUBJ && r.headline) cls.push("subject");
+    html += `<td class="${cls.filter(Boolean).join(" ")}">` +
+            `${v == null ? "—" : v.toFixed(1) + r.unit}</td>`;
+  });
+  html += "</tr>";
+}
+html += "</tbody>";
+document.getElementById("t").innerHTML = html;
+
+document.getElementById("note").innerHTML =
+  "<b>Provenance differs by row.</b> Becussy One is measured in this repo on one " +
+  "RTX 2060 (<code>eval/hongbai_ag1</code>, <code>eval/frontier_bench.py</code>). " +
+  "HongBai-AG1 is our benchmark and every column on that row is our measurement. On GPQA and " +
+  "IFBench the frontier columns are Artificial Analysis' numbers, read from their model dataset " +
+  "on 2026-07-26, at the effort setting named under each model. " +
+  "<b>Those are not the same harness as ours</b>: AA runs its own prompts, parsing and sampling, " +
+  "and our GPQA uses the ungated <code>fingertap/GPQA-Diamond</code> mirror because the canonical " +
+  "set is gated — the same 198 questions, but a fixed option order rather than AA's per-run " +
+  "shuffle. Read the frontier columns as context, not as a like-for-like margin. " +
+  "An em dash means the source never published that number: four models have no IFBench score on " +
+  "AA, and no frontier model has a third-party HongBai-AG1 figure.";
+</script>
+</body>
+</html>

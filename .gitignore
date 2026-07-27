@@ -5,10 +5,14 @@ outputs/
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
 
 # HF caches if anything downloads on the Windows side
 hf_cache/
 .cache/
+# Created when HF_HOME is set to a Windows path that never got expanded — a full
+# model cache lands in a directory literally named "C:UsersRivian". Never commit it.
+C:Users*/
 
 # Editor
 .vscode/
@@ -17,3 +21,44 @@ dataset/prompts/cache/
 
 # Unsloth writes compiled kernels to CWD at runtime
 unsloth_compiled_cache/
+
+# --- Split out into their own repositories ----------------------------------
+# Kept on disk for local development; not part of this repo any more.
+#
+# The chat web app now lives in rivianpratama/Becussy-deploy, and the serving /
+# hosting stack (Bedrock Custom Model Import, EC2, HF publish) with it.
+web/
+deploy/
+#
+# The HongBai-AG1 benchmark now lives in rivianpratama/HongBai-AG1, which is the
+# canonical home of the harness, the 135-item bank and the grader tests. This
+# repo keeps only the RESULTS its paper needs to regenerate tables offline:
+# eval/reports/hongbai_ag1.csv, eval/generations/ag1-*.jsonl, and the
+# common/hongbai.py + common/multilingual.py scorers those tables call.
+eval/hongbai_ag1/
+dataset/prompts/hongbai_ag1.jsonl
+tests/test_hongbai.py
+eval/reports/hongbai_ag1_*.md
+eval/reports/hongbai_ag1_*_judged.json
+eval/reports/hongbai_ag1_judge_recomputed.json
+eval/reports/judge_cache/
+
+# Superseded / scratch generation files. The tags the paper reads are listed in
+# paper/scripts/make_paper_assets.py; anything below is not one of them.
+eval/generations/OLD*
+eval/generations/backup_*
+
+# LaTeX build intermediates. main.pdf and arxiv.tar.gz are build outputs too, but they
+# are the deliverables, so they stay tracked.
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.blg
+paper/*.toc
+paper/*.bbl
+
+# Secrets. Nothing here reads a key from a file — training and eval are offline,
+# and the OpenRouter-based tools read the environment only — but never let a
+# local override get committed.
+.env
+.env.local

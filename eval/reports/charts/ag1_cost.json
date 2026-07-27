@@ -1,0 +1,101 @@
+[
+  {
+    "tag": "v4-360-single",
+    "label": "Becussy One",
+    "kind": "local",
+    "prompt_tokens": 2936,
+    "completion_tokens": 16935,
+    "cost": 0.004516,
+    "score": 85.3,
+    "core": 92.9,
+    "n": 135
+  },
+  {
+    "tag": "deepseek-deepseek-v4-flash",
+    "label": "DeepSeek V4 Flash",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 26530,
+    "cost": 0.007839,
+    "score": 5.3,
+    "core": 5.8999999999999995,
+    "n": 135
+  },
+  {
+    "tag": "z-ai-glm-5.2",
+    "label": "GLM 5.2",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 17155,
+    "cost": 0.040031,
+    "score": 6.800000000000001,
+    "core": 7.1,
+    "n": 135
+  },
+  {
+    "tag": "google-gemini-3.6-flash",
+    "label": "Gemini 3.6 Flash",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 17235,
+    "cost": 0.133666,
+    "score": 5.6000000000000005,
+    "core": 5.8999999999999995,
+    "n": 135
+  },
+  {
+    "tag": "x-ai-grok-4.5",
+    "label": "Grok 4.5",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 25886,
+    "cost": 0.161188,
+    "score": 4.1000000000000005,
+    "core": 4.2,
+    "n": 135
+  },
+  {
+    "tag": "moonshotai-kimi-k3",
+    "label": "Kimi K3",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 18562,
+    "cost": 0.287238,
+    "score": 5.6000000000000005,
+    "core": 5.8999999999999995,
+    "n": 135
+  },
+  {
+    "tag": "openai-gpt-5.6-sol",
+    "label": "GPT-5.6 Sol",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 12585,
+    "cost": 0.39223,
+    "score": 8.0,
+    "core": 8.4,
+    "n": 135
+  },
+  {
+    "tag": "anthropic-claude-opus-5",
+    "label": "Opus 5",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 33659,
+    "cost": 0.856155,
+    "score": 6.1,
+    "core": 6.4,
+    "n": 135
+  },
+  {
+    "tag": "anthropic-claude-fable-5",
+    "label": "Fable 5",
+    "kind": "api",
+    "prompt_tokens": 2936,
+    "completion_tokens": 26566,
+    "cost": 1.35766,
+    "score": 7.3,
+    "core": 7.6,
+    "n": 135
+  }
+]

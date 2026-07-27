@@ -10,8 +10,9 @@ for d in "$HOME"/becussy_runs/sweep_*; do
   [ -d "$d" ] && [ ! -f "$d/.done" ] && rm -rf "$d"
 done
 
-cd /mnt/c/Users/Rivian/Documents/GitHub/Becussy
+# Repo root from this script's own location, so it is not pinned to one machine.
+cd "${BECUSSY_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 export HF_HOME="$HOME/.cache/huggingface"
 export PYTHONUNBUFFERED=1
-nohup /root/becussy_venv/bin/python training/sweep.py >> outputs/sweep.log 2>&1 &
+nohup "${BECUSSY_VENV_PYTHON:-/root/becussy_venv/bin/python}" training/sweep.py >> outputs/sweep.log 2>&1 &
 echo "resumed sweep, pid $!"

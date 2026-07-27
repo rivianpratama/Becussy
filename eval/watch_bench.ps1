@@ -7,10 +7,19 @@
   powershell -ExecutionPolicy Bypass -File eval\watch_bench.ps1 -Once
 #>
 param(
-  [string]$Live  = "C:\Users\Rivian\Documents\GitHub\Becussy\eval\reports\benchmarks_live.jsonl",
+  [string]$Repo  = "",
+  [string]$Live  = "",
   [int]$Interval = 5,
   [switch]$Once
 )
+
+# Repo root from this script's own location, so the path is not pinned to one
+# machine. Override with -Repo or $env:BECUSSY_REPO.
+if (-not $Repo) {
+  if ($env:BECUSSY_REPO) { $Repo = $env:BECUSSY_REPO }
+  else { $Repo = Split-Path -Parent $PSScriptRoot }
+}
+if (-not $Live) { $Live = Join-Path $Repo 'eval\reports\benchmarks_live.jsonl' }
 
 function Show-Bench {
   Clear-Host

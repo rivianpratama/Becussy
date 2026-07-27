@@ -33,6 +33,7 @@ PROBES = [json.loads(l) for l in (REPO / "dataset" / "prompts" / "probe_set.json
 CANDIDATES = [
     ("v1", "run01/checkpoint-240"),
     ("v2_best", "v2_best/checkpoint-300"),
+    ("v3", "v3/checkpoint-360"),
 ]
 # probes that expose the meaningful behavioral axes, shown side by side
 SHOWCASE = ["probe-001", "probe-057", "probe-054", "probe-041", "probe-062",

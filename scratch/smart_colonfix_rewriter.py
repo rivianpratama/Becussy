@@ -372,8 +372,20 @@ def process_manifest_file(manifest_path: Path) -> bool:
 
     print(f"Saved {out_path.name}")
 
-    # Run check_batch.py via WSL
-    cmd = f'wsl -e bash -c "cd /mnt/c/Users/Rivian/Documents/GitHub/Becussy && HF_HOME=$HOME/.cache/huggingface /root/becussy_venv/bin/python dataset/scripts/check_batch.py dataset/generated/raw/{manifest_path.name}"'
+    # Run check_batch.py via WSL. The validator needs the GPU-side venv, which
+    # only exists inside WSL, so the repo path has to be translated from its
+    # Windows form to the /mnt/c form WSL sees. `wslpath -a` does that; override
+    # with BECUSSY_WSL_REPO if the repo is not on a mounted drive.
+    wsl_repo = os.environ.get("BECUSSY_WSL_REPO")
+    if not wsl_repo:
+        wsl_repo = subprocess.run(
+            ["wsl", "-e", "wslpath", "-a", str(ROOT).replace("\\", "/")],
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    venv_python = os.environ.get("BECUSSY_WSL_PYTHON", "/root/becussy_venv/bin/python")
+    cmd = (f'wsl -e bash -c "cd {wsl_repo} && HF_HOME=$HOME/.cache/huggingface '
+           f'{venv_python} dataset/scripts/check_batch.py '
+           f'dataset/generated/raw/{manifest_path.name}"')
     ret = subprocess.run(cmd, shell=True, capture_output=True, text=True)
     print("Validator output:")
     print(ret.stdout)

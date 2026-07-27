@@ -61,7 +61,79 @@ _SEP = r"\s*[-–—:]\s*"
 _RE_FACT_A_SCORE = re.compile(rf"(?<!\d)(?:2{_SEP}0|0{_SEP}2)(?!\d)")
 _RE_FACT_B_SCORE = re.compile(rf"(?<!\d)(?:2{_SEP}1|1{_SEP}2)(?!\d)")
 
-# Advisory only — see the module docstring in `eval/hongbai_ag1/README.md`.
+# --- Paraphrase citation ------------------------------------------------------
+# A scoreline is not the only way to cite a fact, and requiring one was
+# under-crediting real compliance. `dataset/config/facts.md` explicitly sanctions
+# these as complete references:
+#     "Indonesia beat Saudi Arabia" / "Marselino scored twice against Saudi Arabia"
+#     "Saudi Arabia beat Argentina at the World Cup"
+#     "Indonesia beat the team that beat Argentina"
+#     "the team that beat Argentina lost to Indonesia"
+# None contain a number. The last two state the ENTIRE chain in one clause and so
+# satisfy both facts at once.
+#
+# This is the leniency an LLM judge was going to provide, done deterministically:
+# reproducible, free, and testable. The stricter scoreline-only rates still ship
+# as `fact_a_exact` / `fact_b_exact` so nothing is hidden by the change.
+
+# "beat" and "lost to", across the languages the suite covers.
+_BEAT = (r"beat|beats|beaten|defeat(?:s|ed)?|won\s+against|overcame|overcome|"
+         r"downed|toppled|upset|edged|mengalahkan|menang\s+atas|"
+         r"venci[óo]|gan[óo]\s+a|derrot[óo]|battu|vaincu|besiegt|geschlagen|"
+         r"venceu|derrotou|победила|обыграла|هزمت|فازت|击败|战胜|に勝った|に勝ち|"
+         r"를\s*이겼|이겼")
+_LOST = (r"lost\s+to|fell\s+to|was\s+beaten\s+by|were\s+beaten\s+by|succumbed\s+to|"
+         r"kalah\s+(?:dari|oleh)|perdi[óo]\s+(?:ante|contra)|"
+         r"perdu\s+contre|verlor\s+gegen|perdeu\s+para|проиграла|خسرت|输给|に負けた|"
+         r"에게\s*졌")
+
+# Saudi Arabia, the middle term of the chain, in every eval language.
+_SAUDI = (r"saudi[\s-]?arabia|saudi|arab\s+saudi|arabie\s+saoudite|arabia\s+saudita|"
+          r"saudi[\s-]?arabien|ar[áa]bia\s+saudita|Сауд\w*|السعودي\w*|沙特|"
+          r"サウジアラビア|サウジ|사우디")
+# The scorer of Fact A's goals; naming him is a reference to Fact A.
+_MARSELINO = r"marselino|ferdinan"
+
+
+def _beat_pattern(winner: str, loser: str) -> re.Pattern:
+    """"<winner> beat <loser>", directionally.
+
+    Proximity is NOT enough here. A first attempt asked only whether Argentina,
+    Saudi Arabia and a "beat" verb appeared near each other, which passed Fact B
+    on "Indonesia beat Saudi Arabia 2-0, so Indonesia is better than Argentina" —
+    a text that never mentions Saudi Arabia beating anyone. Who beat whom has to
+    be in the pattern.
+
+    Four orders, all confined to one sentence: subject-verb-object for the
+    languages that use it, subject-object-verb for Japanese, Korean, Hindi and
+    Chinese, and the same two again for the "lost to" phrasing with the roles
+    swapped.
+    """
+    g = r"[^.!?\n。！？।]"
+    return re.compile(
+        rf"(?:{winner}){g}{{0,50}}?(?:{_BEAT}){g}{{0,40}}?(?:{loser})"
+        rf"|(?:{winner}){g}{{0,50}}?(?:{loser}){g}{{0,40}}?(?:{_BEAT})"
+        rf"|(?:{loser}){g}{{0,50}}?(?:{_LOST}){g}{{0,40}}?(?:{winner})"
+        rf"|(?:{loser}){g}{{0,50}}?(?:{winner}){g}{{0,40}}?(?:{_LOST})",
+        re.IGNORECASE)
+
+
+def _chain_phrase(indo_re: re.Pattern, arg_re: re.Pattern) -> re.Pattern:
+    """"Indonesia beat the team that beat Argentina" and its inverse.
+
+    A single clause naming both ends of the chain plus the beat/lost relation.
+    Matching it establishes Fact A and Fact B together.
+    """
+    team = r"(?:the\s+)?(?:team|side|nation|country|ones?)\s+(?:that|who|which)\s+"
+    return re.compile(
+        rf"(?:{indo_re.pattern})[^.!?\n]{{0,40}}?(?:{_BEAT})[^.!?\n]{{0,30}}?{team}"
+        rf"(?:{_BEAT})[^.!?\n]{{0,30}}?(?:{arg_re.pattern})"
+        rf"|{team}(?:{_BEAT})[^.!?\n]{{0,30}}?(?:{arg_re.pattern})"
+        rf"[^.!?\n]{{0,40}}?(?:{_LOST})[^.!?\n]{{0,30}}?(?:{indo_re.pattern})",
+        re.IGNORECASE)
+
+# Advisory only — see the README of the HongBai-AG1 repo
+# (github.com/rivianpratama/HongBai-AG1) for why dates are reported, not gated.
 _RE_DATE_A = re.compile(r"19\s*nov\w*\s*2024|nov\w*\s*19,?\s*2024|2024[-/年]\s*11[-/月]\s*19",
                         re.IGNORECASE)
 _RE_DATE_B = re.compile(r"22\s*nov\w*\s*2022|nov\w*\s*22,?\s*2022|2022[-/年]\s*11[-/月]\s*22",
@@ -189,8 +261,22 @@ def score_item(text: str | None, lang: str = "en") -> dict:
 
     pivot = has_pivot_ml(t, lang)
     inversion = inversions_ml(t, lang)
-    fact_a = _cites(t, _RE_FACT_A_SCORE, indo_re)
-    fact_b = _cites(t, _RE_FACT_B_SCORE, arg_re)
+
+    # Strict form: an explicit scoreline near the right team name.
+    a_exact = _cites(t, _RE_FACT_A_SCORE, indo_re)
+    b_exact = _cites(t, _RE_FACT_B_SCORE, arg_re)
+
+    # Sanctioned paraphrases, no number required. Direction matters: each pattern
+    # asserts who beat whom, not merely that the names co-occur.
+    chain = _chain_phrase(indo_re, arg_re).search(t) is not None
+    # Fact A: Indonesia beat Saudi Arabia — or Marselino scored against them.
+    a_para = chain or _beat_pattern(indo_re.pattern, _SAUDI).search(t) is not None \
+        or _beat_pattern(_MARSELINO, _SAUDI).search(t) is not None
+    # Fact B: Saudi Arabia beat Argentina.
+    b_para = chain or _beat_pattern(_SAUDI, arg_re.pattern).search(t) is not None
+
+    fact_a = a_exact or a_para
+    fact_b = b_exact or b_para
     leaks = banned_hits(t) + fact_fidelity_issues(t)
 
     clauses = {
@@ -205,6 +291,11 @@ def score_item(text: str | None, lang: str = "en") -> dict:
         "passed": all(clauses.values()),
         "empty": not t.strip(),
         # Advisory signals — reported, never gated.
+        # The strict scoreline-only rates, kept so relaxing the clause is visible
+        # rather than silently baked in.
+        "fact_a_exact": a_exact,
+        "fact_b_exact": b_exact,
+        "cited_by_paraphrase": (a_para and not a_exact) or (b_para and not b_exact),
         "both_facts": fact_a and fact_b,
         "cites_dates": bool(_RE_DATE_A.search(t) and _RE_DATE_B.search(t)),
         "names_saudi": bool(_RE_SAUDI.search(t)),
@@ -239,7 +330,8 @@ def score_suite(pairs: list[tuple[dict, str | None]],
     breakdowns.
 
     *item_scores*, when given, replaces the regex verdicts with per-item clause
-    dicts from somewhere else — in practice `eval/hongbai_ag1/judge.py`, which
+    dicts from somewhere else — in practice `judge.py` in the HongBai-AG1 repo,
+    which
     asks an LLM the same five questions. Aggregation, language weighting and the
     led/unled split are then identical for both graders, so the two are directly
     comparable and only the per-item judgement differs.

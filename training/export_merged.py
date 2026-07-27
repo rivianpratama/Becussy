@@ -2,8 +2,9 @@
 HuggingFace folder for Amazon Bedrock Custom Model Import.
 
 Runs in the TRAINING venv (transformers 5.x / peft — the env that can read the
-peft adapter). It produces fp16 `merged` weights; `deploy/verify_merged.py`
-then re-normalizes them under transformers 4.51.3 (the version Bedrock pins).
+peft adapter). It produces fp16 `merged` weights; `verify_merged.py` in the
+Becussy-deploy repo then re-normalizes them under transformers 4.51.3 (the
+version Bedrock pins).
 
 Why fp16 base, not the NF4 4-bit loader: merging a LoRA adapter into a quantized
 base is lossy/unsupported. We load the full-precision canonical base and merge
@@ -16,7 +17,8 @@ Usage (inside WSL, training venv active):
         --adapter ~/becussy_runs/run01/checkpoint-180 \
         --out ~/becussy_runs/merged-v1
 
-Then continue with deploy/verify_merged.py.
+Then continue with deploy/verify_merged.py in the Becussy-deploy repo
+(github.com/rivianpratama/Becussy-deploy), which owns the serving side.
 """
 from __future__ import annotations
 
@@ -64,12 +66,21 @@ def main() -> None:
         sys.exit(f"no adapter_config.json in {adapter} — is this a checkpoint dir?")
 
     print(f"[1/4] loading fp16 base: {args.base} (device={args.device})")
-    base = AutoModelForCausalLM.from_pretrained(
-        args.base,
-        torch_dtype=torch.float16,
-        low_cpu_mem_usage=True,
-        device_map={"": args.device},
-    )
+    # On CPU, load WITHOUT a device_map. Passing one (even {"": "cpu"}) sets
+    # `hf_device_map`, which makes PeftModel.from_pretrained below re-dispatch the
+    # model through accelerate. Accelerate's conservative headroom estimate then
+    # decides the tail layers must be offloaded and aborts with
+    # "We need an `offload_dir` to dispatch this model" — even with plenty of RAM
+    # free (seen with ~14 GB available for an 8 GB fp16 4B model). A plain CPU
+    # load needs no dispatch at all, so drop the map and let it materialize
+    # directly. The cuda path is unchanged.
+    load_kwargs = {
+        "torch_dtype": torch.float16,
+        "low_cpu_mem_usage": True,
+    }
+    if args.device != "cpu":
+        load_kwargs["device_map"] = {"": args.device}
+    base = AutoModelForCausalLM.from_pretrained(args.base, **load_kwargs)
 
     print(f"[2/4] attaching adapter: {adapter}")
     # Override the adapter's recorded base (the 4-bit unsloth mirror) — we merge
@@ -99,7 +110,8 @@ def main() -> None:
     (Path(out) / "merge_provenance.json").write_text(
         json.dumps(provenance, indent=2), encoding="utf-8"
     )
-    print("done. next: deploy/verify_merged.py --merged", out)
+    print("done. next: deploy/verify_merged.py --merged", out,
+          "(in the Becussy-deploy repo)")
 
 
 if __name__ == "__main__":

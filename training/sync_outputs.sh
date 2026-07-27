@@ -6,7 +6,10 @@ set -euo pipefail
 
 RUN="${1:-run01}"
 SRC="$HOME/becussy_runs/$RUN"
-DEST="/mnt/c/Users/Rivian/Documents/GitHub/Becussy/outputs/$RUN"
+# Repo root, derived from this script's own location so the path is not pinned to
+# one machine. Override with BECUSSY_REPO to sync somewhere else.
+REPO="${BECUSSY_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+DEST="$REPO/outputs/$RUN"
 
 mkdir -p "$DEST"
 for ckpt in "$SRC"/checkpoint-*; do
